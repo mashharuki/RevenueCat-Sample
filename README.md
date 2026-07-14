@@ -15,3 +15,4 @@ RevenueCat学習・調査用のサンプルリポジトリ
 - [Apple Developer program](https://developer.apple.com/jp/programs/)
 - [【2025年最新版】Apple Developer Program個人登録完全ガイド - 初心者でも迷わず完了できる手順書](https://qiita.com/tomada/items/57ed85f66cb3a233ebad)
 - [Apple Developer Programの登録が超非効率で超大変だったので記録に残す](https://note.com/taraco_mom/n/n3f338b93fe03)
+- [GitHub - twostraws/swift-agent-skills](https://github.com/twostraws/swift-agent-skills)
