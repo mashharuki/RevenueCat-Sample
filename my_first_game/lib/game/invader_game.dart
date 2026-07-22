@@ -174,12 +174,17 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
 
   @override
   void update(double dt) {
-    super.update(dt);
+    // Clamp to at most 3 frames' worth of simulated time (matching the
+    // original prototype's `Math.min(dt, 3)`), so a large gap between
+    // ticks (e.g. the browser tab losing focus) can't teleport the enemy
+    // formation, boss, or bullets across large distances in a single step.
+    final clampedDt = dt > 3 / 60 ? 3 / 60 : dt;
+    super.update(clampedDt);
     if (pointerActive) _tryShoot();
     if (boss == null) {
-      _advanceEnemyFormation(dt);
+      _advanceEnemyFormation(clampedDt);
     } else {
-      _advanceBoss(dt);
+      _advanceBoss(clampedDt);
     }
     _resolveCollisions();
   }
