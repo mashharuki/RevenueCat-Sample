@@ -36,6 +36,11 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
   double invulnerableUntilMs = 0;
   bool pointerActive = false;
 
+  double enemyDirection = 1;
+  double enemySpeed = 0;
+  double enemyShotAtMs = 0;
+  bool _gameOverTriggered = false;
+
   List<EnemyComponent> get liveEnemies =>
       children.whereType<EnemyComponent>().where((e) => e.alive).toList();
 
@@ -55,6 +60,8 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
   /// Clears any existing enemies/boss and spawns the next wave (or boss)
   /// according to [WaveGenerator].
   void spawnWave(int wave) {
+    _gameOverTriggered = false;
+
     for (final enemy in children.whereType<EnemyComponent>().toList()) {
       enemy.removeFromParent();
     }
@@ -71,6 +78,9 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
       return;
     }
 
+    enemyDirection = 1;
+    enemySpeed = WaveGenerator.enemySpeedForWave(wave);
+    enemyShotAtMs = 0;
     for (final spec in WaveGenerator.enemiesForWave(wave)) {
       add(EnemyComponent(spec: spec));
     }
@@ -155,7 +165,89 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
   void update(double dt) {
     super.update(dt);
     if (pointerActive) _tryShoot();
+    if (boss == null) {
+      _advanceEnemyFormation(dt);
+    } else {
+      _advanceBoss(dt);
+    }
     _resolveCollisions();
+  }
+
+  /// Marches the enemy formation side to side, drops it down and speeds it
+  /// up on each edge bounce, fires enemy bullets at an increasing cadence,
+  /// and ends the game if the formation reaches the player's row.
+  void _advanceEnemyFormation(double dt) {
+    final enemies = liveEnemies;
+    if (enemies.isEmpty) return;
+
+    var hitEdge = false;
+    for (final enemy in enemies) {
+      enemy.position.x += enemySpeed * enemyDirection * dt * 60;
+      if (enemy.position.x < 8 || enemy.position.x + enemy.size.x > canvasWidth - 8) {
+        hitEdge = true;
+      }
+    }
+
+    if (hitEdge) {
+      enemyDirection *= -1;
+      for (final enemy in enemies) {
+        enemy.position.y += 18;
+      }
+      enemySpeed += 0.05;
+    }
+
+    final nowMs = currentTime() * 1000;
+    final shotInterval = math.max(
+      280,
+      900 - session.wave * 12 - (24 - enemies.length) * 10,
+    );
+    if (nowMs - enemyShotAtMs > shotInterval) {
+      enemyShotAtMs = nowMs;
+      final shooter = enemies[_random.nextInt(enemies.length)];
+      add(BulletComponent(
+        position: Vector2(
+          shooter.position.x + shooter.size.x / 2,
+          shooter.position.y + shooter.size.y,
+        ),
+        velocityY: 4 + session.wave * 0.08,
+        canvasHeight: canvasHeight,
+        isEnemy: true,
+      ));
+    }
+
+    final lowestY = enemies.map((e) => e.position.y + e.size.y).reduce(math.max);
+    if (lowestY >= (player?.position.y ?? canvasHeight) - 14 && !_gameOverTriggered) {
+      _gameOverTriggered = true;
+      session.endGame(finalScore: session.score, finalWave: session.wave);
+      return;
+    }
+  }
+
+  /// Moves the boss side to side, bouncing off the canvas edges, and fires a
+  /// three-bullet spread at an increasing cadence.
+  void _advanceBoss(double dt) {
+    final activeBoss = boss!;
+    activeBoss.position.x += activeBoss.vx * activeBoss.dir * dt * 60;
+    if (activeBoss.position.x < 16 ||
+        activeBoss.position.x > canvasWidth - 16 - activeBoss.size.x) {
+      activeBoss.dir *= -1;
+    }
+
+    final nowMs = currentTime() * 1000;
+    final shotInterval = math.max(500, 1100 - session.wave * 10);
+    if (nowMs - activeBoss.shootAtMs > shotInterval) {
+      activeBoss.shootAtMs = nowMs;
+      final centerX = activeBoss.position.x + activeBoss.size.x / 2;
+      final bottomY = activeBoss.position.y + activeBoss.size.y;
+      for (final offsetX in [0.0, -16.0, 16.0]) {
+        add(BulletComponent(
+          position: Vector2(centerX + offsetX, bottomY),
+          velocityY: 4.5,
+          canvasHeight: canvasHeight,
+          isEnemy: true,
+        ));
+      }
+    }
   }
 
   void _resolveCollisions() {
