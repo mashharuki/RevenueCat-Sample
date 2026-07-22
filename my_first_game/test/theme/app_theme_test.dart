@@ -12,13 +12,13 @@ void main() {
     expect(AppTheme.danger, const Color(0xFFFF3B5C));
   });
 
-  testWidgets('should build an Orbitron text style with requested size', (WidgetTester tester) async {
+  testWidgets('should build an Orbitron text style with requested size', (tester) async {
     final style = AppTheme.orbitron(fontSize: 22, color: AppTheme.cyan);
     expect(style.fontSize, 22);
     expect(style.color, AppTheme.cyan);
   });
 
-  testWidgets('should build a Rajdhani text style with requested size', (WidgetTester tester) async {
+  testWidgets('should build a Rajdhani text style with requested size', (tester) async {
     final style = AppTheme.rajdhani(fontSize: 14);
     expect(style.fontSize, 14);
   });
