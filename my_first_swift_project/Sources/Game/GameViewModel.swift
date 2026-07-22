@@ -14,11 +14,25 @@ final class GameViewModel: ObservableObject {
     @Published var score: Int = 0
     @Published var lives: Int = GameViewModel.startingLives
     @Published var state: GameState = .menu
+    @Published var activePowerUps: Set<PowerUpType> = []
 
     func resetForNewGame() {
         score = 0
         lives = GameViewModel.startingLives
         state = .playing
+        activePowerUps.removeAll()
+    }
+
+    func activatePowerUp(_ type: PowerUpType) {
+        activePowerUps.insert(type)
+    }
+
+    func deactivatePowerUp(_ type: PowerUpType) {
+        activePowerUps.remove(type)
+    }
+
+    func resetPowerUps() {
+        activePowerUps.removeAll()
     }
 
     func addBrickScore() {

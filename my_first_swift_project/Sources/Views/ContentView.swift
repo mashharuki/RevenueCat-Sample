@@ -43,7 +43,7 @@ private struct HUDOverlay: View {
     @ObservedObject var viewModel: GameViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             HStack {
                 Text("Score: \(viewModel.score)")
                 Spacer()
@@ -52,7 +52,21 @@ private struct HUDOverlay: View {
             .font(.headline)
             .foregroundColor(.white)
             .padding()
+
+            if !viewModel.activePowerUps.isEmpty {
+                Text(activePowerUpsLabel)
+                    .font(.subheadline.bold())
+                    .foregroundColor(.yellow)
+            }
+
             Spacer()
         }
+    }
+
+    private var activePowerUpsLabel: String {
+        viewModel.activePowerUps
+            .sorted { $0.displayName < $1.displayName }
+            .map(\.displayName)
+            .joined(separator: " · ")
     }
 }

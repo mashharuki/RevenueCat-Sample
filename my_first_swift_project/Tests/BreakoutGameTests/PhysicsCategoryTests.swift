@@ -3,7 +3,14 @@ import XCTest
 
 final class PhysicsCategoryTests: XCTestCase {
     func testAllCategoriesAreDistinctPowersOfTwo() {
-        let categories = [PhysicsCategory.ball, PhysicsCategory.paddle, PhysicsCategory.brick, PhysicsCategory.wall]
+        let categories = [
+            PhysicsCategory.ball,
+            PhysicsCategory.paddle,
+            PhysicsCategory.brick,
+            PhysicsCategory.wall,
+            PhysicsCategory.powerUp,
+            PhysicsCategory.laserBolt
+        ]
         XCTAssertEqual(Set(categories).count, categories.count, "physics categories must not overlap")
 
         for category in categories {
