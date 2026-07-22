@@ -40,6 +40,14 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
   double enemySpeed = 0;
   double enemyShotAtMs = 0;
   bool _gameOverTriggered = false;
+  bool _stopped = false;
+
+  /// Marks this game instance as stopped so any in-flight delayed callbacks
+  /// (wave-transition timers) become no-ops instead of mutating a
+  /// [GameSession]/board that has moved on to a different run.
+  void stop() {
+    _stopped = true;
+  }
 
   List<EnemyComponent> get liveEnemies =>
       children.whereType<EnemyComponent>().where((e) => e.alive).toList();
@@ -98,6 +106,7 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     _spawnParticles(enemy.position, enemy.type.color, 10);
     if (liveEnemies.isEmpty) {
       Future.delayed(const Duration(milliseconds: 1300), () {
+        if (_stopped) return;
         spawnWave(session.wave + 1);
       });
     }
@@ -116,6 +125,7 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
       activeBoss.removeFromParent();
       boss = null;
       Future.delayed(const Duration(milliseconds: 1300), () {
+        if (_stopped) return;
         spawnWave(session.wave + 1);
       });
     }

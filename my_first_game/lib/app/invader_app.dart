@@ -30,7 +30,10 @@ class _InvaderAppState extends State<InvaderApp> {
                   onStart: _session.startGame,
                   onShowLeaderboard: _session.showLeaderboard,
                 ),
-              AppScreen.playing || AppScreen.paused => GameplayScreen(session: _session),
+              AppScreen.playing || AppScreen.paused => GameplayScreen(
+                  key: ValueKey(_session.runId),
+                  session: _session,
+                ),
               AppScreen.gameOver => GameOverScreen(
                   result: _session.lastResult,
                   onRetry: _session.restartGame,

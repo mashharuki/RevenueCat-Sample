@@ -25,10 +25,21 @@ class _GameplayScreenState extends State<GameplayScreen> {
   }
 
   @override
+  void dispose() {
+    _game.stop();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.session,
       builder: (context, _) {
+        if (widget.session.screen == AppScreen.paused && !_game.paused) {
+          _game.paused = true;
+        } else if (widget.session.screen != AppScreen.paused && _game.paused) {
+          _game.paused = false;
+        }
         return Container(
           color: AppTheme.background,
           child: Column(

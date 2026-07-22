@@ -20,6 +20,7 @@ class LeaderboardRow {
 
 class GameSession extends ChangeNotifier {
   AppScreen screen = AppScreen.title;
+  int runId = 0;
   int score = 0;
   int lives = 3;
   int wave = 1;
@@ -45,6 +46,7 @@ class GameSession extends ChangeNotifier {
   ];
 
   void startGame() {
+    runId++;
     screen = AppScreen.playing;
     score = 0;
     lives = 3;

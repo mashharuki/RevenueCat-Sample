@@ -80,4 +80,63 @@ void main() {
 
     expect(boss.position.x, isNot(equals(beforeX)));
   });
+
+  // These two run under `testWidgets` (rather than `testWithGame`, which uses
+  // a plain `test`) because clearing the last enemy in a wave schedules the
+  // next wave via `Future.delayed(1300ms)`. `testWidgets` runs its body in a
+  // FakeAsync zone, so `tester.pump(duration)` deterministically advances
+  // that timer without a real wall-clock wait.
+  //
+  // NOTE: unlike the `testWithGame` cases above, these do NOT call
+  // `await game.ready()`. `ready()` internally loops on
+  // `await Future<void>.delayed(Duration.zero)`, and a zero-duration timer
+  // created inside a FakeAsync zone never fires unless the fake clock is
+  // explicitly elapsed — so awaiting it here would hang the test forever.
+  // `game.update(0)` calls `processLifecycleEvents()` synchronously
+  // (see FlameGame.updateTree in the installed flame package), which is
+  // enough to flush pending add/remove operations without waiting on a Future.
+  testWidgets('should advance to the next wave after the delayed timer elapses when not stopped',
+      (tester) async {
+    final session = GameSession();
+    final game = await initializeGame<InvaderGame>(() => InvaderGame(session: session));
+    game.spawnWave(1);
+    game.update(0);
+
+    for (final enemy in game.liveEnemies.toList()) {
+      game.registerHit(enemy);
+    }
+    expect(game.liveEnemies, isEmpty);
+    expect(session.wave, 1);
+
+    await tester.pump(const Duration(milliseconds: 1300));
+    game.update(0);
+
+    expect(session.wave, 2);
+    expect(game.liveEnemies, isNotEmpty);
+  });
+
+  testWidgets('should not advance the wave once stop() has been called, guarding a stale timer',
+      (tester) async {
+    final session = GameSession();
+    final game = await initializeGame<InvaderGame>(() => InvaderGame(session: session));
+    game.spawnWave(1);
+    game.update(0);
+
+    for (final enemy in game.liveEnemies.toList()) {
+      game.registerHit(enemy);
+    }
+    expect(game.liveEnemies, isEmpty);
+    expect(session.wave, 1);
+
+    // Simulate the run ending (e.g. player died, screen torn down) before
+    // the 1300ms wave-transition timer fires.
+    expect(() => game.stop(), returnsNormally);
+
+    await tester.pump(const Duration(milliseconds: 1300));
+    game.update(0);
+
+    // The stale timer must be a no-op: no new wave spawned, HUD untouched.
+    expect(session.wave, 1);
+    expect(game.liveEnemies, isEmpty);
+  });
 }

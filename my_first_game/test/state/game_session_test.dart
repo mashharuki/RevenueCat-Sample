@@ -60,6 +60,24 @@ void main() {
     expect(rows.first.isPlayer, true);
   });
 
+  test('should increment runId on every startGame call so a fresh run can be identified', () {
+    final session = GameSession();
+    final initialRunId = session.runId;
+    session.startGame();
+    final firstRunId = session.runId;
+    expect(firstRunId, greaterThan(initialRunId));
+    session.startGame();
+    final secondRunId = session.runId;
+    expect(secondRunId, greaterThan(firstRunId));
+  });
+
+  test('should increment runId on restartGame since it delegates to startGame', () {
+    final session = GameSession()..startGame();
+    final beforeRestart = session.runId;
+    session.restartGame();
+    expect(session.runId, greaterThan(beforeRestart));
+  });
+
   test('should navigate title/leaderboard/home screens', () {
     final session = GameSession();
     session.showLeaderboard();
