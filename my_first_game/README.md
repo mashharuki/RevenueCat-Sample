@@ -21,3 +21,17 @@ samples, guidance on mobile development, and a full API reference.
 ```bash
 flutter run -d chrome 
 ```
+
+```bash
+開発中の起動(ホットリロード付き)
+flutter run -d chrome   # ブラウザで確認
+flutter run -d macos    # macOSデスクトップアプリとして確認
+flutter run              # 接続中の実機/シミュレータを選択
+
+本番ビルド
+flutter build apk           # Android APK
+flutter build appbundle     # Android App Bundle(Playストア提出用)
+flutter build ios           # iOS(要Xcode、実機は署名が必要)
+flutter build web           # Web用静的ファイル一式(build/web/)
+flutter build macos         # macOSアプリ
+```
