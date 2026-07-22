@@ -43,12 +43,25 @@ void main() {
     expect(after, isNot(equals(before)));
   });
 
-  testWithGame<InvaderGame>('should fire an enemy bullet once the shot interval has elapsed',
+  testWithGame<InvaderGame>('should not fire an enemy bullet before the shot interval elapses',
       () => InvaderGame(session: GameSession()), (game) async {
     game.spawnWave(1);
     await game.ready();
 
-    game.update(2.0);
+    game.update(0.001);
+    await game.ready();
+
+    final enemyBullets = game.children.whereType<BulletComponent>().where((b) => b.isEnemy);
+    expect(enemyBullets, isEmpty);
+  });
+
+  testWithGame<InvaderGame>('should fire an enemy bullet once the shot interval has elapsed',
+      () => InvaderGame(session: GameSession()), (game) async {
+    game.spawnWave(1);
+    await game.ready();
+    game.enemyShotAtMs = 0;
+
+    game.update(0.001);
     await game.ready();
 
     final enemyBullets = game.children.whereType<BulletComponent>().where((b) => b.isEnemy);

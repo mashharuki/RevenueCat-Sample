@@ -71,7 +71,8 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     if (WaveGenerator.isBossWave(wave)) {
       final hp = WaveGenerator.bossHpForWave(wave);
       final newBoss = BossComponent(hp: hp, maxHp: hp)
-        ..position = Vector2((canvasWidth - 64) / 2, 70);
+        ..position = Vector2((canvasWidth - 64) / 2, 70)
+        ..shootAtMs = currentTime() * 1000;
       boss = newBoss;
       add(newBoss);
       session.updateHud(bossActive: true, bossHp: hp, bossMaxHp: hp, wave: wave);
@@ -80,7 +81,7 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
 
     enemyDirection = 1;
     enemySpeed = WaveGenerator.enemySpeedForWave(wave);
-    enemyShotAtMs = 0;
+    enemyShotAtMs = currentTime() * 1000;
     for (final spec in WaveGenerator.enemiesForWave(wave)) {
       add(EnemyComponent(spec: spec));
     }
