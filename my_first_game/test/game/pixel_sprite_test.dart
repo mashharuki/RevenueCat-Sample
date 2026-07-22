@@ -22,6 +22,6 @@ void main() {
     expect(InvaderSprites.enemyAlpha.rowCount, 8);
     expect(InvaderSprites.player.rowCount, 8);
     expect(InvaderSprites.boss.rowCount, 10);
-    expect(InvaderSprites.boss.columns, 17);
+    expect(InvaderSprites.boss.columns, 16);
   });
 }
