@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MenuView: View {
+    @ObservedObject var viewModel: GameViewModel
     let onStart: () -> Void
 
     var body: some View {
@@ -16,6 +17,22 @@ struct MenuView: View {
                     .foregroundColor(.black)
                     .clipShape(Capsule())
             }
+            Button(action: { viewModel.showPaywall() }) {
+                Text("⭐ Upgrade")
+                    .font(.title3.bold())
+                    .padding()
+                    .frame(maxWidth: 220)
+            }
+            .overlay(Capsule().stroke(Color.white.opacity(0.5)))
+            .foregroundColor(.white)
+            Button(action: { viewModel.showWeeklyChallenge() }) {
+                Text(viewModel.hasWeeklyChallenge ? "🗓 Weekly Challenge" : "🔒 Weekly Challenge")
+                    .font(.title3.bold())
+                    .padding()
+                    .frame(maxWidth: 220)
+            }
+            .overlay(Capsule().stroke(Color.white.opacity(0.5)))
+            .foregroundColor(.white)
         }
     }
 }

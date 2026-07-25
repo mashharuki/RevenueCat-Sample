@@ -24,13 +24,18 @@ struct ContentView: View {
 
             switch viewModel.state {
             case .menu:
-                MenuView { startGame() }
+                MenuView(viewModel: viewModel) { startGame() }
             case .gameOver, .win:
                 GameOverView(viewModel: viewModel) { startGame() }
             case .playing:
                 EmptyView()
+            case .paywall:
+                PaywallView(viewModel: viewModel)
+            case .weeklyChallenge:
+                WeeklyChallengeView { viewModel.state = .menu }
             }
         }
+        .task { await viewModel.observeEntitlements() }
     }
 
     private func startGame() {
@@ -46,6 +51,8 @@ private struct HUDOverlay: View {
         VStack(spacing: 4) {
             HStack {
                 Text("Score: \(viewModel.score)")
+                Spacer()
+                Text("Level: \(viewModel.currentLevel)")
                 Spacer()
                 Text("Lives: \(viewModel.lives)")
             }

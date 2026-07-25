@@ -9,19 +9,23 @@
 /* Begin PBXBuildFile section */
 		1A257CEEF6BDB21DD6420F1B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7E4F52C730A40D0CDF5CF /* ContentView.swift */; };
 		300384BB9E94E07F1156F5B4 /* PhysicsCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA072019BB530143DE71431 /* PhysicsCategoryTests.swift */; };
+		45604108524CAD554E9C48F0 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A082A7C0A2527FF669265F /* PurchaseService.swift */; };
 		4D08AD362735A6037C43AFDF /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A124D044BAD09737F7F26425 /* PhysicsCategory.swift */; };
 		607C35FE806E00114B377DE5 /* BrickLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8770EC9757D417F8904D22C7 /* BrickLayout.swift */; };
 		68FDE56FC00629D14C0C9BA9 /* BrickLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87464685DF3B0E40E99F85F2 /* BrickLayoutTests.swift */; };
 		6CD6D2E2710A74F36C04AFD2 /* PowerUpNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37796C8B1AFD0A1036A34CA /* PowerUpNode.swift */; };
+		6ED0243A5112752C3192853F /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A051B540899534647A389B61 /* RevenueCat */; };
 		7D5DF2B92A6C8452EBD0FE45 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DE332AA0D2D491D05E7FC2 /* MenuView.swift */; };
 		821D8470E5E9058C18531FA7 /* BreakoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B2D4C98A86D5E93013B93 /* BreakoutApp.swift */; };
 		833178E92A443086CB9753E5 /* GameMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687B159A3B82A3B0D783E369 /* GameMath.swift */; };
 		8FC6C4B361850ACF65D249C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47B398AB04D34921BCC2DDCA /* Assets.xcassets */; };
 		90FDBCF9FC14037A52E6E31E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912ED055A920DD01C8D3CDCD /* GameScene.swift */; };
+		B5307CB8ED4638E264E73066 /* WeeklyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4154BDE87C0D5C98BED82F2 /* WeeklyChallengeView.swift */; };
 		B8C41416F1CF35676F5494ED /* GameMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C03B8A6C5720883A308E54 /* GameMathTests.swift */; };
 		BF5EFECB7E5D915E91E6F943 /* PowerUpType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C7967842D57F7022CBC577 /* PowerUpType.swift */; };
 		D88D7FD37BA4F903AC002D5E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B331F266942C9A8C8633D57 /* GameViewModel.swift */; };
 		DA91E8564F357F1E607EC7B6 /* GameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15114FA78E5793FC82DB230 /* GameViewModelTests.swift */; };
+		F36AF35FB611DAF029EA76EB /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6AD118D244EF9F130A2001 /* PaywallView.swift */; };
 		F63EC644E1267E49AABE672F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B546DD0AE5C8AC1C4F455F /* GameOverView.swift */; };
 		FA666831B7C468DFF0FF478F /* PowerUpTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E424E13BC15C4A7DBBED9F /* PowerUpTypeTests.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +48,7 @@
 		27F7E4F52C730A40D0CDF5CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		31DFAC971ED81588A33AC2D7 /* BreakoutGame.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BreakoutGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B331F266942C9A8C8633D57 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		43A082A7C0A2527FF669265F /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		4766A7D98DEEBEE223A56D20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		47B398AB04D34921BCC2DDCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49C03B8A6C5720883A308E54 /* GameMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMathTests.swift; sourceTree = "<group>"; };
@@ -54,10 +59,23 @@
 		912ED055A920DD01C8D3CDCD /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		A124D044BAD09737F7F26425 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		B15114FA78E5793FC82DB230 /* GameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModelTests.swift; sourceTree = "<group>"; };
+		BE6AD118D244EF9F130A2001 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		C39B2D4C98A86D5E93013B93 /* BreakoutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutApp.swift; sourceTree = "<group>"; };
+		D4154BDE87C0D5C98BED82F2 /* WeeklyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChallengeView.swift; sourceTree = "<group>"; };
 		D9B546DD0AE5C8AC1C4F455F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		E37796C8B1AFD0A1036A34CA /* PowerUpNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUpNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8B6FDE951CF64C13C87AE2A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6ED0243A5112752C3192853F /* RevenueCat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1CFA490C81E630A22FA150E4 /* BreakoutGameTests */ = {
@@ -104,6 +122,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		34F127543C19E10F843C8482 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				43A082A7C0A2527FF669265F /* PurchaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		367447F496C0F0EECDE0C4A2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +137,7 @@
 				4766A7D98DEEBEE223A56D20 /* Info.plist */,
 				2BBC788DE95A34F34748CE29 /* App */,
 				23BE918519EA62675FFA8018 /* Game */,
+				34F127543C19E10F843C8482 /* Services */,
 				395310A2D0DDA27E17473FDA /* Views */,
 			);
 			path = Sources;
@@ -122,6 +149,8 @@
 				27F7E4F52C730A40D0CDF5CF /* ContentView.swift */,
 				D9B546DD0AE5C8AC1C4F455F /* GameOverView.swift */,
 				67DE332AA0D2D491D05E7FC2 /* MenuView.swift */,
+				BE6AD118D244EF9F130A2001 /* PaywallView.swift */,
+				D4154BDE87C0D5C98BED82F2 /* WeeklyChallengeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -144,6 +173,7 @@
 			buildPhases = (
 				51A4E2007098E1245AC8E5E1 /* Sources */,
 				CC3ABC1180CB212E1C0919AB /* Resources */,
+				8B6FDE951CF64C13C87AE2A8 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,6 +181,7 @@
 			);
 			name = BreakoutGame;
 			packageProductDependencies = (
+				A051B540899534647A389B61 /* RevenueCat */,
 			);
 			productName = BreakoutGame;
 			productReference = 31DFAC971ED81588A33AC2D7 /* BreakoutGame.app */;
@@ -194,6 +225,9 @@
 			);
 			mainGroup = CDF8FE23C11D46BC856B088D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				192510588B6B361A4D0329FE /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3298CAE3BF6FC10DF3D39C70 /* Products */;
 			projectDirPath = "";
@@ -229,9 +263,12 @@
 				90FDBCF9FC14037A52E6E31E /* GameScene.swift in Sources */,
 				D88D7FD37BA4F903AC002D5E /* GameViewModel.swift in Sources */,
 				7D5DF2B92A6C8452EBD0FE45 /* MenuView.swift in Sources */,
+				F36AF35FB611DAF029EA76EB /* PaywallView.swift in Sources */,
 				4D08AD362735A6037C43AFDF /* PhysicsCategory.swift in Sources */,
 				6CD6D2E2710A74F36C04AFD2 /* PowerUpNode.swift in Sources */,
 				BF5EFECB7E5D915E91E6F943 /* PowerUpType.swift in Sources */,
+				45604108524CAD554E9C48F0 /* PurchaseService.swift in Sources */,
+				B5307CB8ED4638E264E73066 /* WeeklyChallengeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +513,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		192510588B6B361A4D0329FE /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.81.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A051B540899534647A389B61 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 192510588B6B361A4D0329FE /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD6D8CA18A2932C0BC409F9C /* Project object */;
 }

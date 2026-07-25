@@ -124,7 +124,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func buildBricks() {
         removeAllBricks()
-        let placements = BrickLayout.standardLayout(in: size)
+        let placements = BrickLayout.layout(forLevel: viewModel.currentLevel, in: size)
         for placement in placements {
             let brick = makeBrickNode(at: placement)
             bricksNode.addChild(brick)
@@ -412,7 +412,26 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         maybeDropPowerUp(from: brick.position)
         fadeOutAndRemove(brick)
         if bricksNode.children.count <= 1 {
-            viewModel.markAsWon()
+            advanceLevelOrFinish()
+        }
+    }
+
+    /// Reacts to `GameViewModel.handleLevelCleared()`: rebuilds the board
+    /// for the next level when the run continues, or leaves `viewModel.state`
+    /// as already set (win/paywall) otherwise.
+    private func advanceLevelOrFinish() {
+        switch viewModel.handleLevelCleared() {
+        case .finalWin, .paywall:
+            break
+        case .nextLevel:
+            resetPowerUpState()
+            buildBricks()
+            resetToSingleBall()
+            let relaunch = SKAction.sequence([
+                .wait(forDuration: GameScene.relaunchDelay),
+                .run { [weak self] in self?.launchBall() }
+            ])
+            run(relaunch)
         }
     }
 

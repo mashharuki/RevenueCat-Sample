@@ -6,6 +6,10 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.9"
+packages:
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios
+    from: 5.81.2
 targets:
   BreakoutGame:
     type: application
@@ -23,6 +27,9 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+    dependencies:
+      - package: RevenueCat
+        product: RevenueCat
   BreakoutGameTests:
     type: bundle.unit-test
     platform: iOS

@@ -2,11 +2,23 @@
 
 ## Fetch offerings
 
+`Purchases.getOfferings` only ships a completion-handler overload in current SDK versions (confirmed on purchases-ios 5.81.2 — `Purchases.shared.getOfferings()` with no completion fails to compile: "missing argument for parameter 'completion'"). Unlike `purchase`/`restorePurchases` below, there is no bare `async throws` equivalent, so bridge it manually:
+
 ```swift
 import RevenueCat
 
 func currentPackages() async throws -> [Package] {
-    let offerings = try await Purchases.shared.getOfferings()
+    let offerings = try await withCheckedThrowingContinuation { continuation in
+        Purchases.shared.getOfferings { offerings, error in
+            if let error {
+                continuation.resume(throwing: error)
+            } else if let offerings {
+                continuation.resume(returning: offerings)
+            } else {
+                continuation.resume(throwing: CancellationError())
+            }
+        }
+    }
     guard let current = offerings.current else { return [] }
     return current.availablePackages
 }
