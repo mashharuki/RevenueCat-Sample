@@ -88,4 +88,59 @@ void main() {
     session.goHome();
     expect(session.screen, AppScreen.title);
   });
+
+  test('should show the paywall with a banner and return to the requested screen on close', () {
+    final session = GameSession();
+    session.showPaywall(banner: 'test banner', returnTo: AppScreen.gameOver);
+    expect(session.screen, AppScreen.paywall);
+    expect(session.paywallBanner, 'test banner');
+    session.closePaywall();
+    expect(session.screen, AppScreen.gameOver);
+    expect(session.paywallBanner, isNull);
+  });
+
+  test('should default the paywall return screen to title', () {
+    final session = GameSession();
+    session.showPaywall();
+    session.closePaywall();
+    expect(session.screen, AppScreen.title);
+  });
+
+  test('should route reachWaveLimit to the paywall and preserve the current run as lastResult', () {
+    final session = GameSession()
+      ..startGame()
+      ..updateHud(score: 320, wave: 3);
+    session.reachWaveLimit();
+    expect(session.screen, AppScreen.paywall);
+    expect(session.paywallBanner, isNotNull);
+    expect(session.lastResult.score, 320);
+    expect(session.lastResult.wave, 3);
+  });
+
+  test('should route showWeeklyChallenge to the paywall when not subscribed', () {
+    final session = GameSession();
+    session.showWeeklyChallenge();
+    expect(session.screen, AppScreen.paywall);
+  });
+
+  test('should do nothing when continueGame is called with no tokens', () {
+    final session = GameSession()..endGame(finalScore: 10, finalWave: 2);
+    session.continueGame();
+    expect(session.screen, AppScreen.gameOver);
+  });
+
+  test('should spend one token, refill lives, and resume playing on continueGame', () {
+    final session = GameSession()
+      ..endGame(finalScore: 10, finalWave: 2)
+      ..grantContinueToken();
+    final runIdBefore = session.runId;
+    expect(session.continueTokens, 1);
+
+    session.continueGame();
+
+    expect(session.continueTokens, 0);
+    expect(session.lives, 3);
+    expect(session.screen, AppScreen.playing);
+    expect(session.runId, greaterThan(runIdBefore));
+  });
 }

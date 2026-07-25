@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_first_game/game/models/game_result.dart';
 import 'package:my_first_game/game/models/leaderboard_entry.dart';
+import 'package:my_first_game/services/purchase_service.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
-enum AppScreen { title, playing, paused, gameOver, leaderboard }
+enum AppScreen { title, playing, paused, gameOver, leaderboard, paywall, weeklyChallenge }
 
 class LeaderboardRow {
   final int rank;
@@ -19,6 +21,10 @@ class LeaderboardRow {
 }
 
 class GameSession extends ChangeNotifier {
+  /// Free players can clear waves up to and including this one. Reaching the
+  /// next wave without [isPremiumUnlocked] routes to the paywall instead.
+  static const int freeWaveLimit = 3;
+
   AppScreen screen = AppScreen.title;
   int runId = 0;
   int score = 0;
@@ -31,6 +37,53 @@ class GameSession extends ChangeNotifier {
   int highScore = 4200;
   GameResult? bestRun;
   GameResult lastResult = const GameResult(score: 0, wave: 1);
+
+  /// RevenueCat purchase state. Updated reactively by
+  /// [Purchases.addCustomerInfoUpdateListener] so the purchase flow and the
+  /// restore flow share one source of truth (see revenuecat-entitlements-gate).
+  bool isPremiumUnlocked = false;
+  bool hasWeeklyChallenge = false;
+
+  /// Consumable balance. RevenueCat only confirms the transaction; tracking
+  /// how many tokens the player has is the app's responsibility, so this is
+  /// kept in memory alongside the rest of this session's non-persisted state
+  /// (score, highScore, etc.).
+  int continueTokens = 0;
+
+  /// Context message shown on the paywall screen (e.g. why it was triggered).
+  String? paywallBanner;
+
+  CustomerInfoUpdateListener? _customerInfoListener;
+
+  GameSession() {
+    if (isPurchasesSupported) {
+      final listener = _applyCustomerInfo;
+      _customerInfoListener = listener;
+      Purchases.addCustomerInfoUpdateListener(listener);
+      Purchases.getCustomerInfo().then(_applyCustomerInfo).catchError((_) {
+        // Network/auth error on first load; the listener will still fire on
+        // the next successful refresh.
+      });
+    }
+  }
+
+  void _applyCustomerInfo(CustomerInfo info) {
+    final premium = info.entitlements.active.containsKey(RevenueCatEntitlements.premium);
+    final weekly = info.entitlements.active.containsKey(RevenueCatEntitlements.weeklyChallenge);
+    if (premium == isPremiumUnlocked && weekly == hasWeeklyChallenge) return;
+    isPremiumUnlocked = premium;
+    hasWeeklyChallenge = weekly;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    final listener = _customerInfoListener;
+    if (listener != null) {
+      Purchases.removeCustomerInfoUpdateListener(listener);
+    }
+    super.dispose();
+  }
 
   final List<LeaderboardEntry> leaderboard = const [
     LeaderboardEntry(name: 'ACE', score: 9800),
@@ -82,6 +135,60 @@ class GameSession extends ChangeNotifier {
 
   void backToTitle() {
     screen = AppScreen.title;
+    notifyListeners();
+  }
+
+  AppScreen _paywallReturnScreen = AppScreen.title;
+
+  void showPaywall({String? banner, AppScreen returnTo = AppScreen.title}) {
+    paywallBanner = banner;
+    _paywallReturnScreen = returnTo;
+    screen = AppScreen.paywall;
+    notifyListeners();
+  }
+
+  void closePaywall() {
+    paywallBanner = null;
+    screen = _paywallReturnScreen;
+    notifyListeners();
+  }
+
+  void showWeeklyChallenge() {
+    if (!hasWeeklyChallenge) {
+      showPaywall(banner: 'ウィークリーチャレンジは週額プランで解放されます');
+      return;
+    }
+    screen = AppScreen.weeklyChallenge;
+    notifyListeners();
+  }
+
+  /// Called when the enemy formation would advance past [freeWaveLimit]
+  /// without [isPremiumUnlocked]. Ends the run at its current score/wave and
+  /// routes to the paywall instead of spawning the next wave.
+  void reachWaveLimit() {
+    lastResult = GameResult(score: score, wave: wave, isNewHigh: score > highScore);
+    if (score > highScore) highScore = score;
+    if (bestRun == null || score > bestRun!.score) {
+      bestRun = GameResult(score: score, wave: wave);
+    }
+    showPaywall(banner: 'WAVE ${freeWaveLimit + 1}以降は全解放パックでプレイできます');
+  }
+
+  /// Spends one continue token (consumable purchase) to resume the run at
+  /// the current score/wave with full lives.
+  void continueGame() {
+    if (continueTokens <= 0) return;
+    continueTokens--;
+    runId++;
+    lives = 3;
+    hitFlash = false;
+    screen = AppScreen.playing;
+    notifyListeners();
+  }
+
+  /// Applies a successful `continue_token` consumable purchase.
+  void grantContinueToken() {
+    continueTokens++;
     notifyListeners();
   }
 

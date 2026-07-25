@@ -1,6 +1,7 @@
 ---
 name: revenuecat-purchase-flow
 description: Implement the RevenueCat purchase and restore flow. Use when the user asks to buy a package, purchase a subscription, fetch offerings, build paywall purchase logic, handle purchase errors, detect user cancelled, or restore previous purchases on iOS, Android, Kotlin Multiplatform, Flutter, or React Native.
+model: opus
 ---
 
 # revenuecat-purchase-flow: buy a package and restore purchases

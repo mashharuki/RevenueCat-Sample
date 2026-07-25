@@ -13,7 +13,7 @@ Future<List<Package>> currentPackages() async {
 
 ## Purchase a package
 
-`Purchases.purchasePackage` throws a `PlatformException` on failure. Use `PurchasesErrorHelper.getErrorCode(e)` to detect cancellation.
+`Purchases.purchasePackage` is **deprecated** as of recent `purchases_flutter` versions (confirmed on 10.4.3, where `flutter analyze` flags it with `deprecated_member_use`) — use `Purchases.purchase(PurchaseParams.package(pkg))` instead. Both throw a `PlatformException` on failure; use `PurchasesErrorHelper.getErrorCode(e)` to detect cancellation.
 
 ```dart
 import 'package:flutter/services.dart';
@@ -29,7 +29,7 @@ class Failed extends PurchaseOutcome {
 
 Future<PurchaseOutcome> buy(Package pkg) async {
   try {
-    await Purchases.purchasePackage(pkg);
+    await Purchases.purchase(PurchaseParams.package(pkg));
     // Do not unlock content here. A CustomerInfoUpdateListener flips the
     // gated UI (see revenuecat-entitlements-gate).
     return Purchased();
@@ -109,7 +109,7 @@ Expose this from a visible "Restore purchases" button on the paywall and/or sett
 ## Notes
 
 - `PurchasesErrorHelper.getErrorCode(e)` returns a `PurchasesErrorCode` enum. Compare with `==` against `PurchasesErrorCode.purchaseCancelledError` and friends. This is the supported way and survives plugin version bumps.
-- `Purchases.purchase(PurchaseParams.package(pkg))` is the newer overload and accepts promotional offers and other options. `purchasePackage(pkg)` remains the simplest call for the common case.
+- Prefer `Purchases.purchase(PurchaseParams.package(pkg))` over `purchasePackage(pkg)`. The latter is deprecated in current releases and `flutter analyze` will flag it; the former also accepts promotional offers and other options.
 - Do not read `PlatformException.code` strings directly. The underlying native error strings differ between iOS and Android.
 
 ## Verify

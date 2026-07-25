@@ -20,6 +20,10 @@ flutter pub get
 
 ### iOS target
 
+Check whether `ios/Podfile` exists first. Flutter 3.24+ resolves iOS plugins (including `purchases_flutter`) via **Swift Package Manager** by default and may not generate a Podfile at all — in that case there is no `pod install` step; the first `flutter run`/`flutter build ios` fetches the RevenueCat SPM packages automatically (you'll see `Fetching from https://github.com/RevenueCat/purchases-ios-spm...` in the build output).
+
+If `ios/Podfile` exists (CocoaPods-based project):
+
 ```bash
 cd ios && pod install && cd ..
 ```

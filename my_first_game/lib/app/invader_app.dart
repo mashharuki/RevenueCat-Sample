@@ -4,7 +4,9 @@ import 'package:my_first_game/theme/app_theme.dart';
 import 'package:my_first_game/ui/screens/game_over_screen.dart';
 import 'package:my_first_game/ui/screens/gameplay_screen.dart';
 import 'package:my_first_game/ui/screens/leaderboard_screen.dart';
+import 'package:my_first_game/ui/screens/paywall_screen.dart';
 import 'package:my_first_game/ui/screens/title_screen.dart';
+import 'package:my_first_game/ui/screens/weekly_challenge_screen.dart';
 
 class InvaderApp extends StatefulWidget {
   const InvaderApp({super.key});
@@ -29,6 +31,9 @@ class _InvaderAppState extends State<InvaderApp> {
               AppScreen.title => TitleScreen(
                   onStart: _session.startGame,
                   onShowLeaderboard: _session.showLeaderboard,
+                  onShowPaywall: _session.showPaywall,
+                  onShowWeeklyChallenge: _session.showWeeklyChallenge,
+                  hasWeeklyChallenge: _session.hasWeeklyChallenge,
                 ),
               AppScreen.playing || AppScreen.paused => GameplayScreen(
                   key: ValueKey(_session.runId),
@@ -36,7 +41,13 @@ class _InvaderAppState extends State<InvaderApp> {
                 ),
               AppScreen.gameOver => GameOverScreen(
                   result: _session.lastResult,
+                  continueTokens: _session.continueTokens,
                   onRetry: _session.restartGame,
+                  onContinue: _session.continueGame,
+                  onBuyContinueToken: () => _session.showPaywall(
+                    banner: 'コンティニュートークンを購入すると続きからプレイできます',
+                    returnTo: AppScreen.gameOver,
+                  ),
                   onShowLeaderboard: _session.showLeaderboard,
                   onHome: _session.goHome,
                 ),
@@ -44,6 +55,8 @@ class _InvaderAppState extends State<InvaderApp> {
                   rows: _session.leaderboardRows,
                   onBack: _session.backToTitle,
                 ),
+              AppScreen.paywall => PaywallScreen(session: _session),
+              AppScreen.weeklyChallenge => WeeklyChallengeScreen(onBack: _session.goHome),
             };
           },
         ),

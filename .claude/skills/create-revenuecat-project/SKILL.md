@@ -1,6 +1,7 @@
 ---
 name: create-revenuecat-project
 description: "Set up a complete RevenueCat project from scratch — creates apps, products, entitlements, offerings, and packages in the correct order. Use when the user wants to create a new RevenueCat project, configure in-app purchases, set up subscriptions or monetization, or bootstrap IAP infrastructure for iOS, Android, or Web."
+model: opus
 ---
 
 # RevenueCat Project Bootstrap
@@ -35,6 +36,8 @@ Store project_id for all subsequent calls
     - For web apps, `create-app` with type rc_billing
 
 3. Create Products (for each subscription/purchase): `create-product` tool
+
+3a. **Test Store apps only:** set a price for each product with the `create-product-prices` tool (e.g. `{amount_micros: 980000000, currency: "JPY"}` for ¥980 — `amount_micros` is always the price × 1,000,000 regardless of the currency's usual decimal places). Without this, the app builds and configures fine but `Purchases.getOfferings()` fails at runtime with "Error fetching offerings ... None of the Test Store products registered in the RevenueCat dashboard could be fetched." Real store apps (`app_store`/`play_store`) get their pricing from App Store Connect / Play Console instead — skip this step for those, and note that `create-product-prices` only works on `test_store` products.
 
 4. Create Entitlements (for each feature/access level): `create-entitlement` tool
 

@@ -5,14 +5,20 @@ import 'package:my_first_game/ui/widgets/neon_button.dart';
 
 class GameOverScreen extends StatelessWidget {
   final GameResult result;
+  final int continueTokens;
   final VoidCallback onRetry;
+  final VoidCallback onContinue;
+  final VoidCallback onBuyContinueToken;
   final VoidCallback onShowLeaderboard;
   final VoidCallback onHome;
 
   const GameOverScreen({
     super.key,
     required this.result,
+    required this.continueTokens,
     required this.onRetry,
+    required this.onContinue,
+    required this.onBuyContinueToken,
     required this.onShowLeaderboard,
     required this.onHome,
   });
@@ -61,6 +67,17 @@ class GameOverScreen extends StatelessWidget {
               width: 260,
               child: Column(
                 children: [
+                  if (continueTokens > 0) ...[
+                    NeonButton(label: '▶ CONTINUE (残り$continueTokens個)', onPressed: onContinue),
+                    const SizedBox(height: 12),
+                  ] else ...[
+                    NeonButton(
+                      label: '🪙 コンティニュートークンを購入',
+                      onPressed: onBuyContinueToken,
+                      primary: false,
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   NeonButton(label: 'RETRY', onPressed: onRetry),
                   const SizedBox(height: 12),
                   NeonButton(label: 'RANKING', onPressed: onShowLeaderboard, primary: false),

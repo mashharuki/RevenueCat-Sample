@@ -8,7 +8,10 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: GameOverScreen(
         result: const GameResult(score: 1234, wave: 5),
+        continueTokens: 0,
         onRetry: () {},
+        onContinue: () {},
+        onBuyContinueToken: () {},
         onShowLeaderboard: () {},
         onHome: () {},
       ),
@@ -21,7 +24,10 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: GameOverScreen(
         result: const GameResult(score: 1234, wave: 5, isNewHigh: true),
+        continueTokens: 0,
         onRetry: () {},
+        onContinue: () {},
+        onBuyContinueToken: () {},
         onShowLeaderboard: () {},
         onHome: () {},
       ),
@@ -34,12 +40,51 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: GameOverScreen(
         result: const GameResult(score: 0, wave: 1),
+        continueTokens: 0,
         onRetry: () => retried = true,
+        onContinue: () {},
+        onBuyContinueToken: () {},
         onShowLeaderboard: () {},
         onHome: () {},
       ),
     ));
     await tester.tap(find.text('RETRY'));
     expect(retried, true);
+  });
+
+  testWidgets('should show a buy-token button when continueTokens is 0', (tester) async {
+    var buyTapped = false;
+    await tester.pumpWidget(MaterialApp(
+      home: GameOverScreen(
+        result: const GameResult(score: 0, wave: 1),
+        continueTokens: 0,
+        onRetry: () {},
+        onContinue: () {},
+        onBuyContinueToken: () => buyTapped = true,
+        onShowLeaderboard: () {},
+        onHome: () {},
+      ),
+    ));
+    expect(find.textContaining('コンティニュートークンを購入'), findsOneWidget);
+    await tester.tap(find.textContaining('コンティニュートークンを購入'));
+    expect(buyTapped, true);
+  });
+
+  testWidgets('should call onContinue when CONTINUE is tapped and tokens remain', (tester) async {
+    var continued = false;
+    await tester.pumpWidget(MaterialApp(
+      home: GameOverScreen(
+        result: const GameResult(score: 0, wave: 1),
+        continueTokens: 2,
+        onRetry: () {},
+        onContinue: () => continued = true,
+        onBuyContinueToken: () {},
+        onShowLeaderboard: () {},
+        onHome: () {},
+      ),
+    ));
+    expect(find.textContaining('CONTINUE'), findsOneWidget);
+    await tester.tap(find.textContaining('CONTINUE'));
+    expect(continued, true);
   });
 }

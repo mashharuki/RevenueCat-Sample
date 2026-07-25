@@ -1,6 +1,7 @@
 ---
 name: integrate-revenuecat
 description: End-to-end RevenueCat integration — sets up the dashboard side via the RevenueCat MCP (project, app, public API key) and installs/configures the Purchases SDK in the app. Use when the user asks to add RevenueCat, integrate Purchases, install the RevenueCat SDK, set up a RevenueCat API key, configure Purchases on launch, or set up a brand new RevenueCat integration on iOS, Android, Kotlin Multiplatform, Flutter, or React Native.
+model: opus
 ---
 
 # integrate-revenuecat: end-to-end RevenueCat integration

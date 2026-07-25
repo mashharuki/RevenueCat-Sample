@@ -5,11 +5,17 @@ import 'package:my_first_game/ui/widgets/neon_button.dart';
 class TitleScreen extends StatelessWidget {
   final VoidCallback onStart;
   final VoidCallback onShowLeaderboard;
+  final VoidCallback onShowPaywall;
+  final VoidCallback onShowWeeklyChallenge;
+  final bool hasWeeklyChallenge;
 
   const TitleScreen({
     super.key,
     required this.onStart,
     required this.onShowLeaderboard,
+    required this.onShowPaywall,
+    required this.onShowWeeklyChallenge,
+    required this.hasWeeklyChallenge,
   });
 
   @override
@@ -39,6 +45,14 @@ class TitleScreen extends StatelessWidget {
                   NeonButton(label: '▶ START', onPressed: onStart),
                   const SizedBox(height: 16),
                   NeonButton(label: '🏆 RANKING', onPressed: onShowLeaderboard, primary: false),
+                  const SizedBox(height: 16),
+                  NeonButton(label: '⭐ UPGRADE', onPressed: onShowPaywall, primary: false),
+                  const SizedBox(height: 16),
+                  NeonButton(
+                    label: hasWeeklyChallenge ? '🗓 WEEKLY CHALLENGE' : '🔒 WEEKLY CHALLENGE',
+                    onPressed: onShowWeeklyChallenge,
+                    primary: false,
+                  ),
                 ],
               ),
             ),

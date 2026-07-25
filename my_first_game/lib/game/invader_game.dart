@@ -96,6 +96,19 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     session.updateHud(bossActive: false, wave: wave);
   }
 
+  /// Advances to [wave], unless it is beyond [GameSession.freeWaveLimit] for
+  /// a non-premium session, in which case the run ends at the paywall
+  /// instead. Used by [registerHit]/[registerBossHit] when a wave is
+  /// cleared; direct [spawnWave] calls (e.g. loading a specific wave for
+  /// testing) intentionally bypass this gate.
+  void _advanceToWave(int wave) {
+    if (!session.isPremiumUnlocked && wave > GameSession.freeWaveLimit) {
+      session.reachWaveLimit();
+      return;
+    }
+    spawnWave(wave);
+  }
+
   /// Removes [enemy], awards its points, spawns hit particles, and triggers
   /// the next wave once the current wave has been fully cleared.
   void registerHit(EnemyComponent enemy) {
@@ -107,7 +120,7 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     if (liveEnemies.isEmpty) {
       Future.delayed(const Duration(milliseconds: 1300), () {
         if (_stopped) return;
-        spawnWave(session.wave + 1);
+        _advanceToWave(session.wave + 1);
       });
     }
   }
@@ -126,7 +139,7 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
       boss = null;
       Future.delayed(const Duration(milliseconds: 1300), () {
         if (_stopped) return;
-        spawnWave(session.wave + 1);
+        _advanceToWave(session.wave + 1);
       });
     }
   }
