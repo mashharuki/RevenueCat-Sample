@@ -33,7 +33,7 @@
   - _Requirements: 3.3, 4.6_
   - _Depends: 1.1, 1.3_
 
-- [ ] 1.6 iOSクライアント(memo_app/)プロジェクトの初期化(XcodeGen)
+- [x] 1.6 iOSクライアント(memo_app/)プロジェクトの初期化(XcodeGen)
   - `my_first_swift_project`と同階層に`memo_app/`を作成し、`project.yml`(iOS 17+ deployment target)を定義する
   - `xcodegen generate`で`memo_app.xcodeproj`を生成する
   - 観測可能な完了状態: 生成された空のiOSアプリがシミュレータでビルド・起動できる

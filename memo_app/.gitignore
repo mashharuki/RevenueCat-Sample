@@ -1,2 +1,13 @@
 GoogleService-Info.plist
 firebase.json
+
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+/build
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+build_out/
