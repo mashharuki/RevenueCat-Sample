@@ -82,7 +82,7 @@
   - _Boundary: PurchaseService (client)_
   - _Depends: 1.1, 1.7_
 
-- [ ] 3.2 (P) RevenueCatClient(サーバー)実装
+- [x] 3.2 (P) RevenueCatClient(サーバー)実装
   - `GET https://api.revenuecat.com/v1/subscribers/{uid}`をシークレットAPIキーで呼び出すクライアントを実装する
   - レスポンスを`{ hasActiveEntitlement: boolean }`へ正規化し、404は「エンタイトルメントなし」として扱う
   - 観測可能な完了状態: 有効なエンタイトルメントを持つ既知のテストユーザーIDで`true`、未知のユーザーIDで`false`が返る
