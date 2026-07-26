@@ -1,0 +1,22 @@
+{
+  "feature_name": "memo-app",
+  "created_at": "2026-07-26T05:16:09Z",
+  "updated_at": "2026-07-26T06:05:28Z",
+  "language": "ja",
+  "phase": "tasks-generated",
+  "approvals": {
+    "requirements": {
+      "generated": true,
+      "approved": true
+    },
+    "design": {
+      "generated": true,
+      "approved": true
+    },
+    "tasks": {
+      "generated": true,
+      "approved": true
+    }
+  },
+  "ready_for_implementation": false
+}
