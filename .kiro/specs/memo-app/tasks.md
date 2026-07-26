@@ -1,10 +1,10 @@
 # Implementation Plan
 
 - [ ] 1. Foundation: 外部サービスとプロジェクトの初期セットアップ
-- [ ] 1.1 RevenueCatプロジェクト/アプリ/エンタイトルメントのセットアップ
-  - 新規iOSアプリをRevenueCatダッシュボード(またはMCP経由)に作成し、`premium`エンタイトルメントと課金商品・オファリングを設定する
+- [x] 1.1 RevenueCatプロジェクト/アプリ/エンタイトルメントのセットアップ
+  - 新規iOSアプリをRevenueCatダッシュボード(またはMCP経由)に作成し、`memo_premium`エンタイトルメントと課金商品・オファリングを設定する
   - RevenueCat Test Store(開発用の疑似ストア)を有効化し、テスト用APIキーを取得する
-  - 観測可能な完了状態: RevenueCatダッシュボードで対象アプリのTest Store用public API keyと`premium`エンタイトルメントが存在する
+  - 観測可能な完了状態: RevenueCatダッシュボードで`memo_premium`エンタイトルメントに`memo_premium_monthly`(P1M, ¥490)が紐付き、`memo_app`オファリングの`$rc_monthly`パッケージから同商品を購入できる状態になっている(`get-products-from-entitlement`・`list-packages`で確認済み)
   - _Requirements: 4.1_
 
 - [ ] 1.2 Firebaseプロジェクトの作成とGoogle Sign-Inプロバイダの有効化
@@ -209,3 +209,10 @@
   - 観測可能な完了状態: 上記3つのフローがすべて実際の画面遷移として確認できる
   - _Requirements: 1.1, 1.2, 3.2, 4.1, 4.2, 4.4, 4.5_
   - _Depends: 7.1, 7.2_
+
+## Implementation Notes
+
+- **1.1**: RevenueCatの`create-app`はtype `test_store`を作成できない(project作成時に自動生成される1つのTest Storeアプリのみが存在する)。そのため`memo_app`は新しいTest Storeアプリを作らず、UNCHAINプロジェクトの既存Test Storeアプリ(`app88c7d2a3c7`)上に、BreakoutGameとは別の識別子で商品・エンタイトルメント・オファリングを作成した。
+- **1.1**: エンタイトルメント識別子は`premium`ではなく`memo_premium`を使用(`premium`は既にBreakoutGameが使用中のため)。3.1(PurchaseServiceクライアント)・3.2(RevenueCatClientサーバー、`RC_ENTITLEMENT_ID`環境変数)は`memo_premium`を参照すること。
+- **1.1**: `default`/`is_current: true`のオファリングは既にBreakoutGameが使用中のため、memo_app用に新規オファリング`memo_app`(`is_current: false`)を作成した。3.1のオファリング取得、6.3のPaywallViewは`Purchases.shared.getOfferings()`の`.current`ではなく、識別子`memo_app`で明示的に取得すること。パッケージ識別子は`$rc_monthly`、商品`memo_premium_monthly`(P1M, ¥490 JPY)。
+- **1.1**: Test Store公開APIキーはBreakoutGameと同一(`test_sddznTcTAozgeMzKYctdrgEfZZq`、UNCHAINプロジェクト内で1つのTest Storeアプリを全アプリが共有するため)。1.7・3.1で`Purchases.configure`に使用する。
