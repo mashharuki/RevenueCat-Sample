@@ -13,6 +13,30 @@
       "skillPath": "skills/durable-objects/SKILL.md",
       "computedHash": "72efa2277fea08f43b393c74abaacc9fa575e20bc63bdc9d46829b8a39352852"
     },
+    "firebase-auth-basics": {
+      "source": "firebase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/firebase-auth-basics/SKILL.md",
+      "computedHash": "f4850f578bacdda96cacaa57b5e1121ec047e99bf7d389033042b1975af91040"
+    },
+    "firebase-basics": {
+      "source": "firebase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/firebase-basics/SKILL.md",
+      "computedHash": "8210ee53231b8299df100561d4ef776d39a293fd54403008bd738c65a856d54f"
+    },
+    "firebase-crashlytics": {
+      "source": "firebase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/firebase-crashlytics/SKILL.md",
+      "computedHash": "62a51efdc3240eed27697e14bbb8a29ebb8c94530fd3a1c851e747b90804d69b"
+    },
+    "firebase-remote-config-basics": {
+      "source": "firebase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/firebase-remote-config-basics/SKILL.md",
+      "computedHash": "d5e9090dec35e050be958b72b672e39bd931014ebb311bac3a46f542fc04e10d"
+    },
     "flutter-animating-apps": {
       "source": "nexu-io/open-design",
       "sourceType": "github",
@@ -54,6 +78,12 @@
       "sourceType": "github",
       "skillPath": "skills/wrangler/SKILL.md",
       "computedHash": "11edeb37eedb91deedde694b2bb1cc4ff4e8b5a8f1836c217a8c871fe39abcb5"
+    },
+    "xcode-project-setup": {
+      "source": "firebase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/xcode-project-setup/SKILL.md",
+      "computedHash": "e7ddb878c879eda7a3e462cebebcebb827d90836e4cb8a11b513e54403176e7d"
     }
   }
 }
