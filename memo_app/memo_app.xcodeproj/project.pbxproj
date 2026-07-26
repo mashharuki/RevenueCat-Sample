@@ -21,6 +21,7 @@
 		A44A8AC8203E14F0CCAD5D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */; };
 		AF0BA267D02A60A974A70A38 /* MemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446B21F0D22A4C6855480823 /* MemoListView.swift */; };
 		C2B84953DA84FEAD82BEEC5F /* MemoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */; };
+		C8112A20B752E27FB56B71E8 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4137B5B7B3B2F841D45A1C5A /* PaywallView.swift */; };
 		E7134356EAE7403A6C1FDD1C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB420A5B31165391D1FBE22 /* Memo.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		28E858F6AF1ACE780A46D212 /* MemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewModel.swift; sourceTree = "<group>"; };
 		2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoApp.swift; sourceTree = "<group>"; };
 		2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
+		4137B5B7B3B2F841D45A1C5A /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		446B21F0D22A4C6855480823 /* MemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListView.swift; sourceTree = "<group>"; };
 		455549FE8FAD2C0019183182 /* MemoApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3EDECB2877C16D7DC651FF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			children = (
 				B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */,
 				446B21F0D22A4C6855480823 /* MemoListView.swift */,
+				4137B5B7B3B2F841D45A1C5A /* PaywallView.swift */,
 				B0DFD97EC265B51FD6068B4E /* SignInView.swift */,
 			);
 			path = Views;
@@ -216,6 +219,7 @@
 				C2B84953DA84FEAD82BEEC5F /* MemoEditView.swift in Sources */,
 				AF0BA267D02A60A974A70A38 /* MemoListView.swift in Sources */,
 				71DB80FB7189F1519196EA6E /* MemoListViewModel.swift in Sources */,
+				C8112A20B752E27FB56B71E8 /* PaywallView.swift in Sources */,
 				9C35FBBD89398849C902E09A /* PurchaseService.swift in Sources */,
 				71EC79004B1FEBF1E79C449B /* SignInView.swift in Sources */,
 			);
