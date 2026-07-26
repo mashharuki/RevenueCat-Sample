@@ -22,41 +22,45 @@ class _InvaderAppState extends State<InvaderApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: AppTheme.background),
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: AppTheme.background,
+      ),
       home: Scaffold(
         body: AnimatedBuilder(
           animation: _session,
           builder: (context, _) {
             return switch (_session.screen) {
               AppScreen.title => TitleScreen(
-                  onStart: _session.startGame,
-                  onShowLeaderboard: _session.showLeaderboard,
-                  onShowPaywall: _session.showPaywall,
-                  onShowWeeklyChallenge: _session.showWeeklyChallenge,
-                  hasWeeklyChallenge: _session.hasWeeklyChallenge,
-                ),
+                onStart: _session.startGame,
+                onShowLeaderboard: _session.showLeaderboard,
+                onShowPaywall: _session.showPaywall,
+                onShowWeeklyChallenge: _session.showWeeklyChallenge,
+                hasWeeklyChallenge: _session.hasWeeklyChallenge,
+              ),
               AppScreen.playing || AppScreen.paused => GameplayScreen(
-                  key: ValueKey(_session.runId),
-                  session: _session,
-                ),
+                key: ValueKey(_session.runId),
+                session: _session,
+              ),
               AppScreen.gameOver => GameOverScreen(
-                  result: _session.lastResult,
-                  continueTokens: _session.continueTokens,
-                  onRetry: _session.restartGame,
-                  onContinue: _session.continueGame,
-                  onBuyContinueToken: () => _session.showPaywall(
-                    banner: 'コンティニュートークンを購入すると続きからプレイできます',
-                    returnTo: AppScreen.gameOver,
-                  ),
-                  onShowLeaderboard: _session.showLeaderboard,
-                  onHome: _session.goHome,
+                result: _session.lastResult,
+                continueTokens: _session.continueTokens,
+                onRetry: _session.restartGame,
+                onContinue: _session.continueGame,
+                onBuyContinueToken: () => _session.showPaywall(
+                  banner: 'コンティニュートークンを購入すると続きからプレイできます',
+                  returnTo: AppScreen.gameOver,
                 ),
+                onShowLeaderboard: _session.showLeaderboard,
+                onHome: _session.goHome,
+              ),
               AppScreen.leaderboard => LeaderboardScreen(
-                  rows: _session.leaderboardRows,
-                  onBack: _session.backToTitle,
-                ),
+                rows: _session.leaderboardRows,
+                onBack: _session.backToTitle,
+              ),
               AppScreen.paywall => PaywallScreen(session: _session),
-              AppScreen.weeklyChallenge => WeeklyChallengeScreen(onBack: _session.goHome),
+              AppScreen.weeklyChallenge => WeeklyChallengeScreen(
+                onBack: _session.goHome,
+              ),
             };
           },
         ),

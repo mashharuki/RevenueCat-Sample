@@ -56,7 +56,9 @@ enum PurchaseService {
         do {
             let params = PurchaseParams.Builder(package: package).build()
             let result = try await Purchases.shared.purchase(params)
-            if result.userCancelled { return .cancelled }
+            if result.userCancelled {
+                return .cancelled
+            }
             return .purchased
         } catch {
             let nsError = error as NSError

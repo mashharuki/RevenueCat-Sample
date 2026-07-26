@@ -29,8 +29,8 @@ enum BrickLayout {
         let startY = sceneSize.height - topMargin
 
         var placements: [BrickPlacement] = []
-        for row in 0..<rowCount {
-            for column in 0..<columns {
+        for row in 0 ..< rowCount {
+            for column in 0 ..< columns {
                 let x = startX + CGFloat(column) * (brickSize.width + spacing)
                 let y = startY - CGFloat(row) * (brickSize.height + spacing)
                 placements.append(BrickPlacement(position: CGPoint(x: x, y: y), row: row))

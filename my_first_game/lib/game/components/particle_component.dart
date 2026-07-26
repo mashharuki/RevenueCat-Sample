@@ -12,8 +12,8 @@ class ParticleComponent extends PositionComponent {
     required this.velocity,
     required this.color,
     required this.life,
-  })  : maxLife = life,
-        super(position: position, size: Vector2.all(4), anchor: Anchor.center);
+  }) : maxLife = life,
+       super(position: position, size: Vector2.all(4), anchor: Anchor.center);
 
   bool get isExpired => life <= 0;
 
@@ -26,7 +26,8 @@ class ParticleComponent extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    final paint = Paint()..color = color.withValues(alpha: (life / maxLife).clamp(0, 1));
+    final paint = Paint()
+      ..color = color.withValues(alpha: (life / maxLife).clamp(0, 1));
     canvas.drawCircle(Offset.zero, 2.2, paint);
   }
 }

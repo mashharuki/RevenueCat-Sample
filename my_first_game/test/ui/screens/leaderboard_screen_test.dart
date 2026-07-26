@@ -9,9 +9,11 @@ void main() {
       LeaderboardRow(rank: 1, name: 'ACE', score: 9800, isPlayer: false),
       LeaderboardRow(rank: 2, name: 'YOU', score: 500, isPlayer: true),
     ];
-    await tester.pumpWidget(const MaterialApp(
-      home: LeaderboardScreen(rows: rows, onBack: _noop),
-    ));
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: LeaderboardScreen(rows: rows, onBack: _noop),
+      ),
+    );
     expect(find.text('ACE'), findsOneWidget);
     expect(find.text('YOU'), findsOneWidget);
   });

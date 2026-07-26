@@ -56,9 +56,12 @@ class _GameplayScreenState extends State<GameplayScreen> {
                     GameWidget(game: _game),
                     if (widget.session.hitFlash)
                       IgnorePointer(
-                        child: Container(color: AppTheme.danger.withValues(alpha: 0.2)),
+                        child: Container(
+                          color: AppTheme.danger.withValues(alpha: 0.2),
+                        ),
                       ),
-                    if (widget.session.screen == AppScreen.paused) _PauseOverlay(session: widget.session),
+                    if (widget.session.screen == AppScreen.paused)
+                      _PauseOverlay(session: widget.session),
                   ],
                 ),
               ),
@@ -98,13 +101,24 @@ class _PauseOverlay extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('PAUSED', style: AppTheme.orbitron(fontSize: 22, letterSpacing: 4)),
+            Text(
+              'PAUSED',
+              style: AppTheme.orbitron(fontSize: 22, letterSpacing: 4),
+            ),
             const SizedBox(height: 18),
             NeonButton(label: 'RESUME', onPressed: session.resumeGame),
             const SizedBox(height: 12),
-            NeonButton(label: 'RESTART', onPressed: session.restartGame, primary: false),
+            NeonButton(
+              label: 'RESTART',
+              onPressed: session.restartGame,
+              primary: false,
+            ),
             const SizedBox(height: 12),
-            NeonButton(label: 'HOME', onPressed: session.goHome, primary: false),
+            NeonButton(
+              label: 'HOME',
+              onPressed: session.goHome,
+              primary: false,
+            ),
           ],
         ),
       ),

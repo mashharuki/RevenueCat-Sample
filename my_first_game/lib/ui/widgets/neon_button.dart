@@ -22,9 +22,13 @@ class NeonButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: primary ? AppTheme.cyan : Colors.transparent,
           foregroundColor: primary ? AppTheme.background : AppTheme.cyan,
-          side: primary ? BorderSide.none : const BorderSide(color: AppTheme.cyan),
+          side: primary
+              ? BorderSide.none
+              : const BorderSide(color: AppTheme.cyan),
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
         child: Text(label, style: AppTheme.orbitron(fontSize: 14)),
       ),

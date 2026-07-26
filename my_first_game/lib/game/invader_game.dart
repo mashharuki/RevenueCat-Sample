@@ -83,7 +83,12 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
         ..shootAtMs = currentTime() * 1000;
       boss = newBoss;
       add(newBoss);
-      session.updateHud(bossActive: true, bossHp: hp, bossMaxHp: hp, wave: wave);
+      session.updateHud(
+        bossActive: true,
+        bossHp: hp,
+        bossMaxHp: hp,
+        wave: wave,
+      );
       return;
     }
 
@@ -163,12 +168,14 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
         (_random.nextDouble() - 0.5) * 6,
         (_random.nextDouble() - 0.5) * 6,
       );
-      add(ParticleComponent(
-        position: origin.clone(),
-        velocity: velocity,
-        color: color,
-        life: 26,
-      ));
+      add(
+        ParticleComponent(
+          position: origin.clone(),
+          velocity: velocity,
+          color: color,
+          life: 26,
+        ),
+      );
     }
   }
 
@@ -178,11 +185,13 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     lastShotMs = nowMs;
     final p = player;
     if (p == null) return;
-    add(BulletComponent(
-      position: Vector2(p.position.x + p.size.x / 2 - 1.5, p.position.y - 8),
-      velocityY: -9,
-      canvasHeight: canvasHeight,
-    ));
+    add(
+      BulletComponent(
+        position: Vector2(p.position.x + p.size.x / 2 - 1.5, p.position.y - 8),
+        velocityY: -9,
+        canvasHeight: canvasHeight,
+      ),
+    );
   }
 
   @override
@@ -212,7 +221,8 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     var hitEdge = false;
     for (final enemy in enemies) {
       enemy.position.x += enemySpeed * enemyDirection * dt * 60;
-      if (enemy.position.x < 8 || enemy.position.x + enemy.size.x > canvasWidth - 8) {
+      if (enemy.position.x < 8 ||
+          enemy.position.x + enemy.size.x > canvasWidth - 8) {
         hitEdge = true;
       }
     }
@@ -233,19 +243,24 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
     if (nowMs - enemyShotAtMs > shotInterval) {
       enemyShotAtMs = nowMs;
       final shooter = enemies[_random.nextInt(enemies.length)];
-      add(BulletComponent(
-        position: Vector2(
-          shooter.position.x + shooter.size.x / 2,
-          shooter.position.y + shooter.size.y,
+      add(
+        BulletComponent(
+          position: Vector2(
+            shooter.position.x + shooter.size.x / 2,
+            shooter.position.y + shooter.size.y,
+          ),
+          velocityY: 4 + session.wave * 0.08,
+          canvasHeight: canvasHeight,
+          isEnemy: true,
         ),
-        velocityY: 4 + session.wave * 0.08,
-        canvasHeight: canvasHeight,
-        isEnemy: true,
-      ));
+      );
     }
 
-    final lowestY = enemies.map((e) => e.position.y + e.size.y).reduce(math.max);
-    if (lowestY >= (player?.position.y ?? canvasHeight) - 14 && !_gameOverTriggered) {
+    final lowestY = enemies
+        .map((e) => e.position.y + e.size.y)
+        .reduce(math.max);
+    if (lowestY >= (player?.position.y ?? canvasHeight) - 14 &&
+        !_gameOverTriggered) {
       _gameOverTriggered = true;
       session.endGame(finalScore: session.score, finalWave: session.wave);
       return;
@@ -269,18 +284,23 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
       final centerX = activeBoss.position.x + activeBoss.size.x / 2;
       final bottomY = activeBoss.position.y + activeBoss.size.y;
       for (final offsetX in [0.0, -16.0, 16.0]) {
-        add(BulletComponent(
-          position: Vector2(centerX + offsetX, bottomY),
-          velocityY: 4.5,
-          canvasHeight: canvasHeight,
-          isEnemy: true,
-        ));
+        add(
+          BulletComponent(
+            position: Vector2(centerX + offsetX, bottomY),
+            velocityY: 4.5,
+            canvasHeight: canvasHeight,
+            isEnemy: true,
+          ),
+        );
       }
     }
   }
 
   void _resolveCollisions() {
-    final bullets = children.whereType<BulletComponent>().where((b) => !b.isEnemy).toList();
+    final bullets = children
+        .whereType<BulletComponent>()
+        .where((b) => !b.isEnemy)
+        .toList();
     for (final bullet in bullets) {
       final activeBoss = boss;
       if (activeBoss != null) {
@@ -317,7 +337,10 @@ class InvaderGame extends FlameGame with DragCallbacks, TapCallbacks {
       }
     }
 
-    final enemyBullets = children.whereType<BulletComponent>().where((b) => b.isEnemy).toList();
+    final enemyBullets = children
+        .whereType<BulletComponent>()
+        .where((b) => b.isEnemy)
+        .toList();
     final p = player;
     if (p == null) return;
     for (final bullet in enemyBullets) {

@@ -23,7 +23,8 @@ class BulletComponent extends PositionComponent {
     this.color = const Color(0xFFD6F8FF),
   }) : super(position: position, size: Vector2(3, 14), anchor: Anchor.topLeft);
 
-  bool get isOffscreen => isEnemy ? position.y > canvasHeight + 20 : position.y < -20;
+  bool get isOffscreen =>
+      isEnemy ? position.y > canvasHeight + 20 : position.y < -20;
 
   @override
   void update(double dt) {

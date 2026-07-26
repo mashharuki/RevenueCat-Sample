@@ -10,18 +10,18 @@ class EnemyComponent extends PixelSpriteComponent {
   bool alive = true;
 
   EnemyComponent({required EnemySpec spec})
-      : type = spec.type,
-        points = spec.type.points,
-        super(
-          sprite: _spriteFor(spec.type),
-          pixelSize: 4,
-          color: spec.type.color,
-          position: Vector2(spec.x, spec.y),
-        );
+    : type = spec.type,
+      points = spec.type.points,
+      super(
+        sprite: _spriteFor(spec.type),
+        pixelSize: 4,
+        color: spec.type.color,
+        position: Vector2(spec.x, spec.y),
+      );
 
   static PixelSprite _spriteFor(EnemyType type) => switch (type) {
-        EnemyType.alpha => InvaderSprites.enemyAlpha,
-        EnemyType.beta => InvaderSprites.enemyBeta,
-        EnemyType.gamma => InvaderSprites.enemyGamma,
-      };
+    EnemyType.alpha => InvaderSprites.enemyAlpha,
+    EnemyType.beta => InvaderSprites.enemyBeta,
+    EnemyType.gamma => InvaderSprites.enemyGamma,
+  };
 }

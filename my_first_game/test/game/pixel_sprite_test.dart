@@ -11,11 +11,7 @@ void main() {
   test('should return one offset per filled cell in row-major order', () {
     const sprite = PixelSprite(['010', '101']);
     final cells = sprite.filledCells();
-    expect(cells, [
-      const Offset(1, 0),
-      const Offset(0, 1),
-      const Offset(2, 1),
-    ]);
+    expect(cells, [const Offset(1, 0), const Offset(0, 1), const Offset(2, 1)]);
   });
 
   test('should expose the five prototype sprites with correct sizes', () {

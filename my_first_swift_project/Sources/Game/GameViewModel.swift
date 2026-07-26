@@ -95,7 +95,7 @@ final class GameViewModel: ObservableObject {
             markAsWon()
             return .finalWin
         }
-        if !isPremiumUnlocked && currentLevel >= GameViewModel.freeLevelLimit {
+        if !isPremiumUnlocked, currentLevel >= GameViewModel.freeLevelLimit {
             showPaywall(banner: "レベル\(GameViewModel.freeLevelLimit + 1)以降は全解放パックで遊べます", returnTo: .menu)
             return .paywall
         }

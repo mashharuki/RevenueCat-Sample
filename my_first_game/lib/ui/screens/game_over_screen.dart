@@ -31,7 +31,10 @@ class GameOverScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('GAME OVER', style: AppTheme.orbitron(fontSize: 34, color: AppTheme.danger)),
+            Text(
+              'GAME OVER',
+              style: AppTheme.orbitron(fontSize: 34, color: AppTheme.danger),
+            ),
             const SizedBox(height: 26),
             Container(
               width: 260,
@@ -42,20 +45,41 @@ class GameOverScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text('FINAL SCORE', style: AppTheme.rajdhani(fontSize: 10, color: Colors.white38)),
-                  Text(result.score.toString(), style: AppTheme.orbitron(fontSize: 36, color: AppTheme.cyan)),
-                  Text('到達ウェーブ ${result.wave}', style: AppTheme.rajdhani(fontSize: 12)),
+                  Text(
+                    'FINAL SCORE',
+                    style: AppTheme.rajdhani(
+                      fontSize: 10,
+                      color: Colors.white38,
+                    ),
+                  ),
+                  Text(
+                    result.score.toString(),
+                    style: AppTheme.orbitron(
+                      fontSize: 36,
+                      color: AppTheme.cyan,
+                    ),
+                  ),
+                  Text(
+                    '到達ウェーブ ${result.wave}',
+                    style: AppTheme.rajdhani(fontSize: 12),
+                  ),
                   if (result.isNewHigh) ...[
                     const SizedBox(height: 12),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0x26FFB84D),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         'NEW RECORD',
-                        style: AppTheme.orbitron(fontSize: 10, color: AppTheme.orange),
+                        style: AppTheme.orbitron(
+                          fontSize: 10,
+                          color: AppTheme.orange,
+                        ),
                       ),
                     ),
                   ],
@@ -68,7 +92,10 @@ class GameOverScreen extends StatelessWidget {
               child: Column(
                 children: [
                   if (continueTokens > 0) ...[
-                    NeonButton(label: '▶ CONTINUE (残り$continueTokens個)', onPressed: onContinue),
+                    NeonButton(
+                      label: '▶ CONTINUE (残り$continueTokens個)',
+                      onPressed: onContinue,
+                    ),
                     const SizedBox(height: 12),
                   ] else ...[
                     NeonButton(
@@ -80,7 +107,11 @@ class GameOverScreen extends StatelessWidget {
                   ],
                   NeonButton(label: 'RETRY', onPressed: onRetry),
                   const SizedBox(height: 12),
-                  NeonButton(label: 'RANKING', onPressed: onShowLeaderboard, primary: false),
+                  NeonButton(
+                    label: 'RANKING',
+                    onPressed: onShowLeaderboard,
+                    primary: false,
+                  ),
                   const SizedBox(height: 12),
                   NeonButton(label: 'HOME', onPressed: onHome, primary: false),
                 ],

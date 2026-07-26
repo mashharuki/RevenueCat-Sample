@@ -39,11 +39,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         super.init(size: size)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMove(to view: SKView) {
+    override func didMove(to _: SKView) {
         backgroundColor = .black
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -164,17 +165,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func launchBall() {
         guard isWaitingForLaunch, let ball = balls.first else { return }
         isWaitingForLaunch = false
-        let randomDx = CGFloat.random(in: -60...60)
+        let randomDx = CGFloat.random(in: -60 ... 60)
         ball.physicsBody?.velocity = CGVector(dx: randomDx, dy: GameScene.launchSpeed)
     }
 
     // MARK: - Input
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         movePaddle(with: touches)
     }
 
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {
         movePaddle(with: touches)
     }
 
@@ -235,7 +236,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Power-ups
 
     private func maybeDropPowerUp(from position: CGPoint) {
-        guard Double.random(in: 0...1) < GameScene.powerUpDropChance, let type = PowerUpType.allCases.randomElement() else { return }
+        guard Double.random(in: 0 ... 1) < GameScene.powerUpDropChance, let type = PowerUpType.allCases.randomElement() else { return }
         let capsule = makePowerUpCapsule(type: type, at: position)
         addChild(capsule)
         activePowerUps.append(capsule)
@@ -256,9 +257,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func color(for type: PowerUpType) -> SKColor {
         switch type {
-        case .multiBall: return .systemPurple
-        case .paddleGrow: return .systemTeal
-        case .laser: return .systemPink
+        case .multiBall: .systemPurple
+        case .paddleGrow: .systemTeal
+        case .laser: .systemPink
         }
     }
 
@@ -359,8 +360,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func body(_ a: SKPhysicsBody, _ b: SKPhysicsBody, matching category: UInt32) -> SKPhysicsBody? {
-        if a.categoryBitMask == category { return a }
-        if b.categoryBitMask == category { return b }
+        if a.categoryBitMask == category {
+            return a
+        }
+        if b.categoryBitMask == category {
+            return b
+        }
         return nil
     }
 

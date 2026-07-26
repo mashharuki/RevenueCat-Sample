@@ -11,10 +11,10 @@ class BossComponent extends PixelSpriteComponent {
   double shootAtMs = 0;
 
   BossComponent({required this.hp, required this.maxHp})
-      : super(
-          sprite: InvaderSprites.boss,
-          pixelSize: 4,
-          color: AppTheme.purple,
-          position: Vector2(0, 70),
-        );
+    : super(
+        sprite: InvaderSprites.boss,
+        pixelSize: 4,
+        color: AppTheme.purple,
+        position: Vector2(0, 70),
+      );
 }

@@ -7,9 +7,9 @@ enum PowerUpType: CaseIterable, Hashable {
 
     var displayName: String {
         switch self {
-        case .multiBall: return "Multi-Ball"
-        case .paddleGrow: return "Paddle+"
-        case .laser: return "Laser"
+        case .multiBall: "Multi-Ball"
+        case .paddleGrow: "Paddle+"
+        case .laser: "Laser"
         }
     }
 }

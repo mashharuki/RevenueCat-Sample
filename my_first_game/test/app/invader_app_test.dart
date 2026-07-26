@@ -7,10 +7,13 @@ void main() {
     expect(find.text('INVADERS'), findsOneWidget);
   });
 
-  testWidgets('should navigate to the leaderboard screen from the title screen', (tester) async {
-    await tester.pumpWidget(const InvaderApp());
-    await tester.tap(find.text('🏆 RANKING'));
-    await tester.pump();
-    expect(find.text('RANKING'), findsOneWidget);
-  });
+  testWidgets(
+    'should navigate to the leaderboard screen from the title screen',
+    (tester) async {
+      await tester.pumpWidget(const InvaderApp());
+      await tester.tap(find.text('🏆 RANKING'));
+      await tester.pump();
+      expect(find.text('RANKING'), findsOneWidget);
+    },
+  );
 }

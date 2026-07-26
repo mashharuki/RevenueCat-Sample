@@ -14,11 +14,8 @@ class PixelSpriteComponent extends PositionComponent {
     super.position,
     super.anchor = Anchor.topLeft,
   }) : super(
-          size: Vector2(
-            sprite.columns * pixelSize,
-            sprite.rowCount * pixelSize,
-          ),
-        );
+         size: Vector2(sprite.columns * pixelSize, sprite.rowCount * pixelSize),
+       );
 
   @override
   void render(Canvas canvas) {

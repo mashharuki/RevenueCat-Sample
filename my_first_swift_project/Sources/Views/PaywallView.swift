@@ -1,5 +1,5 @@
-import SwiftUI
 import RevenueCat
+import SwiftUI
 
 struct PaywallView: View {
     @ObservedObject var viewModel: GameViewModel
@@ -95,7 +95,7 @@ struct PaywallView: View {
                 statusMessage = "購入が完了しました"
             case .cancelled:
                 statusMessage = nil
-            case .failed(let error):
+            case let .failed(error):
                 statusMessage = "購入に失敗しました: \(error.localizedDescription)"
             }
         }
@@ -120,13 +120,13 @@ private struct PackageRow: View {
     private var subtitle: String {
         switch package.identifier {
         case RevenueCatPackages.unlockAll:
-            return "全レベルを無制限にプレイ(買い切り)"
+            "全レベルを無制限にプレイ(買い切り)"
         case RevenueCatPackages.continueToken:
-            return "ゲームオーバー時に1回だけコンティニュー(消費型)"
+            "ゲームオーバー時に1回だけコンティニュー(消費型)"
         case RevenueCatPackages.weeklyChallenge:
-            return "週替わりチャレンジモードを解放(週額)"
+            "週替わりチャレンジモードを解放(週額)"
         default:
-            return ""
+            ""
         }
     }
 

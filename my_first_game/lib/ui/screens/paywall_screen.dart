@@ -34,7 +34,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
     final outcome = await purchase(package);
 
-    if (outcome is Purchased && package.identifier == RevenueCatPackages.continueToken) {
+    if (outcome is Purchased &&
+        package.identifier == RevenueCatPackages.continueToken) {
       widget.session.grantContinueToken();
     }
 
@@ -68,7 +69,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
           child: Column(
             children: [
               const SizedBox(height: 24),
-              Text('UPGRADE', style: AppTheme.orbitron(fontSize: 30, color: AppTheme.cyan)),
+              Text(
+                'UPGRADE',
+                style: AppTheme.orbitron(fontSize: 30, color: AppTheme.cyan),
+              ),
               if (widget.session.paywallBanner != null) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -91,7 +95,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         child: Text(
                           '商品を取得できませんでした。\nRevenueCatダッシュボードの設定を確認してください。',
                           textAlign: TextAlign.center,
-                          style: AppTheme.rajdhani(fontSize: 13, color: Colors.white54),
+                          style: AppTheme.rajdhani(
+                            fontSize: 13,
+                            color: Colors.white54,
+                          ),
                         ),
                       );
                     }
@@ -100,7 +107,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       separatorBuilder: (_, _) => const SizedBox(height: 14),
                       itemBuilder: (context, index) => _PackageCard(
                         package: packages[index],
-                        isPurchasing: _purchasingIdentifier == packages[index].identifier,
+                        isPurchasing:
+                            _purchasingIdentifier == packages[index].identifier,
                         onBuy: () => _buy(packages[index]),
                       ),
                     );
@@ -111,17 +119,27 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Text(
                   _statusMessage!,
                   textAlign: TextAlign.center,
-                  style: AppTheme.rajdhani(fontSize: 12, color: AppTheme.orange),
+                  style: AppTheme.rajdhani(
+                    fontSize: 12,
+                    color: AppTheme.orange,
+                  ),
                 ),
                 const SizedBox(height: 12),
               ],
               TextButton(
                 onPressed: _restore,
-                child: Text('購入を復元', style: AppTheme.rajdhani(fontSize: 13, color: Colors.white54)),
+                child: Text(
+                  '購入を復元',
+                  style: AppTheme.rajdhani(fontSize: 13, color: Colors.white54),
+                ),
               ),
               SizedBox(
                 width: double.infinity,
-                child: NeonButton(label: '閉じる', onPressed: widget.session.closePaywall, primary: false),
+                child: NeonButton(
+                  label: '閉じる',
+                  onPressed: widget.session.closePaywall,
+                  primary: false,
+                ),
               ),
               const SizedBox(height: 16),
             ],
@@ -144,11 +162,11 @@ class _PackageCard extends StatelessWidget {
   });
 
   String get _subtitle => switch (package.identifier) {
-        RevenueCatPackages.unlockAll => '全ウェーブを無制限にプレイ(買い切り)',
-        RevenueCatPackages.continueToken => 'ゲームオーバー時に1回だけコンティニュー(消費型)',
-        RevenueCatPackages.weeklyChallenge => '週替わりチャレンジモードを解放(週額)',
-        _ => '',
-      };
+    RevenueCatPackages.unlockAll => '全ウェーブを無制限にプレイ(買い切り)',
+    RevenueCatPackages.continueToken => 'ゲームオーバー時に1回だけコンティニュー(消費型)',
+    RevenueCatPackages.weeklyChallenge => '週替わりチャレンジモードを解放(週額)',
+    _ => '',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -165,9 +183,15 @@ class _PackageCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(package.storeProduct.title, style: AppTheme.orbitron(fontSize: 14)),
+                Text(
+                  package.storeProduct.title,
+                  style: AppTheme.orbitron(fontSize: 14),
+                ),
                 const SizedBox(height: 6),
-                Text(_subtitle, style: AppTheme.rajdhani(fontSize: 12, color: Colors.white54)),
+                Text(
+                  _subtitle,
+                  style: AppTheme.rajdhani(fontSize: 12, color: Colors.white54),
+                ),
               ],
             ),
           ),
@@ -179,15 +203,23 @@ class _PackageCard extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.cyan,
                 foregroundColor: AppTheme.background,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               child: isPurchasing
                   ? const SizedBox(
                       width: 16,
                       height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.background),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppTheme.background,
+                      ),
                     )
-                  : Text(package.storeProduct.priceString, style: AppTheme.rajdhani(fontSize: 13)),
+                  : Text(
+                      package.storeProduct.priceString,
+                      style: AppTheme.rajdhani(fontSize: 13),
+                    ),
             ),
           ),
         ],

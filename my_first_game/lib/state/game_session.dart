@@ -4,7 +4,15 @@ import 'package:my_first_game/game/models/leaderboard_entry.dart';
 import 'package:my_first_game/services/purchase_service.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-enum AppScreen { title, playing, paused, gameOver, leaderboard, paywall, weeklyChallenge }
+enum AppScreen {
+  title,
+  playing,
+  paused,
+  gameOver,
+  leaderboard,
+  paywall,
+  weeklyChallenge,
+}
 
 class LeaderboardRow {
   final int rank;
@@ -68,8 +76,12 @@ class GameSession extends ChangeNotifier {
   }
 
   void _applyCustomerInfo(CustomerInfo info) {
-    final premium = info.entitlements.active.containsKey(RevenueCatEntitlements.premium);
-    final weekly = info.entitlements.active.containsKey(RevenueCatEntitlements.weeklyChallenge);
+    final premium = info.entitlements.active.containsKey(
+      RevenueCatEntitlements.premium,
+    );
+    final weekly = info.entitlements.active.containsKey(
+      RevenueCatEntitlements.weeklyChallenge,
+    );
     if (premium == isPremiumUnlocked && weekly == hasWeeklyChallenge) return;
     isPremiumUnlocked = premium;
     hasWeeklyChallenge = weekly;
@@ -166,7 +178,11 @@ class GameSession extends ChangeNotifier {
   /// without [isPremiumUnlocked]. Ends the run at its current score/wave and
   /// routes to the paywall instead of spawning the next wave.
   void reachWaveLimit() {
-    lastResult = GameResult(score: score, wave: wave, isNewHigh: score > highScore);
+    lastResult = GameResult(
+      score: score,
+      wave: wave,
+      isNewHigh: score > highScore,
+    );
     if (score > highScore) highScore = score;
     if (bestRun == null || score > bestRun!.score) {
       bestRun = GameResult(score: score, wave: wave);
@@ -236,7 +252,8 @@ class GameSession extends ChangeNotifier {
 
   List<LeaderboardRow> get leaderboardRows {
     final entries = [
-      for (final e in leaderboard) (name: e.name, score: e.score, isPlayer: false),
+      for (final e in leaderboard)
+        (name: e.name, score: e.score, isPlayer: false),
       if (bestRun != null) (name: 'YOU', score: bestRun!.score, isPlayer: true),
     ]..sort((a, b) => b.score.compareTo(a.score));
 

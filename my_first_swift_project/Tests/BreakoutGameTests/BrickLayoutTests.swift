@@ -1,5 +1,5 @@
-import XCTest
 @testable import BreakoutGame
+import XCTest
 
 final class BrickLayoutTests: XCTestCase {
     func testStandardLayoutGeneratesExpectedBrickCount() {

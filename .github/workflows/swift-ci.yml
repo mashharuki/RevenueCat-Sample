@@ -1,0 +1,67 @@
+name: Swift CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "my_first_swift_project/**"
+      - ".github/workflows/swift-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "my_first_swift_project/**"
+      - ".github/workflows/swift-ci.yml"
+
+concurrency:
+  group: swift-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: my_first_swift_project
+
+jobs:
+  lint:
+    name: Lint (SwiftLint + SwiftFormat)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftLint & SwiftFormat
+        run: brew install swiftlint swiftformat
+
+      - name: Run SwiftLint
+        run: swiftlint lint --config .swiftlint.yml --reporter github-actions-logging
+
+      - name: Run SwiftFormat (check only)
+        run: swiftformat --lint .
+
+  build-and-test:
+    name: Build & Test
+    runs-on: macos-15
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Show available simulators
+        run: xcrun simctl list devices available
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project BreakoutGame.xcodeproj \
+            -scheme BreakoutGame \
+            -destination 'platform=iOS Simulator,name=iPhone 16'
+
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project BreakoutGame.xcodeproj \
+            -scheme BreakoutGame \
+            -destination 'platform=iOS Simulator,name=iPhone 16'

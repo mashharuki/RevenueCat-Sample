@@ -4,11 +4,11 @@ import 'pixel_sprite_component.dart';
 
 class PlayerComponent extends PixelSpriteComponent {
   PlayerComponent()
-      : super(
-          sprite: InvaderSprites.player,
-          pixelSize: 3,
-          color: const Color(0xFFD6F8FF),
-        );
+    : super(
+        sprite: InvaderSprites.player,
+        pixelSize: 3,
+        color: const Color(0xFFD6F8FF),
+      );
 
   double clampX(double targetX, double canvasWidth) {
     final half = size.x / 2;

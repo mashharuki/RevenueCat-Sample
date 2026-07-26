@@ -19,14 +19,24 @@ class WeeklyChallengeScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('WEEKLY CHALLENGE', style: AppTheme.orbitron(fontSize: 24, color: AppTheme.purple)),
+            Text(
+              'WEEKLY CHALLENGE',
+              style: AppTheme.orbitron(fontSize: 24, color: AppTheme.purple),
+            ),
             const SizedBox(height: 16),
             Text(
               '今週のお題: ノーダメージでWAVE 7に到達せよ',
               style: AppTheme.rajdhani(fontSize: 14, color: Colors.white70),
             ),
             const SizedBox(height: 32),
-            SizedBox(width: 220, child: NeonButton(label: 'HOME', onPressed: onBack, primary: false)),
+            SizedBox(
+              width: 220,
+              child: NeonButton(
+                label: 'HOME',
+                onPressed: onBack,
+                primary: false,
+              ),
+            ),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
-import XCTest
 @testable import BreakoutGame
+import XCTest
 
 final class GameViewModelTests: XCTestCase {
     func testAddBrickScoreIncrementsByBrickScoreValue() {
@@ -19,7 +19,7 @@ final class GameViewModelTests: XCTestCase {
 
     func testLoseLifeSetsGameOverWhenLivesReachZero() {
         let viewModel = GameViewModel()
-        for _ in 0..<GameViewModel.startingLives {
+        for _ in 0 ..< GameViewModel.startingLives {
             _ = viewModel.loseLife()
         }
         XCTAssertEqual(viewModel.lives, 0)
@@ -91,7 +91,9 @@ final class GameViewModelTests: XCTestCase {
 
     func testContinueGameDoesNothingWithoutTokens() {
         let viewModel = GameViewModel()
-        for _ in 0..<GameViewModel.startingLives { _ = viewModel.loseLife() }
+        for _ in 0 ..< GameViewModel.startingLives {
+            _ = viewModel.loseLife()
+        }
         viewModel.continueGame()
         XCTAssertEqual(viewModel.state, .gameOver)
         XCTAssertEqual(viewModel.lives, 0)
@@ -99,7 +101,9 @@ final class GameViewModelTests: XCTestCase {
 
     func testContinueGameSpendsTokenRefillsLivesAndResumesPlaying() {
         let viewModel = GameViewModel()
-        for _ in 0..<GameViewModel.startingLives { _ = viewModel.loseLife() }
+        for _ in 0 ..< GameViewModel.startingLives {
+            _ = viewModel.loseLife()
+        }
         viewModel.grantContinueToken()
         XCTAssertEqual(viewModel.continueTokens, 1)
 

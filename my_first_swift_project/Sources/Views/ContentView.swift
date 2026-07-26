@@ -1,5 +1,5 @@
-import SwiftUI
 import SpriteKit
+import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel: GameViewModel

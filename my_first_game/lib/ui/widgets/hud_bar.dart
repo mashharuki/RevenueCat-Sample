@@ -29,14 +29,20 @@ class HudBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('SCORE', style: AppTheme.rajdhani(fontSize: 9, color: Colors.white54)),
+              Text(
+                'SCORE',
+                style: AppTheme.rajdhani(fontSize: 9, color: Colors.white54),
+              ),
               Text(
                 score.toString().padLeft(6, '0'),
                 style: AppTheme.orbitron(fontSize: 18, color: AppTheme.cyan),
               ),
             ],
           ),
-          Text('WAVE $wave', style: AppTheme.orbitron(fontSize: 12, color: AppTheme.orange)),
+          Text(
+            'WAVE $wave',
+            style: AppTheme.orbitron(fontSize: 12, color: AppTheme.orange),
+          ),
           Row(
             children: [
               LivesIndicator(lives: lives),

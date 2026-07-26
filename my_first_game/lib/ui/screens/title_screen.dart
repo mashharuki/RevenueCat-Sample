@@ -26,16 +26,30 @@ class TitleScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('NEON', style: AppTheme.orbitron(fontSize: 15, color: AppTheme.cyan, letterSpacing: 8)),
+            Text(
+              'NEON',
+              style: AppTheme.orbitron(
+                fontSize: 15,
+                color: AppTheme.cyan,
+                letterSpacing: 8,
+              ),
+            ),
             ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
                 colors: [AppTheme.cyan, AppTheme.pink],
               ).createShader(bounds),
-              child: Text('INVADERS', style: AppTheme.orbitron(fontSize: 52, color: Colors.white)),
+              child: Text(
+                'INVADERS',
+                style: AppTheme.orbitron(fontSize: 52, color: Colors.white),
+              ),
             ),
             Text(
               'PROTOTYPE BUILD',
-              style: AppTheme.rajdhani(fontSize: 13, color: Colors.white38, letterSpacing: 5),
+              style: AppTheme.rajdhani(
+                fontSize: 13,
+                color: Colors.white38,
+                letterSpacing: 5,
+              ),
             ),
             const SizedBox(height: 40),
             SizedBox(
@@ -44,12 +58,22 @@ class TitleScreen extends StatelessWidget {
                 children: [
                   NeonButton(label: '▶ START', onPressed: onStart),
                   const SizedBox(height: 16),
-                  NeonButton(label: '🏆 RANKING', onPressed: onShowLeaderboard, primary: false),
-                  const SizedBox(height: 16),
-                  NeonButton(label: '⭐ UPGRADE', onPressed: onShowPaywall, primary: false),
+                  NeonButton(
+                    label: '🏆 RANKING',
+                    onPressed: onShowLeaderboard,
+                    primary: false,
+                  ),
                   const SizedBox(height: 16),
                   NeonButton(
-                    label: hasWeeklyChallenge ? '🗓 WEEKLY CHALLENGE' : '🔒 WEEKLY CHALLENGE',
+                    label: '⭐ UPGRADE',
+                    onPressed: onShowPaywall,
+                    primary: false,
+                  ),
+                  const SizedBox(height: 16),
+                  NeonButton(
+                    label: hasWeeklyChallenge
+                        ? '🗓 WEEKLY CHALLENGE'
+                        : '🔒 WEEKLY CHALLENGE',
                     onPressed: onShowWeeklyChallenge,
                     primary: false,
                   ),

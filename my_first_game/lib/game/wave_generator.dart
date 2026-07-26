@@ -35,13 +35,15 @@ class WaveGenerator {
     for (var r = 0; r < rows; r++) {
       final type = EnemyType.values[r % 3];
       for (var c = 0; c < cols; c++) {
-        specs.add(EnemySpec(
-          x: margin + c * colWidth + colWidth / 2 - 16,
-          y: 84 + r * 42,
-          w: 32,
-          h: 32,
-          type: type,
-        ));
+        specs.add(
+          EnemySpec(
+            x: margin + c * colWidth + colWidth / 2 - 16,
+            y: 84 + r * 42,
+            w: 32,
+            h: 32,
+            type: type,
+          ),
+        );
       }
     }
     return specs;

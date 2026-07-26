@@ -1,6 +1,6 @@
-import XCTest
-import CoreGraphics
 @testable import BreakoutGame
+import CoreGraphics
+import XCTest
 
 final class GameMathTests: XCTestCase {
     func testClampReturnsValueWhenWithinRange() {
