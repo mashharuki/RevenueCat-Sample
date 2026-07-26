@@ -19,6 +19,8 @@
 		830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 575E8C77DDCE5DA6950A2150 /* GoogleSignIn */; };
 		9C35FBBD89398849C902E09A /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */; };
 		A44A8AC8203E14F0CCAD5D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */; };
+		AF0BA267D02A60A974A70A38 /* MemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446B21F0D22A4C6855480823 /* MemoListView.swift */; };
+		C2B84953DA84FEAD82BEEC5F /* MemoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */; };
 		E7134356EAE7403A6C1FDD1C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB420A5B31165391D1FBE22 /* Memo.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,12 +28,14 @@
 		28E858F6AF1ACE780A46D212 /* MemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewModel.swift; sourceTree = "<group>"; };
 		2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoApp.swift; sourceTree = "<group>"; };
 		2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
+		446B21F0D22A4C6855480823 /* MemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListView.swift; sourceTree = "<group>"; };
 		455549FE8FAD2C0019183182 /* MemoApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3EDECB2877C16D7DC651FF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		6DB420A5B31165391D1FBE22 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		804728780240AD59008F4CDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		95C6F4D0520631688089E9A7 /* AuthSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionStore.swift; sourceTree = "<group>"; };
 		B0DFD97EC265B51FD6068B4E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditView.swift; sourceTree = "<group>"; };
 		C51B73720B5D37A0A8551181 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62611EBFCDD037844A1F46C /* MemoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAPIClient.swift; sourceTree = "<group>"; };
 		FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		6DD4042FEE17D2DC0D63DDFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */,
+				446B21F0D22A4C6855480823 /* MemoListView.swift */,
 				B0DFD97EC265B51FD6068B4E /* SignInView.swift */,
 			);
 			path = Views;
@@ -207,6 +213,8 @@
 				E7134356EAE7403A6C1FDD1C /* Memo.swift in Sources */,
 				809B09CCCBF8C406113EDC08 /* MemoAPIClient.swift in Sources */,
 				6864F952B53968D0CCDCD685 /* MemoApp.swift in Sources */,
+				C2B84953DA84FEAD82BEEC5F /* MemoEditView.swift in Sources */,
+				AF0BA267D02A60A974A70A38 /* MemoListView.swift in Sources */,
 				71DB80FB7189F1519196EA6E /* MemoListViewModel.swift in Sources */,
 				9C35FBBD89398849C902E09A /* PurchaseService.swift in Sources */,
 				71EC79004B1FEBF1E79C449B /* SignInView.swift in Sources */,
