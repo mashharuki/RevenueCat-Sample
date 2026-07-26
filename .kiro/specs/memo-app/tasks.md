@@ -7,11 +7,11 @@
   - 観測可能な完了状態: RevenueCatダッシュボードで`memo_premium`エンタイトルメントに`memo_premium_monthly`(P1M, ¥490)が紐付き、`memo_app`オファリングの`$rc_monthly`パッケージから同商品を購入できる状態になっている(`get-products-from-entitlement`・`list-packages`で確認済み)
   - _Requirements: 4.1_
 
-- [ ] 1.2 Firebaseプロジェクトの作成とGoogle Sign-Inプロバイダの有効化
+- [x] 1.2 Firebaseプロジェクトの作成とGoogle Sign-Inプロバイダの有効化
   - `firebase-basics`/`firebase-auth-basics`スキルの手順でFirebaseプロジェクトを作成する
   - `firebase.json`でGoogle Sign-Inプロバイダを有効化しデプロイする
   - iOSアプリをFirebaseプロジェクトに登録し`GoogleService-Info.plist`を取得する
-  - 観測可能な完了状態: Firebase CLIでGoogle Sign-Inプロバイダが有効と確認でき、`GoogleService-Info.plist`が取得できる
+  - 観測可能な完了状態: `firebase deploy --only auth`が`Auth providers enabled: Google sign-in`で成功し、`memo_app/GoogleService-Info.plist`(BUNDLE_ID `com.haruki.MemoApp`, PROJECT_ID `memo-app-shipaton`)が取得済み
   - _Requirements: 1.1_
 
 - [ ] 1.3 バックエンド(api/)プロジェクトの初期化
@@ -216,3 +216,7 @@
 - **1.1**: エンタイトルメント識別子は`premium`ではなく`memo_premium`を使用(`premium`は既にBreakoutGameが使用中のため)。3.1(PurchaseServiceクライアント)・3.2(RevenueCatClientサーバー、`RC_ENTITLEMENT_ID`環境変数)は`memo_premium`を参照すること。
 - **1.1**: `default`/`is_current: true`のオファリングは既にBreakoutGameが使用中のため、memo_app用に新規オファリング`memo_app`(`is_current: false`)を作成した。3.1のオファリング取得、6.3のPaywallViewは`Purchases.shared.getOfferings()`の`.current`ではなく、識別子`memo_app`で明示的に取得すること。パッケージ識別子は`$rc_monthly`、商品`memo_premium_monthly`(P1M, ¥490 JPY)。
 - **1.1**: Test Store公開APIキーはBreakoutGameと同一(`test_sddznTcTAozgeMzKYctdrgEfZZq`、UNCHAINプロジェクト内で1つのTest Storeアプリを全アプリが共有するため)。1.7・3.1で`Purchases.configure`に使用する。
+- **1.2**: `npx firebase-tools`実行時に`~/.npm`キャッシュのroot所有ファイルによる`EACCES`エラーが発生する環境だった。`sudo chown`は使えないため、`npm_config_cache`環境変数を書き込み可能な一時ディレクトリに向けて回避した(以降のタスクでFirebase CLIを使う場合も同様の回避が必要な可能性がある。恒久対応は`sudo chown -R 501:20 ~/.npm`をユーザー自身に依頼する)。
+- **1.2**: Firebaseプロジェクトは新規作成(`memo-app-shipaton`)。既存の6プロジェクト(frkt-demo等)はいずれもmemo_app向けではないため使用しなかった。
+- **1.2**: `firebase.json`の`googleSignIn.authorizedRedirectUris`に`http://localhost`を明示すると、Firebaseが自動プロビジョニングする「Default Web App」側の登録と重複し`PostMessage Origins have duplicate [http://localhost]`エラーになる。この項目は省略すること。
+- **1.2**: iOSアプリ登録情報 — Bundle ID `com.haruki.MemoApp`、App ID `1:682928555697:ios:859db82e3de83f58a3c490`。`GoogleService-Info.plist`の`REVERSED_CLIENT_ID`(`com.googleusercontent.apps.682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1`)と`CLIENT_ID`(`682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1.apps.googleusercontent.com`)は1.7のInfo.plist設定(URLスキーム・`GIDClientID`)でそのまま使用する。
