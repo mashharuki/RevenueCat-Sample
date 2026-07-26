@@ -12,6 +12,13 @@
     "FREE_TIER_MEMO_LIMIT": 20,
     // RevenueCat entitlement identifier that unlocks unlimited memos (see .kiro/specs/memo-app/tasks.md Implementation Notes)
     "RC_ENTITLEMENT_ID": "memo_premium"
-  }
-  // d1_databases binding is added in task 1.4 once the D1 database has been created
+  },
+  "d1_databases": [
+    {
+      "binding": "memo_app_db",
+      "database_name": "memo-app-db",
+      "database_id": "0576b63c-283b-4e5b-9ec1-b9dd2fec4bb3",
+      "migrations_dir": "./migrations"
+    }
+  ]
 }

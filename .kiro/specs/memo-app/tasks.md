@@ -20,7 +20,7 @@
   - 観測可能な完了状態: `npx tsc --noEmit`がエラーなく完了し、`wrangler dev`が`FREE_TIER_MEMO_LIMIT`/`RC_ENTITLEMENT_ID`バインディングを表示して`Ready on http://localhost:8799`で起動する(独立レビューで再検証済み)
   - _Requirements: 1.6, 5.1_
 
-- [ ] 1.4 memosテーブルのD1マイグレーション作成
+- [x] 1.4 memosテーブルのD1マイグレーション作成
   - `wrangler d1 create`でデータベースを作成し、`memos`テーブル(id, user_id, content, created_at, updated_at)とインデックスを定義するマイグレーションを作成する
   - 観測可能な完了状態: `wrangler d1 migrations apply --local`実行後、`memos`テーブルが設計どおりのカラム構成で存在する
   - _Requirements: 5.3_
@@ -224,3 +224,4 @@
 - **1.3**: `wrangler types`は`@cloudflare/workers-types`を置き換える方針にAPI側から誘導される(実行時に`Action required: Migrate from @cloudflare/workers-types to generated runtime types`と表示された)。そのため`@cloudflare/workers-types`は依存関係から除外し、代わりに`nodejs_compat`フラグ向けに`@types/node`を追加、`tsconfig.json`の`types`は`["node"]`のみとした。
 - **1.3**: `wrangler types <path>`は出力先ディレクトリ(`src/types/`)が事前に存在しないと書き込みに失敗する。ディレクトリを先に作成してから実行すること。
 - **1.3**: `wrangler dev`をエージェント環境で実行すると`Local Explorer API`(`/cdn-cgi/explorer/api`)がバインディング確認用に自動公開される。動作確認に活用できる。
+- **1.4**: `.claude/hooks/block-protected-files.sh`が`migrations/[0-9]{4}.*\.(sql|ts|js)$`へのEdit/Write toolを一律拒否する(新規作成でも)。マイグレーションファイルは`wrangler d1 migrations create <db> <name>`でスキャフォールドし、内容の書き込みはBashのheredoc(`cat > ... << 'EOF'`)で行うこと。DB作成は`wrangler d1 create memo-app-db`(APAC region作成、database_id払い出し)、`wrangler.jsonc`の`d1_databases`バインディング追加後は必ず`npm run types`で`env.d.ts`を再生成すること(手書き禁止は1.3と同じ方針)。
