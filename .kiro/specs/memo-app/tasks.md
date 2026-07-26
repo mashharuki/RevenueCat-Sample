@@ -64,7 +64,7 @@
   - _Boundary: AuthService_
   - _Depends: 1.7_
 
-- [ ] 2.3 (P) バックエンドFirebaseAuthMiddleware実装
+- [x] 2.3 (P) バックエンドFirebaseAuthMiddleware実装
   - Honoの`hono/jwk`をFirebaseのJWKS URLに向けて設定し、IDトークンの署名を検証する
   - `iss`・`aud`・`sub`クレームを追加検証し、いずれか不正なら401を返す
   - 検証済みuidをリクエストコンテキストに設定する

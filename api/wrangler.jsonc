@@ -11,7 +11,10 @@
     // Free-tier memo count limit before RevenueCat entitlement check kicks in (design.md Requirement 3.1/3.4)
     "FREE_TIER_MEMO_LIMIT": 20,
     // RevenueCat entitlement identifier that unlocks unlimited memos (see .kiro/specs/memo-app/tasks.md Implementation Notes)
-    "RC_ENTITLEMENT_ID": "memo_premium"
+    "RC_ENTITLEMENT_ID": "memo_premium",
+    // Firebase project ID (see .kiro/specs/memo-app/tasks.md 1.2 Implementation Notes). Used to
+    // validate the `iss`/`aud` claims of Firebase ID tokens in FirebaseAuthMiddleware.
+    "FIREBASE_PROJECT_ID": "memo-app-shipaton"
   },
   "d1_databases": [
     {
