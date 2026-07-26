@@ -41,6 +41,32 @@ struct MemoEditView: View {
             .disabled(isSaving || content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         }
       }
+      .sheet(isPresented: paywallBinding) {
+        PaywallView(onEntitlementUnlocked: retryPendingCreate)
+      }
+    }
+  }
+
+  /// Only the create flow can hit the free-tier limit (Requirement 3.1/3.2), so this stays `false`
+  /// while editing an existing memo even if `isLimitReached` is stale-true from an earlier,
+  /// cancelled attempt in a different `MemoEditView` instance sharing the same `viewModel`.
+  private var paywallBinding: Binding<Bool> {
+    Binding(
+      get: { memo == nil && viewModel.isLimitReached },
+      set: { isPresented in
+        if !isPresented {
+          viewModel.dismissLimitReachedPrompt()
+        }
+      }
+    )
+  }
+
+  private func retryPendingCreate() {
+    Task {
+      await viewModel.retryPendingMemoCreation()
+      if viewModel.errorMessage == nil && !viewModel.isLimitReached {
+        dismiss()
+      }
     }
   }
 

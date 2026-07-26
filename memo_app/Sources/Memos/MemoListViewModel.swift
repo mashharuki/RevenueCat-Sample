@@ -10,6 +10,12 @@ final class MemoListViewModel: ObservableObject {
 
   private let apiClient: MemoAPIClienting
 
+  /// Content of the most recent creation attempt that failed with `.limitReached`, kept so a
+  /// successful purchase/restore can retry the same creation without the user retyping it
+  /// (Requirement 4.2). Cleared by the next successful creation; left untouched by
+  /// `dismissLimitReachedPrompt()` so it is not lost to a race with the paywall's dismissal.
+  private var pendingMemoContent: String?
+
   init(apiClient: MemoAPIClienting = MemoAPIClient()) {
     self.apiClient = apiClient
   }
@@ -29,10 +35,29 @@ final class MemoListViewModel: ObservableObject {
     case .success(let memo):
       upsert(memo)
       isLimitReached = false
+      pendingMemoContent = nil
       errorMessage = nil
     case .failure(let error):
+      if case .limitReached = error {
+        pendingMemoContent = content
+      }
       handle(error)
     }
+  }
+
+  /// Re-attempts the creation that most recently failed due to the free-tier limit, using the
+  /// same content, after a successful purchase or restore unlocks the entitlement (Requirement
+  /// 4.2). A no-op if there is no pending content (e.g. the paywall was dismissed without buying).
+  func retryPendingMemoCreation() async {
+    guard let content = pendingMemoContent else { return }
+    await createMemo(content: content)
+  }
+
+  /// Clears the limit-reached state without retrying, e.g. when the user dismisses the paywall
+  /// without purchasing or restoring (Requirement 4.3 — return to the previous screen without
+  /// changing entitlement).
+  func dismissLimitReachedPrompt() {
+    isLimitReached = false
   }
 
   func updateMemo(id: String, content: String) async {

@@ -6,6 +6,11 @@ import SwiftUI
 /// purchase/restore outcome (success, cancellation, or failure) dismisses this screen without
 /// itself touching entitlement state — that is RevenueCat's/`PurchaseService`'s responsibility.
 struct PaywallView: View {
+  /// Invoked when a purchase or restore actually unlocks the entitlement (not on cancellation or
+  /// failure), so a caller showing this as a limit-reached prompt can retry whatever it was
+  /// blocked on (Requirement 4.2).
+  var onEntitlementUnlocked: (() -> Void)?
+
   @Environment(\.dismiss) private var dismiss
   @State private var packages: [Package] = []
   @State private var isLoadingPackages = true
@@ -69,8 +74,11 @@ struct PaywallView: View {
   private func purchase(_ package: Package) {
     isProcessing = true
     Task {
-      _ = await PurchaseService.purchase(package)
+      let outcome = await PurchaseService.purchase(package)
       isProcessing = false
+      if case .purchased = outcome {
+        onEntitlementUnlocked?()
+      }
       dismiss()
     }
   }
@@ -78,8 +86,11 @@ struct PaywallView: View {
   private func restore() {
     isProcessing = true
     Task {
-      _ = await PurchaseService.restore()
+      let result = await PurchaseService.restore()
       isProcessing = false
+      if case .success = result {
+        onEntitlementUnlocked?()
+      }
       dismiss()
     }
   }
