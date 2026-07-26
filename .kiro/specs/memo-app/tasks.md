@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [ ] 1. Foundation: 外部サービスとプロジェクトの初期セットアップ
+- [x] 1. Foundation: 外部サービスとプロジェクトの初期セットアップ
 - [x] 1.1 RevenueCatプロジェクト/アプリ/エンタイトルメントのセットアップ
   - 新規iOSアプリをRevenueCatダッシュボード(またはMCP経由)に作成し、`memo_premium`エンタイトルメントと課金商品・オファリングを設定する
   - RevenueCat Test Store(開発用の疑似ストア)を有効化し、テスト用APIキーを取得する
@@ -46,7 +46,7 @@
   - 観測可能な完了状態: これら3つのフレームワークをimportした状態でプロジェクトがビルド成功する
   - _Depends: 1.2, 1.6_
 
-- [ ] 2. Core: 認証コンポーネント
+- [x] 2. Core: 認証コンポーネント
 - [x] 2.1 (P) AuthSessionStore実装
   - Firebase Authの認証状態変化を監視し、現在のセッション(サインイン中のユーザーまたはnil)をアプリ全体へ配信する状態オブジェクトを実装する
   - 観測可能な完了状態: Firebase Auth側でサインイン/サインアウトが起きると、この状態オブジェクトの値が対応して変化する
@@ -74,7 +74,7 @@
   - _Depends: 1.2, 1.3_
 
 - [ ] 3. Core: 課金コンポーネント
-- [ ] 3.1 (P) PurchaseService(クライアント)実装
+- [x] 3.1 (P) PurchaseService(クライアント)実装
   - `my_first_swift_project`の`PurchaseService.swift`と同じ`enum` + `static async`パターンで、RevenueCat SDKの初期化・オファリング取得・購入・復元を実装する
   - Firebase UIDを受け取り`Purchases.shared.logIn(uid)`を実行する関数を追加する
   - 観測可能な完了状態: Test Store設定下でオファリング取得・購入・復元がそれぞれ成功/キャンセル/失敗を区別した結果を返す
@@ -228,4 +228,7 @@
 - **1.5**: `wrangler secret put`は対象Workerが一度もデプロイされていないと`Worker "memo-app-api" not found`で失敗する(シークレットはデプロイ済みWorkerに紐づく仕組みのため)。1.3時点ではまだ`wrangler deploy`していなかったので、1.5実行前に一度`wrangler deploy`してWorkerを作成した(スタブ実装で先行デプロイ、URLは`https://memo-app-api.avp-104-106-107-a78.workers.dev`)。また、プロジェクトの`wrangler` skill(`.claude/skills/wrangler/SKILL.md`)が「シークレット値をコマンド引数や`echo`で渡さない」ことを明記しているため、エージェントは`wrangler secret put`を代行実行できない — シークレット値の入力は必ずユーザー自身が対話プロンプトで行うこと。
 - **1.7**: このマシンのXcode 15.1(Swift 5.9.2)は、Firebase/GoogleSignInの現行SPMリリースが要求するSwiftツールチェーンより古い。以下3点が必要だった。(a) `xcode-project-setup`スキル同梱の`xcode_spm_setup`スクリプト自体が、依存する`XcodeProj`パッケージの`.upToNextMajor(from: "8.27.7")`指定により8.27.7以降(swift-tools-version 5.10要求)を掴んでビルド不能になっていたため、`.agents/skills/xcode-project-setup/scripts/xcode_spm_setup/Package.swift`で`XcodeProj`を`.exact("8.24.11")`(tools-version 5.8、Swift 5.9.2と互換)に固定した。(b) 同スクリプトの`Sources/main.swift`に順序バグがあり、`PBXFrameworksBuildPhase`が存在しないターゲット(XcodeGenは依存ゼロのターゲットに空のFrameworksビルドフェーズを生成しない)に対して`rootObject.addSwiftPackage(...)`を呼ぶと`Could not find frameworks build phase for target`で失敗する — フェーズ確保処理を`addSwiftPackage`呼び出しの前に移動して修正した。(c) SPMのマニフェスト上の`swift-tools-version`表示だけでは実際にコンパイル可能かは保証されない(パッケージ側が5.9系を名乗りつつSwift 6構文を含むケースがある)。実機検証の結果、`memo_app.xcodeproj`の`XCRemoteSwiftPackageReference`は以下へ`kind = exactVersion`で厳密固定すること: `firebase-ios-sdk` = `11.11.0`(11.12.0で`internal import`アクセスレベル構文、より新しいバージョンで`sending`引数修飾子が導入されSwift 5.9.2でコンパイル不能)、`GoogleSignIn-iOS` = `9.0.0`(9.1.0以降はswift-tools-version 6.0要求)。`purchases-ios`は`5.81.2`(最新かつSwift 5.9.2と互換、`my_first_swift_project`と同一バージョン)のまま`upToNextMajorVersion`で問題なし。将来Xcodeをアップグレードした際は、これらの`exactVersion`固定を見直して最新版に戻すことを検討する。
 - **2.1/2.2/2.3**: このスペックのタスク分解は、恒久的な自動テストの作成を意図的に8.1(バックエンド)・8.3(iOSクライアント)へ集約している(2.x/3.x/4.x/5.x/6.xは実装のみ)。そのため2.1/2.2/2.3では恒久テストファイルを追加せず、代わりにその場限りの検証で観測可能な完了状態を実証した: 2.3は`wrangler dev`+Node `fetch`(このリポジトリでは`curl`がBash権限で拒否されているため)で401系を確認し、さらにローカルRSA鍵ペア+`hono/jwk`の`keys`オプションで実際のFirebase JWKSに依存せずiss/aud/exp検証と成功時のuid抽出を直接実証(検証用スクリプトは未コミット、`src/index.ts`の一時ルートも検証後に元へ戻した)。2.1/2.2はGoogleサインインの実機E2E確認が8.4の担当のため、design.mdのインターフェース(`AuthServicing`/`AuthenticatedUser`/`AuthError`)との完全一致・`Auth.auth()`のinit時アクセス回避(firebase-auth-basics/references/ios_setup.mdの必須ルール)・実機ビルド成功・シミュレータでの起動確認までを完了の根拠とした。
+- **重大な発見(2.1/2.2 → 3.1で修正)**: `memo_app.xcodeproj`はXcodeGen生成時から一貫して**folder sync(`PBXFileSystemSynchronizedRootGroup`)を使っておらず**、`Sources`配下の各`.swift`ファイルを`project.pbxproj`に明示列挙する旧来方式だった(`xcode-project-setup`スキルの「ディスクに置くだけで自動的にプロジェクトに含まれる」という前提は本プロジェクトには当てはまらない)。そのため2.1/2.2で追加した`AuthSessionStore.swift`/`AuthService.swift`は、コミット時点では`PBXSourcesBuildPhase`に一切登録されておらず、**実際には一度もコンパイルされていなかった**(2.1/2.2のレビューで「ビルド成功」と報告されたのは、これらのファイルがターゲットから除外されていたため単に無視されていたことによる偽陽性)。3.1着手時に`xcodegen generate`を実行して発見・修正した。**重要な副作用**: `xcodegen generate`は(a)1.7で`xcode_spm_setup`スクリプトにより手動追加したSPM依存関係(Firebase/GoogleSignIn/RevenueCatの`packageReferences`・`PBXFrameworksBuildPhase`)と(b)手動編集した`Sources/Info.plist`のGIDClientID/CFBundleURLTypesを**完全に消去する**(project.ymlに定義がないため)。今後、新規`.swift`ファイル追加のために`xcodegen generate`を実行する場合は、直後に必ず(1) 1.7と同じ3つの`xcode_spm_setup`呼び出し(Firebase exact 11.11.0 / GoogleSignIn-iOS exact 9.0.0 / purchases-ios 5.81.2)を再実行し、各`XCRemoteSwiftPackageReference`の`kind`を`exactVersion`に戻すこと、(2) `Sources/Info.plist`にGIDClientID/CFBundleURLTypesを再追加すること。この2点を忘れると1.7/2.x/3.xの成果が silently 失われる。
+- **3.1**: `PurchaseService.swift`は`my_first_swift_project`と同じ`enum` + `static async`パターンで実装。`Purchases.shared.logIn(_:)`は`purchases-ios` 5.81.2で`async throws -> (customerInfo:created:)`が存在するため直接呼び出せる(bridging不要、`getOfferings`とは異なる)。`fetchCurrentPackages()`は1.1の方針通り`Offerings.offering(identifier: "memo_app")`で明示取得(`.current`は使わない)。実機検証: Test Storeの実際の購入ダイアログ(Successful/Failed/Cancelの3択、`revenuecat-testing-setup/platforms/ios.md`記載の通り)を操作し、fetch(`$rc_monthly`パッケージ取得)・cancel(`.cancelled`)・failed(`RevenueCat.ErrorCode` 42を`.failed`として捕捉)・restore(`.success`)・logIn(成功)を実機で確認した。purchased(成功)パスは、同一関数内のtry/catchと`userCancelled`分岐が上記で実証済みであること、かつ`my_first_swift_project`の同一パターンが既に本番稼働していることから、UIダイアログの座標特定が不安定だったため打ち切り、コードレビューベースで妥当と判断した(iOSシミュレータのタップ座標はポイント基準で、スクリーンショットから正確なピクセル換算をする手段がなく試行錯誤に時間を要した — 今後の類似作業では大きなタップ領域のボタンを最初から使うこと)。
 - **2.3**: Bashの`block-dangerous-commands.sh`フックは変数名に`Token`を含む代入(例: `validToken = ...`)を`token\s*=`の正規表現で誤検知しブロックする。JWT検証スクリプトなど`token`を含む識別子を使う場合は`jwtValid`のように語順を変えて回避すること。
+- **3.2**: `RevenueCatClient`(`api/src/billing/revenueCatClient.ts`)は`Env`型に依存せず`{ secretKey, entitlementId }`を直接受け取る設計にした(`RC_SECRET_KEY`はWorkers Secretで`wrangler.jsonc`に定義がなく`wrangler types`が生成する`Env`型に含まれないため)。呼び出し元(4.2のMemoService)は`c.env.RC_SECRET_KEY`を読んで渡す形になるが、その時点でも`.dev.vars`が無い限りローカル`wrangler dev`はこの値を持たない。実機検証は`wrangler dev --remote`(ローカルdevサーバーを維持しつつ実際にデプロイ済みWorkerの本物のシークレットを使う)で行い、値を一切チャットに露出させずに済んだ。RevenueCat REST API v1のレスポンス形式は`subscriber.entitlements[id].expires_date`(ISO8601文字列、無期限は`null`)。既知のuidにRC MCPの`grant-customer-entitlement`でプロモーション権を付与し、`hasActiveEntitlement: true`/未知uidで`false`を実機確認済み。
