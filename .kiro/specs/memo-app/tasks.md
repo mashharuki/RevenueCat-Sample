@@ -90,7 +90,7 @@
   - _Boundary: RevenueCatClient (server)_
   - _Depends: 1.3, 1.5_
 
-- [ ] 4. Core: メモ機能(バックエンド)
+- [x] 4. Core: メモ機能(バックエンド)
 - [x] 4.1 MemoRepository実装
   - D1に対するメモの作成・一覧取得(更新日時降順)・更新・削除・件数取得をパラメータ化クエリで実装する
   - 全クエリに`user_id`によるフィルタを必須で含める
@@ -117,7 +117,7 @@
   - _Depends: 2.3, 4.2_
 
 - [ ] 5. Core: メモ機能(iOSクライアント)
-- [ ] 5.1 Memoモデル + MemoAPIClient実装
+- [x] 5.1 Memoモデル + MemoAPIClient実装
   - クライアント側`Memo`モデル(Codable)を定義する
   - `api/`へのHTTPクライアントを実装し、リクエスト毎に最新のFirebase IDトークンを取得して`Authorization`ヘッダーに付与する
   - ネットワーク到達不能時に専用のエラー結果を返す(サイレント失敗にしない)
@@ -234,4 +234,5 @@
 - **4.1/4.2**: `MemoRepository`は全データ返却クエリ(list/insert/update/delete)を`user_id`でスコープする一方、`findOwnerId(memoId)`のみ`user_id`フィルタなしでowner_idだけを返す例外を設けた(design.mdの`MemoServiceError`が`forbidden`と`not_found`を別ケースとして定義しており、両者を区別するには所有者確認が必要なため。メモ本文は一切返さないので「所有者以外のデータへの到達を構造的に防ぐ」という制約の趣旨は保っている)。`RC_SECRET_KEY`は`wrangler.jsonc`に定義がなくSecretのため`wrangler types`が拾わない — ローカル型生成/開発用に`.dev.vars`(値はプレースホルダー、gitignore済み)を作成すると`wrangler types`が`RC_SECRET_KEY: string`を`Env`型に含めるようになる。`api/.dev.vars.example`に非機密のテンプレートを追加した。
 - **4.1/4.2/4.3 検証方法**: `firebase.json`はGoogle Sign-Inのみ有効(anonymous/emailPasswordは無効)のため、本物のFirebase IDトークンをスクリプトで用意できない。そのため検証を2層に分けた: (a) 実際の`memosRoutes`(`FirebaseAuthMiddleware`込み)へトークンなしでアクセスし401を確認(認証境界の実証)、(b) 一時的なテストルート(未コミット)で`identity`を直接セットし`MemoRepository`/`MemoService`をHTTP越しに直接叩いて、作成/一覧/user_id分離/所有者チェック(403 forbidden vs 404 not_found)/バリデーション/上限判定3パターン(スタブ`getSubscriberStatus`で under-limit・at-limit+entitled・at-limit+not-entitledを`wrangler dev`のローカルD1に対して実証)を確認。`routes.ts`自身のエラーkind→HTTPステータスマッピング(`errorResponse()`)は静的な1:1switchであり、上記で実証済みの`MemoService`の`Result`形状を機械的にマッピングするだけなので、コードレビューで妥当性を確認した(3.1のPURCHASEDパスと同様の判断)。恒久テストは8.1(MemoServiceの上限3パターン)・8.2(routes.tsのHTTP CRUD統合テスト、他人のメモを操作できないことのテスト)が担当。
 - **4.3 レビュー指摘の修正**: 初回レビューで2件REJECTED。(1) design.mdの「API Data Transfer」契約(`Data Contracts & Integration`節)は`Memo`のクライアント向けDTOから`userId`を明示的に除外している("クライアントは自分のメモしか受け取らないため不要")のに、`routes.ts`が`MemoService`の内部`Memo`型(userId込み)をそのまま`c.json()`していた。`routes.ts`に`toMemoDto()`マッパーを追加しGET/POST/PATCHの全レスポンスに適用して修正(DELETEはボディなしなので対象外)。(2) `api/.dev.vars.example`は`api/.gitignore`の`.dev.vars.*`パターンにも一致し実際にはコミット不能だった → `.gitignore`に`!.dev.vars.example`を追記して解消。あわせて`3. Core: 課金コンポーネント`の親チェックボックスが誤って`[x]`になっていた(1./2.は親を未チェックのまま維持する既存方針と不整合)ため`[ ]`に戻した。
+- **5.1**: `MemoAPIClient`は設計table上`AuthSessionStore`をP0依存としているが、`AuthSessionStore`はuid/displayNameのキャッシュのみでトークン取得APIを持たないため、リクエスト毎に新鮮なIDトークンを得る目的で`Auth.auth().currentUser?.getIDToken()`を直接呼び出す設計にした(意図的な逸脱、レビューで妥当と判断)。`Memo`のCodable実装は`Date().toISOString()`(ミリ秒付きISO8601)をパースするため`ISO8601DateFormatter`に`.withFractionalSeconds`を追加したカスタムデコーダを用意した(デフォルトオプションでは小数点秒を含む文字列を拒否するため)。2.1-4.3と同じ方針で本タスクも恒久テストファイルは追加していない(iOSテストターゲット自体が未作成で、8.3が担当)。新規Swiftファイル追加に伴い`xcodegen generate`を実行したため、3.1のImplementation Notesの手順通りSPM依存(firebase-ios-sdk exactVersion 11.11.0 / GoogleSignIn-iOS exactVersion 9.0.0 / purchases-ios upToNextMajorVersion 5.81.2)と`Sources/Info.plist`のGIDClientID/CFBundleURLTypesを再適用し、シミュレータ向けビルド成功を確認した。
 - **3.2**: `RevenueCatClient`(`api/src/billing/revenueCatClient.ts`)は`Env`型に依存せず`{ secretKey, entitlementId }`を直接受け取る設計にした(`RC_SECRET_KEY`はWorkers Secretで`wrangler.jsonc`に定義がなく`wrangler types`が生成する`Env`型に含まれないため)。呼び出し元(4.2のMemoService)は`c.env.RC_SECRET_KEY`を読んで渡す形になるが、その時点でも`.dev.vars`が無い限りローカル`wrangler dev`はこの値を持たない。実機検証は`wrangler dev --remote`(ローカルdevサーバーを維持しつつ実際にデプロイ済みWorkerの本物のシークレットを使う)で行い、値を一切チャットに露出させずに済んだ。RevenueCat REST API v1のレスポンス形式は`subscriber.entitlements[id].expires_date`(ISO8601文字列、無期限は`null`)。既知のuidにRC MCPの`grant-customer-entitlement`でプロモーション権を付与し、`hasActiveEntitlement: true`/未知uidで`false`を実機確認済み。
