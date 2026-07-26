@@ -14,10 +14,10 @@
   - 観測可能な完了状態: `firebase deploy --only auth`が`Auth providers enabled: Google sign-in`で成功し、`memo_app/GoogleService-Info.plist`(BUNDLE_ID `com.haruki.MemoApp`, PROJECT_ID `memo-app-shipaton`)が取得済み
   - _Requirements: 1.1_
 
-- [ ] 1.3 バックエンド(api/)プロジェクトの初期化
-  - `package.json`、`tsconfig.json`、`wrangler.jsonc`(D1バインディング、`FREE_TIER_MEMO_LIMIT`・`RC_ENTITLEMENT_ID`環境変数を含む)を作成する
-  - `wrangler types`で`env.d.ts`を生成する(手書き禁止)
-  - 観測可能な完了状態: `wrangler dev`が空のワーカーとしてエラーなく起動する
+- [x] 1.3 バックエンド(api/)プロジェクトの初期化
+  - `package.json`、`tsconfig.json`、`wrangler.jsonc`(`FREE_TIER_MEMO_LIMIT`・`RC_ENTITLEMENT_ID`環境変数を含む。D1バインディングは1.4でデータベース作成後に追加)を作成する
+  - `wrangler types`で`src/types/env.d.ts`を生成する(手書き禁止)
+  - 観測可能な完了状態: `npx tsc --noEmit`がエラーなく完了し、`wrangler dev`が`FREE_TIER_MEMO_LIMIT`/`RC_ENTITLEMENT_ID`バインディングを表示して`Ready on http://localhost:8799`で起動する(独立レビューで再検証済み)
   - _Requirements: 1.6, 5.1_
 
 - [ ] 1.4 memosテーブルのD1マイグレーション作成
@@ -220,3 +220,7 @@
 - **1.2**: Firebaseプロジェクトは新規作成(`memo-app-shipaton`)。既存の6プロジェクト(frkt-demo等)はいずれもmemo_app向けではないため使用しなかった。
 - **1.2**: `firebase.json`の`googleSignIn.authorizedRedirectUris`に`http://localhost`を明示すると、Firebaseが自動プロビジョニングする「Default Web App」側の登録と重複し`PostMessage Origins have duplicate [http://localhost]`エラーになる。この項目は省略すること。
 - **1.2**: iOSアプリ登録情報 — Bundle ID `com.haruki.MemoApp`、App ID `1:682928555697:ios:859db82e3de83f58a3c490`。`GoogleService-Info.plist`の`REVERSED_CLIENT_ID`(`com.googleusercontent.apps.682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1`)と`CLIENT_ID`(`682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1.apps.googleusercontent.com`)は1.7のInfo.plist設定(URLスキーム・`GIDClientID`)でそのまま使用する。
+- **1.3**: `wrangler.jsonc`にD1バインディング(`d1_databases`)はまだ追加していない — D1データベースが存在しない状態でdatabase_idを書けないため。1.4で`wrangler d1 create`実行後、同ファイルに`d1_databases`バインディングを追記すること(`migrations_dir: "./migrations"`も併せて設定)。
+- **1.3**: `wrangler types`は`@cloudflare/workers-types`を置き換える方針にAPI側から誘導される(実行時に`Action required: Migrate from @cloudflare/workers-types to generated runtime types`と表示された)。そのため`@cloudflare/workers-types`は依存関係から除外し、代わりに`nodejs_compat`フラグ向けに`@types/node`を追加、`tsconfig.json`の`types`は`["node"]`のみとした。
+- **1.3**: `wrangler types <path>`は出力先ディレクトリ(`src/types/`)が事前に存在しないと書き込みに失敗する。ディレクトリを先に作成してから実行すること。
+- **1.3**: `wrangler dev`をエージェント環境で実行すると`Local Explorer API`(`/cdn-cgi/explorer/api`)がバインディング確認用に自動公開される。動作確認に活用できる。
