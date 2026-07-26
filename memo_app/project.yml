@@ -12,6 +12,8 @@ targets:
     platform: iOS
     sources:
       - Sources
+      - path: GoogleService-Info.plist
+        buildPhase: resources
     settings:
       base:
         TARGETED_DEVICE_FAMILY: "1"
@@ -23,3 +25,30 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        # Kept here (not just hand-edited into Sources/Info.plist) so `xcodegen generate` stops
+        # wiping these on every regeneration — see tasks.md Implementation Notes 2.1/2.2 for the
+        # prior recurring pain point this caused.
+        GIDClientID: "682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1.apps.googleusercontent.com"
+        CFBundleURLTypes:
+          - CFBundleURLSchemes:
+              - "com.googleusercontent.apps.682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1"
+  MemoAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - Tests/MemoAppTests
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: MemoApp
+schemes:
+  MemoApp:
+    build:
+      targets:
+        MemoApp: all
+        MemoAppTests: [test]
+    test:
+      targets:
+        - MemoAppTests

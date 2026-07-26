@@ -8,39 +8,58 @@
 
 /* Begin PBXBuildFile section */
 		015A2F34F91C8202DC8BA762 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C51B73720B5D37A0A8551181 /* Assets.xcassets */; };
+		081A4FFF86CB70537C7B7EE9 /* FakeMemoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFA3EA122267FEF37950EAB /* FakeMemoAPIClient.swift */; };
 		115CA1658D3B99ACB95C8A10 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3EDECB2877C16D7DC651FF /* AuthService.swift */; };
-		1D632AF4B6A9498A27371D5A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 08BE48CE455874D96E66AB26 /* RevenueCat */; };
 		2B1D67FA59EEED07AD99B3C5 /* AuthSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C6F4D0520631688089E9A7 /* AuthSessionStore.swift */; };
+		2F5167D332C29DCBB2B50A54 /* FakeAuthStateObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4C4755CA659AA528C70FE9 /* FakeAuthStateObserving.swift */; };
+		62867049E3DD6D628B119EE6 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 357BD341B2E34BC7D7896E45 /* GoogleSignIn */; };
 		6864F952B53968D0CCDCD685 /* MemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */; };
 		71DB80FB7189F1519196EA6E /* MemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E858F6AF1ACE780A46D212 /* MemoListViewModel.swift */; };
 		71EC79004B1FEBF1E79C449B /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DFD97EC265B51FD6068B4E /* SignInView.swift */; };
-		729F310FA639EE55CBFC17D4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */; };
+		729F310FA639EE55CBFC17D4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 08BE48CE455874D96E66AB26 /* RevenueCat */; };
 		809B09CCCBF8C406113EDC08 /* MemoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62611EBFCDD037844A1F46C /* MemoAPIClient.swift */; };
-		830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 575E8C77DDCE5DA6950A2150 /* GoogleSignIn */; };
+		8CC20151A2109DE5990BBFC0 /* MemoListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCD92E0CC0F84C64EE33F44 /* MemoListViewModelTests.swift */; };
 		9C35FBBD89398849C902E09A /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */; };
 		A44A8AC8203E14F0CCAD5D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */; };
 		AF0BA267D02A60A974A70A38 /* MemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446B21F0D22A4C6855480823 /* MemoListView.swift */; };
 		C2B84953DA84FEAD82BEEC5F /* MemoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */; };
+		C4D1B50BF338FDB03143B0D8 /* AuthSessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4318E2EF7ADE4E27B271FB77 /* AuthSessionStoreTests.swift */; };
 		C8112A20B752E27FB56B71E8 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4137B5B7B3B2F841D45A1C5A /* PaywallView.swift */; };
 		E7134356EAE7403A6C1FDD1C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB420A5B31165391D1FBE22 /* Memo.swift */; };
+		EE3ED9947606B764A3659D99 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 26C2FCF015C87061D5F781A7 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E8E2CFA688F1843AF654F3EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59AAC090131D2B733BEE939F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 68734F8C80461A197237C07E;
+			remoteInfo = MemoApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		28E858F6AF1ACE780A46D212 /* MemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewModel.swift; sourceTree = "<group>"; };
 		2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoApp.swift; sourceTree = "<group>"; };
+		2FCD92E0CC0F84C64EE33F44 /* MemoListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewModelTests.swift; sourceTree = "<group>"; };
 		2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		4137B5B7B3B2F841D45A1C5A /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		4318E2EF7ADE4E27B271FB77 /* AuthSessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionStoreTests.swift; sourceTree = "<group>"; };
 		446B21F0D22A4C6855480823 /* MemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListView.swift; sourceTree = "<group>"; };
 		455549FE8FAD2C0019183182 /* MemoApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3EDECB2877C16D7DC651FF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		6DB420A5B31165391D1FBE22 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		77B5CD18E6A1BEE029DFADA4 /* MemoAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MemoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		804728780240AD59008F4CDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		95C6F4D0520631688089E9A7 /* AuthSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionStore.swift; sourceTree = "<group>"; };
+		9CFA3EA122267FEF37950EAB /* FakeMemoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeMemoAPIClient.swift; sourceTree = "<group>"; };
 		B0DFD97EC265B51FD6068B4E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		B2933AE5DD9FACFAC3D32437 /* MemoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditView.swift; sourceTree = "<group>"; };
 		C51B73720B5D37A0A8551181 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC4C4755CA659AA528C70FE9 /* FakeAuthStateObserving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAuthStateObserving.swift; sourceTree = "<group>"; };
 		D62611EBFCDD037844A1F46C /* MemoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAPIClient.swift; sourceTree = "<group>"; };
-		FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,9 +67,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				729F310FA639EE55CBFC17D4 /* FirebaseAuth in Frameworks */,
-				830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */,
-				1D632AF4B6A9498A27371D5A /* RevenueCat in Frameworks */,
+				729F310FA639EE55CBFC17D4 /* RevenueCat in Frameworks */,
+				EE3ED9947606B764A3659D99 /* FirebaseAuth in Frameworks */,
+				62867049E3DD6D628B119EE6 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAD3FAC6D5F5EEDDF010226E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +89,17 @@
 				2FF04B9E4358D93FA7BD4FE5 /* PurchaseService.swift */,
 			);
 			path = Billing;
+			sourceTree = "<group>";
+		};
+		4D0EBF25DEC55C0781FBCF34 /* MemoAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				4318E2EF7ADE4E27B271FB77 /* AuthSessionStoreTests.swift */,
+				2FCD92E0CC0F84C64EE33F44 /* MemoListViewModelTests.swift */,
+				8D2C6A9630F375E30A7F2B1B /* Support */,
+			);
+			name = MemoAppTests;
+			path = Tests/MemoAppTests;
 			sourceTree = "<group>";
 		};
 		6B03C955E9C28756C56D9B0B /* App */ = {
@@ -88,8 +125,18 @@
 			isa = PBXGroup;
 			children = (
 				455549FE8FAD2C0019183182 /* MemoApp.app */,
+				77B5CD18E6A1BEE029DFADA4 /* MemoAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8D2C6A9630F375E30A7F2B1B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				CC4C4755CA659AA528C70FE9 /* FakeAuthStateObserving.swift */,
+				9CFA3EA122267FEF37950EAB /* FakeMemoAPIClient.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		8EB77344678495D5197704FC /* Auth */ = {
@@ -104,9 +151,10 @@
 		91ACD04FE6EB34C53B571390 = {
 			isa = PBXGroup;
 			children = (
+				FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */,
+				4D0EBF25DEC55C0781FBCF34 /* MemoAppTests */,
 				C393B5B09C0719DE3FAD6226 /* Sources */,
 				827E34DA4CFDBD9EFB71119C /* Products */,
-				FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +185,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2F0EE85C6A92A5F2A3B71D9B /* MemoAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A01AA5DECC225C67D8DA446F /* Build configuration list for PBXNativeTarget "MemoAppTests" */;
+			buildPhases = (
+				46CC93641C4150B1BA7F6116 /* Sources */,
+				AAD3FAC6D5F5EEDDF010226E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F681250152ACD87B98C413F7 /* PBXTargetDependency */,
+			);
+			name = MemoAppTests;
+			packageProductDependencies = (
+			);
+			productName = MemoAppTests;
+			productReference = 77B5CD18E6A1BEE029DFADA4 /* MemoAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		68734F8C80461A197237C07E /* MemoApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB757615DCE8D1F6AB0ABA3C /* Build configuration list for PBXNativeTarget "MemoApp" */;
@@ -151,9 +218,9 @@
 			);
 			name = MemoApp;
 			packageProductDependencies = (
-				2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */,
-				575E8C77DDCE5DA6950A2150 /* GoogleSignIn */,
 				08BE48CE455874D96E66AB26 /* RevenueCat */,
+				26C2FCF015C87061D5F781A7 /* FirebaseAuth */,
+				357BD341B2E34BC7D7896E45 /* GoogleSignIn */,
 			);
 			productName = MemoApp;
 			productReference = 455549FE8FAD2C0019183182 /* MemoApp.app */;
@@ -190,6 +257,7 @@
 			projectRoot = "";
 			targets = (
 				68734F8C80461A197237C07E /* MemoApp */,
+				2F0EE85C6A92A5F2A3B71D9B /* MemoAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,6 +275,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		46CC93641C4150B1BA7F6116 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4D1B50BF338FDB03143B0D8 /* AuthSessionStoreTests.swift in Sources */,
+				2F5167D332C29DCBB2B50A54 /* FakeAuthStateObserving.swift in Sources */,
+				081A4FFF86CB70537C7B7EE9 /* FakeMemoAPIClient.swift in Sources */,
+				8CC20151A2109DE5990BBFC0 /* MemoListViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99DF85E23CC83FDE3EF8848F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +306,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F681250152ACD87B98C413F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 68734F8C80461A197237C07E /* MemoApp */;
+			targetProxy = E8E2CFA688F1843AF654F3EE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		26B1F5D6394BA61388B2685D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -238,9 +325,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoApp;
 				SDKROOT = iphoneos;
@@ -367,6 +451,46 @@
 			};
 			name = Release;
 		};
+		8439DE9FC53C123D55C6BAEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoAppTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MemoApp.app/MemoApp";
+			};
+			name = Debug;
+		};
+		A94DF17C43B1DBB6E1091CF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoAppTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MemoApp.app/MemoApp";
+			};
+			name = Release;
+		};
 		BC9EADFD710C57202B7FAA76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -377,9 +501,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoApp;
 				SDKROOT = iphoneos;
@@ -395,6 +516,15 @@
 			buildConfigurations = (
 				55622BC98720C8EA1F3823CA /* Debug */,
 				5B3BE53830F25DF77B6823CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A01AA5DECC225C67D8DA446F /* Build configuration list for PBXNativeTarget "MemoAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8439DE9FC53C123D55C6BAEF /* Debug */,
+				A94DF17C43B1DBB6E1091CF1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -443,12 +573,12 @@
 			package = 55FDBC8BD6FB1BC06F435E85 /* XCRemoteSwiftPackageReference "purchases-ios" */;
 			productName = RevenueCat;
 		};
-		2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */ = {
+		26C2FCF015C87061D5F781A7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1EFFF509F14DF7B82FDD7AC4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		575E8C77DDCE5DA6950A2150 /* GoogleSignIn */ = {
+		357BD341B2E34BC7D7896E45 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D6E0CB65B52044DC048AF25B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
