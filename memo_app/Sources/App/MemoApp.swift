@@ -1,3 +1,6 @@
+import FirebaseAuth
+import GoogleSignIn
+import RevenueCat
 import SwiftUI
 
 @main

@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		015A2F34F91C8202DC8BA762 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C51B73720B5D37A0A8551181 /* Assets.xcassets */; };
+		1D632AF4B6A9498A27371D5A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 08BE48CE455874D96E66AB26 /* RevenueCat */; };
 		6864F952B53968D0CCDCD685 /* MemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */; };
+		729F310FA639EE55CBFC17D4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */; };
+		830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 575E8C77DDCE5DA6950A2150 /* GoogleSignIn */; };
+		A44A8AC8203E14F0CCAD5D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,7 +20,21 @@
 		455549FE8FAD2C0019183182 /* MemoApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		804728780240AD59008F4CDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C51B73720B5D37A0A8551181 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		568C56377322038247D27DA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				729F310FA639EE55CBFC17D4 /* FirebaseAuth in Frameworks */,
+				830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */,
+				1D632AF4B6A9498A27371D5A /* RevenueCat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		6B03C955E9C28756C56D9B0B /* App */ = {
@@ -40,6 +58,7 @@
 			children = (
 				C393B5B09C0719DE3FAD6226 /* Sources */,
 				827E34DA4CFDBD9EFB71119C /* Products */,
+				FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +81,7 @@
 			buildPhases = (
 				99DF85E23CC83FDE3EF8848F /* Sources */,
 				781D4AB8521F7C4ACAFEAFDC /* Resources */,
+				568C56377322038247D27DA7 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -69,6 +89,9 @@
 			);
 			name = MemoApp;
 			packageProductDependencies = (
+				2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */,
+				575E8C77DDCE5DA6950A2150 /* GoogleSignIn */,
+				08BE48CE455874D96E66AB26 /* RevenueCat */,
 			);
 			productName = MemoApp;
 			productReference = 455549FE8FAD2C0019183182 /* MemoApp.app */;
@@ -94,6 +117,11 @@
 			);
 			mainGroup = 91ACD04FE6EB34C53B571390;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1EFFF509F14DF7B82FDD7AC4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D6E0CB65B52044DC048AF25B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				55FDBC8BD6FB1BC06F435E85 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 827E34DA4CFDBD9EFB71119C /* Products */;
 			projectDirPath = "";
@@ -110,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				015A2F34F91C8202DC8BA762 /* Assets.xcassets in Resources */,
+				A44A8AC8203E14F0CCAD5D3E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +166,9 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoApp;
 				SDKROOT = iphoneos;
@@ -274,6 +306,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.haruki.MemoApp;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -302,6 +337,51 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1EFFF509F14DF7B82FDD7AC4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 11.11.0;
+			};
+		};
+		55FDBC8BD6FB1BC06F435E85 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.81.2;
+			};
+		};
+		D6E0CB65B52044DC048AF25B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = exactVersion;
+				version = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		08BE48CE455874D96E66AB26 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55FDBC8BD6FB1BC06F435E85 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+		2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EFFF509F14DF7B82FDD7AC4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		575E8C77DDCE5DA6950A2150 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D6E0CB65B52044DC048AF25B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59AAC090131D2B733BEE939F /* Project object */;
 }

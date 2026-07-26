@@ -18,6 +18,17 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>682928555697-ne4a7qcqrjp747b86a9j1d5od0lj93u1.apps.googleusercontent.com</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

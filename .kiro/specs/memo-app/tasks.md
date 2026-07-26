@@ -39,7 +39,7 @@
   - 観測可能な完了状態: 生成された空のiOSアプリがシミュレータでビルド・起動できる
   - _Requirements: 1.1_
 
-- [ ] 1.7 Firebase/GoogleSignIn/RevenueCat SPM依存関係の追加とInfo.plist設定
+- [x] 1.7 Firebase/GoogleSignIn/RevenueCat SPM依存関係の追加とInfo.plist設定
   - `xcode-project-setup`スキルのスクリプトで`FirebaseAuth`、`GoogleSignIn`、`RevenueCat`のSPM依存を`memo_app.xcodeproj`に追加する
   - `GoogleService-Info.plist`をリソースとしてリンクする
   - Info.plistに`GIDClientID`と逆引きクライアントID形式のURLスキームを`CFBundleURLTypes`へ手動追加する
@@ -226,3 +226,4 @@
 - **1.3**: `wrangler dev`をエージェント環境で実行すると`Local Explorer API`(`/cdn-cgi/explorer/api`)がバインディング確認用に自動公開される。動作確認に活用できる。
 - **1.4**: `.claude/hooks/block-protected-files.sh`が`migrations/[0-9]{4}.*\.(sql|ts|js)$`へのEdit/Write toolを一律拒否する(新規作成でも)。マイグレーションファイルは`wrangler d1 migrations create <db> <name>`でスキャフォールドし、内容の書き込みはBashのheredoc(`cat > ... << 'EOF'`)で行うこと。DB作成は`wrangler d1 create memo-app-db`(APAC region作成、database_id払い出し)、`wrangler.jsonc`の`d1_databases`バインディング追加後は必ず`npm run types`で`env.d.ts`を再生成すること(手書き禁止は1.3と同じ方針)。
 - **1.5**: `wrangler secret put`は対象Workerが一度もデプロイされていないと`Worker "memo-app-api" not found`で失敗する(シークレットはデプロイ済みWorkerに紐づく仕組みのため)。1.3時点ではまだ`wrangler deploy`していなかったので、1.5実行前に一度`wrangler deploy`してWorkerを作成した(スタブ実装で先行デプロイ、URLは`https://memo-app-api.avp-104-106-107-a78.workers.dev`)。また、プロジェクトの`wrangler` skill(`.claude/skills/wrangler/SKILL.md`)が「シークレット値をコマンド引数や`echo`で渡さない」ことを明記しているため、エージェントは`wrangler secret put`を代行実行できない — シークレット値の入力は必ずユーザー自身が対話プロンプトで行うこと。
+- **1.7**: このマシンのXcode 15.1(Swift 5.9.2)は、Firebase/GoogleSignInの現行SPMリリースが要求するSwiftツールチェーンより古い。以下3点が必要だった。(a) `xcode-project-setup`スキル同梱の`xcode_spm_setup`スクリプト自体が、依存する`XcodeProj`パッケージの`.upToNextMajor(from: "8.27.7")`指定により8.27.7以降(swift-tools-version 5.10要求)を掴んでビルド不能になっていたため、`.agents/skills/xcode-project-setup/scripts/xcode_spm_setup/Package.swift`で`XcodeProj`を`.exact("8.24.11")`(tools-version 5.8、Swift 5.9.2と互換)に固定した。(b) 同スクリプトの`Sources/main.swift`に順序バグがあり、`PBXFrameworksBuildPhase`が存在しないターゲット(XcodeGenは依存ゼロのターゲットに空のFrameworksビルドフェーズを生成しない)に対して`rootObject.addSwiftPackage(...)`を呼ぶと`Could not find frameworks build phase for target`で失敗する — フェーズ確保処理を`addSwiftPackage`呼び出しの前に移動して修正した。(c) SPMのマニフェスト上の`swift-tools-version`表示だけでは実際にコンパイル可能かは保証されない(パッケージ側が5.9系を名乗りつつSwift 6構文を含むケースがある)。実機検証の結果、`memo_app.xcodeproj`の`XCRemoteSwiftPackageReference`は以下へ`kind = exactVersion`で厳密固定すること: `firebase-ios-sdk` = `11.11.0`(11.12.0で`internal import`アクセスレベル構文、より新しいバージョンで`sending`引数修飾子が導入されSwift 5.9.2でコンパイル不能)、`GoogleSignIn-iOS` = `9.0.0`(9.1.0以降はswift-tools-version 6.0要求)。`purchases-ios`は`5.81.2`(最新かつSwift 5.9.2と互換、`my_first_swift_project`と同一バージョン)のまま`upToNextMajorVersion`で問題なし。将来Xcodeをアップグレードした際は、これらの`exactVersion`固定を見直して最新版に戻すことを検討する。

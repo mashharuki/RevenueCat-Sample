@@ -139,25 +139,11 @@ func main() {
             }
         }
         
-        // 2. Add Swift Package Dependency
-        print("Adding Swift Package Dependency: \(repoURL)")
-        
-        // Check if package already exists
-        let packageRef: XCRemoteSwiftPackageReference
-        if let existingPkg = rootObject.remotePackages.first(where: { $0.repositoryURL == repoURL }) {
-            packageRef = existingPkg
-            print("Package already present.")
-        } else {
-            packageRef = try rootObject.addSwiftPackage(
-                repositoryURL: repoURL, 
-                productName: products.first!, 
-                versionRequirement: .upToNextMajorVersion(versionRequirementString), 
-                targetName: target.name
-            )
-        }
-        
-        // 3. Link requested products
-        print("Linking products: \(products.joined(separator: ", "))")
+        // 2. Ensure a Frameworks build phase exists before touching packages.
+        // XcodeGen does not emit an (empty) PBXFrameworksBuildPhase for targets
+        // with no dependencies declared in project.yml, but XcodeProj's
+        // addSwiftPackage(...) below requires one to already be present on the
+        // target or it throws "Could not find frameworks build phase for target".
         var frameworksBuildPhase = target.buildPhases.compactMap { $0 as? PBXFrameworksBuildPhase }.first
         if frameworksBuildPhase == nil {
             let newPhase = PBXFrameworksBuildPhase()
@@ -165,6 +151,26 @@ func main() {
             target.buildPhases.append(newPhase)
             frameworksBuildPhase = newPhase
         }
+
+        // 3. Add Swift Package Dependency
+        print("Adding Swift Package Dependency: \(repoURL)")
+
+        // Check if package already exists
+        let packageRef: XCRemoteSwiftPackageReference
+        if let existingPkg = rootObject.remotePackages.first(where: { $0.repositoryURL == repoURL }) {
+            packageRef = existingPkg
+            print("Package already present.")
+        } else {
+            packageRef = try rootObject.addSwiftPackage(
+                repositoryURL: repoURL,
+                productName: products.first!,
+                versionRequirement: .upToNextMajorVersion(versionRequirementString),
+                targetName: target.name
+            )
+        }
+
+        // 4. Link requested products
+        print("Linking products: \(products.joined(separator: ", "))")
         
         for product in products {
             // Check if product is already linked
@@ -186,7 +192,7 @@ func main() {
             frameworksBuildPhase?.files?.append(buildFile)
         }
 
-        // 4. Add -ObjC linker flag if adding Firebase
+        // 5. Add -ObjC linker flag if adding Firebase
         if products.contains(where: { $0.contains("Firebase") }) {
             print("Adding -ObjC to OTHER_LDFLAGS...")
             for configuration in target.buildConfigurationList?.buildConfigurations ?? [] {
