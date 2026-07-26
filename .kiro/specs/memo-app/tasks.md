@@ -116,7 +116,7 @@
   - _Boundary: routes.ts (Memos API)_
   - _Depends: 2.3, 4.2_
 
-- [ ] 5. Core: メモ機能(iOSクライアント)
+- [x] 5. Core: メモ機能(iOSクライアント)
 - [x] 5.1 Memoモデル + MemoAPIClient実装
   - クライアント側`Memo`モデル(Codable)を定義する
   - `api/`へのHTTPクライアントを実装し、リクエスト毎に最新のFirebase IDトークンを取得して`Authorization`ヘッダーに付与する
@@ -135,7 +135,7 @@
   - _Depends: 5.1_
 
 - [ ] 6. Core: 画面(iOSクライアント Views)
-- [ ] 6.1 (P) SignInView実装
+- [x] 6.1 (P) SignInView実装
   - Googleサインインボタンと、失敗/キャンセル時のエラーメッセージ表示を実装する
   - 観測可能な完了状態: サインイン失敗時にエラーメッセージが画面に表示され、成功時に画面遷移が発生する
   - _Requirements: 1.1, 1.3_
@@ -236,4 +236,5 @@
 - **4.3 レビュー指摘の修正**: 初回レビューで2件REJECTED。(1) design.mdの「API Data Transfer」契約(`Data Contracts & Integration`節)は`Memo`のクライアント向けDTOから`userId`を明示的に除外している("クライアントは自分のメモしか受け取らないため不要")のに、`routes.ts`が`MemoService`の内部`Memo`型(userId込み)をそのまま`c.json()`していた。`routes.ts`に`toMemoDto()`マッパーを追加しGET/POST/PATCHの全レスポンスに適用して修正(DELETEはボディなしなので対象外)。(2) `api/.dev.vars.example`は`api/.gitignore`の`.dev.vars.*`パターンにも一致し実際にはコミット不能だった → `.gitignore`に`!.dev.vars.example`を追記して解消。あわせて`3. Core: 課金コンポーネント`の親チェックボックスが誤って`[x]`になっていた(1./2.は親を未チェックのまま維持する既存方針と不整合)ため`[ ]`に戻した。
 - **5.1**: `MemoAPIClient`は設計table上`AuthSessionStore`をP0依存としているが、`AuthSessionStore`はuid/displayNameのキャッシュのみでトークン取得APIを持たないため、リクエスト毎に新鮮なIDトークンを得る目的で`Auth.auth().currentUser?.getIDToken()`を直接呼び出す設計にした(意図的な逸脱、レビューで妥当と判断)。`Memo`のCodable実装は`Date().toISOString()`(ミリ秒付きISO8601)をパースするため`ISO8601DateFormatter`に`.withFractionalSeconds`を追加したカスタムデコーダを用意した(デフォルトオプションでは小数点秒を含む文字列を拒否するため)。2.1-4.3と同じ方針で本タスクも恒久テストファイルは追加していない(iOSテストターゲット自体が未作成で、8.3が担当)。新規Swiftファイル追加に伴い`xcodegen generate`を実行したため、3.1のImplementation Notesの手順通りSPM依存(firebase-ios-sdk exactVersion 11.11.0 / GoogleSignIn-iOS exactVersion 9.0.0 / purchases-ios upToNextMajorVersion 5.81.2)と`Sources/Info.plist`のGIDClientID/CFBundleURLTypesを再適用し、シミュレータ向けビルド成功を確認した。
 - **5.2**: `MemoListViewModel.isLimitReached`は`createMemo`が`.limitReached`を受け取った時のみ`true`になり、成功パス(`createMemo`成功時)でのみ`false`に戻す実装にした。7.1/7.2(購入成功後の再試行接続)を実装する際、`PurchaseService.purchase`が成功しただけでは`isLimitReached`は自動的に`false`に戻らない(次の`createMemo`呼び出しが成功して初めて解除される)点に注意し、購入成功時に明示的に`isLimitReached = false`をセットするか、再試行の`createMemo`呼び出し自体に任せるかを設計判断すること(レビュー指摘、非ブロッキング)。
+- **6.1**: `SignInView`は`AuthServicing`をデフォルト`AuthService()`で受け取るが、`@MainActor`型の`AuthService()`呼び出しをinitの**デフォルト引数式**に書くと"call to main actor-isolated initializer in a synchronous nonisolated context"でコンパイルエラーになる(デフォルト引数の評価コンテキストが型のグローバルアクター分離を継承しないため)。`init(authService: AuthServicing? = nil) { self.authService = authService ?? AuthService() }`のようにinit本体内で構築する形に変えれば解決する(SignInView自体も`@MainActor`を付与)。今後`@MainActor`型をSwiftUI Viewのデフォルト引数にする場合は同じ回避が必要。ナビゲーション(SignInView→MemoListViewの遷移)はこのタスクでは実装せず7.1が担当(design.mdの「Presentational Views」節どおり、SignInViewは新しい境界を持たない)。恒久テストはまだ無いため、シミュレータでの実機的検証(ビューを一時的に`MemoApp.swift`のルートに差し込み、ボタンタップで実際のGoogle同意シートが表示されること、キャンセル時にエラーメッセージが表示されて画面遷移しないことをスクリーンショットで確認、検証後`MemoApp.swift`を元に戻す)を完了の根拠とした。
 - **3.2**: `RevenueCatClient`(`api/src/billing/revenueCatClient.ts`)は`Env`型に依存せず`{ secretKey, entitlementId }`を直接受け取る設計にした(`RC_SECRET_KEY`はWorkers Secretで`wrangler.jsonc`に定義がなく`wrangler types`が生成する`Env`型に含まれないため)。呼び出し元(4.2のMemoService)は`c.env.RC_SECRET_KEY`を読んで渡す形になるが、その時点でも`.dev.vars`が無い限りローカル`wrangler dev`はこの値を持たない。実機検証は`wrangler dev --remote`(ローカルdevサーバーを維持しつつ実際にデプロイ済みWorkerの本物のシークレットを使う)で行い、値を一切チャットに露出させずに済んだ。RevenueCat REST API v1のレスポンス形式は`subscriber.entitlements[id].expires_date`(ISO8601文字列、無期限は`null`)。既知のuidにRC MCPの`grant-customer-entitlement`でプロモーション権を付与し、`hasActiveEntitlement: true`/未知uidで`false`を実機確認済み。

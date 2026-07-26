@@ -13,6 +13,7 @@
 		2B1D67FA59EEED07AD99B3C5 /* AuthSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C6F4D0520631688089E9A7 /* AuthSessionStore.swift */; };
 		6864F952B53968D0CCDCD685 /* MemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */; };
 		71DB80FB7189F1519196EA6E /* MemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E858F6AF1ACE780A46D212 /* MemoListViewModel.swift */; };
+		71EC79004B1FEBF1E79C449B /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DFD97EC265B51FD6068B4E /* SignInView.swift */; };
 		729F310FA639EE55CBFC17D4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2CDBC3EE2AA36F4948E4C7E1 /* FirebaseAuth */; };
 		809B09CCCBF8C406113EDC08 /* MemoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62611EBFCDD037844A1F46C /* MemoAPIClient.swift */; };
 		830C3AC9E9FAF3FCD8E45EA1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 575E8C77DDCE5DA6950A2150 /* GoogleSignIn */; };
@@ -30,6 +31,7 @@
 		6DB420A5B31165391D1FBE22 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		804728780240AD59008F4CDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		95C6F4D0520631688089E9A7 /* AuthSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionStore.swift; sourceTree = "<group>"; };
+		B0DFD97EC265B51FD6068B4E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C51B73720B5D37A0A8551181 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62611EBFCDD037844A1F46C /* MemoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoAPIClient.swift; sourceTree = "<group>"; };
 		FBFACA606FDC301EA0CB8DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 				2B7A892AD8D4ACA4A79DFF89 /* MemoApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		6DD4042FEE17D2DC0D63DDFB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B0DFD97EC265B51FD6068B4E /* SignInView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		827E34DA4CFDBD9EFB71119C /* Products */ = {
@@ -110,6 +120,7 @@
 				8EB77344678495D5197704FC /* Auth */,
 				458FF71FFD31BA642DB9C57C /* Billing */,
 				945EA3C72E92AE6EA3A5BA65 /* Memos */,
+				6DD4042FEE17D2DC0D63DDFB /* Views */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -198,6 +209,7 @@
 				6864F952B53968D0CCDCD685 /* MemoApp.swift in Sources */,
 				71DB80FB7189F1519196EA6E /* MemoListViewModel.swift in Sources */,
 				9C35FBBD89398849C902E09A /* PurchaseService.swift in Sources */,
+				71EC79004B1FEBF1E79C449B /* SignInView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
