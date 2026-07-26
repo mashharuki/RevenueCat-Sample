@@ -20,9 +20,15 @@ enum AuthError: Error {
 
 private struct MissingIDTokenError: Error {}
 
-/// Google Sign-In -> Firebase credential exchange. Does not call
-/// `PurchaseService.logIn(uid:)` — that connection is made by the integration
-/// task that wires this into the app's sign-in flow.
+/// Google Sign-In -> Firebase credential exchange. After a successful Firebase
+/// sign-in, ties the RevenueCat subscriber identity to the Firebase uid via
+/// `PurchaseService.logIn(uid:)` (design.md AuthService Responsibilities;
+/// `research.md` Decision) so the backend and RevenueCat agree on the same
+/// identifier. A `logIn` failure does not fail the sign-in itself — there is
+/// no dedicated `AuthError` case for it. `MemoApp`'s root view retries
+/// `logIn` whenever `AuthSessionStore` observes a session (including this
+/// same sign-in), so a transient failure here is not the only chance to
+/// establish the identifier — see `RootView` in `MemoApp.swift`.
 @MainActor
 final class AuthService: AuthServicing {
   func signInWithGoogle() async -> Result<AuthenticatedUser, AuthError> {
@@ -62,6 +68,11 @@ final class AuthService: AuthServicing {
 
     do {
       let authResult = try await Auth.auth().signIn(with: credential)
+      do {
+        try await PurchaseService.logIn(uid: authResult.user.uid)
+      } catch {
+        print("PurchaseService.logIn failed after sign-in: \(error)")
+      }
       return .success(AuthenticatedUser(uid: authResult.user.uid, displayName: authResult.user.displayName))
     } catch {
       return .failure(.firebaseSignInFailed(underlying: error))

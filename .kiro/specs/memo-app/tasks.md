@@ -134,7 +134,7 @@
   - _Boundary: MemoListViewModel_
   - _Depends: 5.1_
 
-- [ ] 6. Core: 画面(iOSクライアント Views)
+- [x] 6. Core: 画面(iOSクライアント Views)
 - [x] 6.1 (P) SignInView実装
   - Googleサインインボタンと、失敗/キャンセル時のエラーメッセージ表示を実装する
   - 観測可能な完了状態: サインイン失敗時にエラーメッセージが画面に表示され、成功時に画面遷移が発生する
@@ -157,7 +157,7 @@
   - _Depends: 3.1_
 
 - [ ] 7. Integration: エンドツーエンドの配線
-- [ ] 7.1 アプリ起動シーケンスとサインイン→RevenueCatログインの接続
+- [x] 7.1 アプリ起動シーケンスとサインイン→RevenueCatログインの接続
   - `MemoApp.swift`で`FirebaseApp.configure()`→`PurchaseService.configure()`の順に起動処理を実行する
   - `AuthService`のサインイン成功時に`PurchaseService.logIn(uid)`を呼び出すよう接続する
   - `AuthSessionStore`の状態に応じて`SignInView`⇄`MemoListView`を切り替えるルートナビゲーションを実装する
@@ -240,3 +240,4 @@
 - **6.2**: `MemoListView`の行は当初、ラベルの`VStack`にframe指定がなくテキストの内在サイズ分しかタップ領域がなかった(行の右側をタップしても編集シートが開かない)。`.frame(maxWidth: .infinity, alignment: .leading)` + `.contentShape(Rectangle())`を付与して行全体をタップ可能にした。`MemoEditView.save()`は更新時のみ`viewModel.errorMessage == nil`で判定し、作成時のみ`!viewModel.isLimitReached`も追加で見る(5.2の`isLimitReached`は作成呼び出し以外では変化しないため、更新後にこのフラグを見ると無関係な過去の上限到達が残っていて誤ってdismissをブロックする恐れがある — レビューでバックエンド`service.ts`まで遡って裏付け済み)。PaywallViewへの遷移(要件3.2/4.5)はこのタスクでは実装せず7.2が担当。恒久テストはまだ無いため、`MemoApp.swift`を一時的にin-memoryのフェイク`MemoAPIClienting`実装で差し替えて実機的にCRUD一巡(作成→一覧反映→編集→一覧反映→削除)をシミュレータで確認し、検証後に元へ戻した。
 - **6.3**: `PaywallView`は購入・復元のどの結果(成功/キャンセル/失敗)でも`dismiss()`する設計にした(要件4.3が「失敗またはキャンセル時は前の画面に戻る」を一括りにしており、かつ4.1-4.4のいずれもエラーメッセージ表示までは要求していないため)。実際の購入失敗時にユーザーへフィードバックがない点はレビューで非ブロッキングの改善提案として指摘された(将来的に7.2等で`.failed`時のアラート表示を検討)。`Package.localizedPriceString`は`storeProduct`ではなく`Package`自身のプロパティである点に注意(`storeProduct.localizedTitle`/`.localizedDescription`とは異なる)。恒久テストはまだ無いため、`MemoApp.swift`を一時的に`PurchaseService.configure()` + `PaywallView()`ルートに差し替え、実際のRevenueCat Test Store(3.1と同一)に対してプラン取得(`メモ無制限(月額)` ¥490)・購入(Test Store Purchaseダイアログ経由でTest valid purchase)・復元がクラッシュなく完了することをシミュレータで確認し、検証後に元へ戻した。
 - **3.2**: `RevenueCatClient`(`api/src/billing/revenueCatClient.ts`)は`Env`型に依存せず`{ secretKey, entitlementId }`を直接受け取る設計にした(`RC_SECRET_KEY`はWorkers Secretで`wrangler.jsonc`に定義がなく`wrangler types`が生成する`Env`型に含まれないため)。呼び出し元(4.2のMemoService)は`c.env.RC_SECRET_KEY`を読んで渡す形になるが、その時点でも`.dev.vars`が無い限りローカル`wrangler dev`はこの値を持たない。実機検証は`wrangler dev --remote`(ローカルdevサーバーを維持しつつ実際にデプロイ済みWorkerの本物のシークレットを使う)で行い、値を一切チャットに露出させずに済んだ。RevenueCat REST API v1のレスポンス形式は`subscriber.entitlements[id].expires_date`(ISO8601文字列、無期限は`null`)。既知のuidにRC MCPの`grant-customer-entitlement`でプロモーション権を付与し、`hasActiveEntitlement: true`/未知uidで`false`を実機確認済み。
+- **7.1**: `MemoApp.swift`の`project.pbxproj`は`FirebaseAuth`/`GoogleSignIn`/`RevenueCat`の3プロダクトのみを明示リンクしており`FirebaseCore`は含まれていないが、`import FirebaseCore`は問題なくビルドできた(`FirebaseCore`はObjective-Cモジュールで、`FirebaseAuth`のパッケージ依存グラフの一部として同じビルドで解決されるため — `xcodebuild ... build`で`BUILD SUCCEEDED`を実機確認済み。今後同様に「暗黙の推移的依存のimportが通るか」を疑う場面では、まず実際に`xcodebuild`を回して確認するのが最も速い)。`AuthService.signInWithGoogle()`はFirebase sign-in成功後に`PurchaseService.logIn(uid:)`を呼ぶが、失敗しても`AuthError`の新規caseは追加せずサインイン自体は成功として返す(design.mdのService Interfaceを変更しないため)。初回レビューで「`logIn`失敗時に他の再試行経路が存在せず、RevenueCat識別子がFirebase uidと永久に紐付かなくなりうる」とImportant指摘を受け(`PurchaseService.configure()`/`purchase()`/`restore()`はいずれも`logIn`をやり直さないため)、`MemoApp.swift`の`RootView`に`.onChange(of: sessionStore.session)`を追加し、セッションがnilから非nilへ遷移するたび(初回サインイン時・永続化済みセッションでの再起動時の両方)に`PurchaseService.logIn(uid:)`を再試行する構成に修正して再レビューでAPPROVEDとなった(`logIn`は同一uidに対して冪等なため、`AuthService`内の初回呼び出しとの二重発火は許容)。design.mdのSystem Flow図が示す「RC logIn完了→navigate」という厳密な順序は採用していない(`RootView`のnavigationは`AuthSessionStore`のFirebase認証状態のみで即時決定し、`logIn`完了を待たない) — レビューでSuggestion(非ブロッキング)として記録済み、クライアント側でCustomerInfo/entitlementを同期的に参照する箇所が現状ないため実害は限定的。Google実アカウントによるサインイン→MemoListView遷移の完全なE2E確認は、実アカウント資格情報の入力が必要になるため本タスクでは行わず8.4(E2Eフロー検証)に委ねた(2.1/2.2/6.1と同じ既存方針)。
