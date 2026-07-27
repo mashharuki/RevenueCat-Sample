@@ -55,12 +55,20 @@ npx -y firebase-tools@latest apps:sdkconfig ios com.haruki.MemoApp
 
 **注意**: いずれも取り消しが困難、または既存ユーザーのサインインができなくなる破壊的操作。
 
-```bash
-# Google Sign-Inプロバイダのみ無効化(プロジェクト自体は残す)
-# firebase.json の googleSignIn を削除するか anonymous/emailPassword 同様に false 相当にしてから
-npx -y firebase-tools@latest deploy --only auth
+`firebase deploy --only auth`は「今の`firebase.json`の内容を反映するだけ」の汎用コマンドで、削除専用のコマンドではない(上の「デプロイ手順」と全く同じコマンド)。プロバイダを無効化するには、**先に`firebase.json`を編集してから**このコマンドで反映させる、という2ステップになる。
 
-# Firebaseプロジェクト自体を削除する場合(認証情報・全ユーザーが完全に消失する)
+```bash
+# 1. firebase.json の auth.providers.googleSignIn を削除(またはブロックごと外す)
+#    編集前:
+#      "googleSignIn": { "oAuthBrandDisplayName": "Memo App", "supportEmail": "..." }
+#    編集後: このキー自体を削除する
+
+# 2. 編集した設定を反映(通常のデプロイと同じコマンド)
+npx -y firebase-tools@latest deploy --only auth
+```
+
+```bash
+# Firebaseプロジェクト自体を削除する場合(認証情報・全ユーザーが完全に消失する。こちらは専用の削除コマンド)
 npx -y firebase-tools@latest projects:delete memo-app-shipaton
 ```
 
