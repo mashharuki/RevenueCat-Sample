@@ -73,7 +73,7 @@
   - _Boundary: FirebaseAuthMiddleware_
   - _Depends: 1.2, 1.3_
 
-- [ ] 3. Core: 課金コンポーネント
+- [x] 3. Core: 課金コンポーネント
 - [x] 3.1 (P) PurchaseService(クライアント)実装
   - `my_first_swift_project`の`PurchaseService.swift`と同じ`enum` + `static async`パターンで、RevenueCat SDKの初期化・オファリング取得・購入・復元を実装する
   - Firebase UIDを受け取り`Purchases.shared.logIn(uid)`を実行する関数を追加する
@@ -178,7 +178,7 @@
   - _Requirements: 1.6, 5.1, 5.2_
   - _Depends: 2.3, 4.3_
 
-- [ ] 8. Validation: テストと検証
+- [x] 8. Validation: テストと検証
 - [x] 8.1 (P) バックエンド単体テスト
   - `MemoService`の上限判定3パターン(上限未満/上限到達かつ有効/上限到達かつ無効)をテストする
   - `FirebaseAuthMiddleware`が期限切れ・aud不一致・改ざん署名のトークンをそれぞれ401にすることをテストする
