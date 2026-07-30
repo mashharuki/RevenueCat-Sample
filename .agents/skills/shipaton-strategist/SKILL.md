@@ -20,8 +20,9 @@ Shipaton 2026 の必須条件。詳細は `references/rules-and-categories.md` �
 
 - **新規アプリ**を iOS / iPadOS / macOS / Android 向けに開発し、**2026/8/1〜9/30 の間に初回公開**すること（既存アプリのアップデートは対象外）
 - **RevenueCat SDK を統合**し、少なくとも1つのアプリ内課金（または RevenueCat Ads による広告）を実装すること
-- 提出物: アプリ説明文、デモ動画（最大2分・YouTube/Vimeo）、公開ストアURL、アイコン(1024×1024)、スクリーンショット(1179×2556)、審査員向け無料アクセス（プロモコード等）
+- 提出物（前回大会ベースの参考値。⚠️ 2026年7月30日時点で公式`/rules`ページは「Full rules announced soon」で未確定）: アプリ説明文、デモ動画（最大2分・YouTube/Vimeo）、公開ストアURL、アイコン(1024×1024)、スクリーンショット(1179×2556)、審査員向け無料アクセス（プロモコード等）
 - 審査: 10/1〜13、結果発表: 10/21
+- 賞カテゴリは RevenueCat主催9つ＋スポンサー賞7つ＋インフルエンサー賞5つの**合計21カテゴリ**、確定賞金総額は**$685,000+**（詳細は `references/rules-and-categories.md` と `references/sponsor-and-influencer-awards.md`）
 - ⚠️ 公式ルールは開催直前に更新されるため、着手時に必ず https://revenuecat-shipaton-2026.devpost.com/rules で最新版を確認するよう促すこと
 
 ## ワークフロー
@@ -40,6 +41,8 @@ Shipaton 2026 の必須条件。詳細は `references/rules-and-categories.md` �
 
 Apple Developer アカウント未取得の場合、審査に時間がかかることがあるため**今すぐ登録**を最優先タスクとして伝える。iOSアプリ審査のリードタイム（数日〜1週間）から逆算し、実質的な開発締切は9月中旬〜下旬であることを必ず共有する。
 
+まだ Shipaton 自体に登録していないなら、それも今すぐの最優先タスクとして伝える。登録完了だけで「Ship Kit」の Milestone 1 特典（Replit Pro割引・OneSignal無料期間等）が解放されるため、登録を後回しにする理由がない（詳細は `references/sponsor-and-influencer-awards.md`）。
+
 ### Phase 1: 賞カテゴリ戦略
 
 **「どの賞を狙うか」を先に決める。** アイディアより先にカテゴリを決めるのは、Shipaton では審査基準がカテゴリごとに全く異なるためである（グランプリ=トラクション、Design Award=デザイン品質、HAMM=マネタイズ設計、Peace Prize=社会的インパクト）。
@@ -50,6 +53,8 @@ Apple Developer アカウント未取得の場合、審査に時間がかかる�
 - マネタイズ設計を語れる → HAMM Award 主軸 + グランプリ副次
 - 社会課題に情熱がある → Peace Prize 主軸 + HAMM 副次（ミッション連動型課金モデル）
 - 学生 → Next Gen Award（ストアアカウント不要）を必ず案内
+- 生産性/栄養・食事/ヨガ・フィットネス/キャリアコーチング/ゲーム のいずれかに強い経験や情熱がある → `references/sponsor-and-influencer-awards.md` の**インフルエンサー賞5部門**（審査員個人が公言する具体的な要望が基準）を必ず案内する。競合が少なく的を絞りやすい
+- KMP/Compose Multiplatformで開発する・Web課金導線を作る・リテンション施策に強みがある等の場合は、同ファイルの**スポンサー賞**（JetBrains/Stripe/OneSignal等）も相乗り候補として検討する
 
 #BuildInPublic はどのアイディアでも相乗り可能かつグロースにも直結するため、原則全員に推奨する。
 
@@ -144,6 +149,7 @@ Apple Developer アカウント未取得の場合、審査に時間がかかる�
 | ファイル | いつ読むか |
 |---|---|
 | `references/rules-and-categories.md` | Phase 0-1。ルール・賞・審査基準の確認時は必ず |
+| `references/sponsor-and-influencer-awards.md` | Phase 0-1。スポンサー賞・インフルエンサー賞・Ship Kit特典の詳細を確認する時は必ず |
 | `references/winning-patterns.md` | Phase 1-2, 4。過去勝者のパターン・マネタイズモデルを参照する時 |
 | `references/ideation-playbook.md` | Phase 2-3。アイディア発散・検証の進め方 |
 | `references/execution-playbook.md` | Phase 5-6。技術選定・スケジュール・グロース |
