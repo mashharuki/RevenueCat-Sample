@@ -3,16 +3,21 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { Barcode } from "@/components/ui/barcode";
 import { MovieColors, Radius, Spacing } from "@/constants/theme";
-import type { Movie } from "@/types/movie";
+import type { Movie, Showtime } from "@/types/movie";
 import type { Ticket } from "@/types/ticket";
 import { formatDayLabel } from "@/utils/format-date";
 
 type TicketCardProps = {
   ticket: Ticket;
   movie: Movie;
+  showtime: Showtime;
 };
 
-export function TicketCard({ ticket, movie }: TicketCardProps) {
+export function TicketCard({ ticket, movie, showtime }: TicketCardProps) {
+  const rowLabel = Array.from(
+    new Set(ticket.seatIds.map((seatId) => seatId.split("-")[0])),
+  ).join(", ");
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -36,8 +41,16 @@ export function TicketCard({ ticket, movie }: TicketCardProps) {
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Date</Text>
             <Text style={styles.detailValue}>
-              {formatDayLabel(ticket.purchasedAt.slice(0, 10)).day}
+              {formatDayLabel(showtime.date).day}
             </Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.detailLabel}>Time</Text>
+            <Text style={styles.detailValue}>{showtime.time}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.detailLabel}>Row</Text>
+            <Text style={styles.detailValue}>{rowLabel}</Text>
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Seats</Text>
@@ -101,10 +114,13 @@ const styles = StyleSheet.create({
   },
   detailsGrid: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    rowGap: Spacing.three,
+    columnGap: Spacing.three,
   },
   detailItem: {
     gap: Spacing.half,
+    minWidth: "27%",
   },
   detailLabel: {
     color: MovieColors.textMuted,

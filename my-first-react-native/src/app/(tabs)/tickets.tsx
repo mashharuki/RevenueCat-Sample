@@ -8,11 +8,13 @@ import { BottomTabInset, MovieColors, Spacing } from "@/constants/theme";
 import { useTickets } from "@/context/tickets-context";
 import { useAsync } from "@/hooks/use-async";
 import { fetchMovies } from "@/services/movies";
-import type { Movie } from "@/types/movie";
+import { fetchAllShowtimes } from "@/services/showtimes";
+import type { Movie, Showtime } from "@/types/movie";
 
 export default function TicketsScreen() {
   const { tickets, isLoading, error, reload } = useTickets();
   const moviesAsync = useAsync(fetchMovies, []);
+  const showtimesAsync = useAsync(fetchAllShowtimes, []);
 
   const movieById = useMemo(() => {
     const map = new Map<string, Movie>();
@@ -22,12 +24,22 @@ export default function TicketsScreen() {
     return map;
   }, [moviesAsync.data]);
 
-  const combinedLoading = isLoading || moviesAsync.isLoading;
-  const combinedError = error ?? moviesAsync.error;
+  const showtimeById = useMemo(() => {
+    const map = new Map<string, Showtime>();
+    for (const showtime of showtimesAsync.data ?? []) {
+      map.set(showtime.id, showtime);
+    }
+    return map;
+  }, [showtimesAsync.data]);
+
+  const combinedLoading =
+    isLoading || moviesAsync.isLoading || showtimesAsync.isLoading;
+  const combinedError = error ?? moviesAsync.error ?? showtimesAsync.error;
 
   function handleReload() {
     reload();
     moviesAsync.reload();
+    showtimesAsync.reload();
   }
 
   return (
@@ -46,8 +58,14 @@ export default function TicketsScreen() {
         >
           {tickets.map((ticket) => {
             const movie = movieById.get(ticket.movieId);
-            return movie ? (
-              <TicketCard key={ticket.id} ticket={ticket} movie={movie} />
+            const showtime = showtimeById.get(ticket.showtimeId);
+            return movie && showtime ? (
+              <TicketCard
+                key={ticket.id}
+                ticket={ticket}
+                movie={movie}
+                showtime={showtime}
+              />
             ) : null;
           })}
         </ScrollView>

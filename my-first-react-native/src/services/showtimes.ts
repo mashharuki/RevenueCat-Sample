@@ -30,3 +30,8 @@ export async function fetchShowtimeById(
   }
   return ok(showtime);
 }
+
+export async function fetchAllShowtimes(): Promise<Result<Showtime[]>> {
+  await delay();
+  return ok(SHOWTIMES);
+}
