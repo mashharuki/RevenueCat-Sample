@@ -28,3 +28,4 @@ RevenueCat学習・調査用のサンプルリポジトリ
 - [Figma - Sign Up and Animation](https://www.figma.com/community/file/1250806100555056627/sign-up-and-animation)
 - [Figma - Midjourney Web App](https://www.figma.com/community/file/1241020191420889535/midjourney-web-app)
 - [Figma - Notification Web Design](https://www.figma.com/community/file/1247548360630672682/notification-web-design)
+- [Rozenite - React Native DevTools Plugin Framework](https://github.com/callstackincubator/rozenite)
