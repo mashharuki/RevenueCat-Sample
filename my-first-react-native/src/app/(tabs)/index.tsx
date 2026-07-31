@@ -1,48 +1,108 @@
-import { useState } from "react";
+import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Barcode } from "@/components/ui/barcode";
-import { Chip } from "@/components/ui/chip";
-import { GradientButton } from "@/components/ui/gradient-button";
+import { PosterCard } from "@/components/movie/poster-card";
+import { ScreenState } from "@/components/ui/screen-state";
 import { MovieColors, Spacing } from "@/constants/theme";
+import { useAsync } from "@/hooks/use-async";
+import { fetchMovies } from "@/services/movies";
 
 export default function HomeScreen() {
-  const [selected, setSelected] = useState("Mon 25");
+  const router = useRouter();
+  const { data: movies, error, isLoading, reload } = useAsync(fetchMovies, []);
+
+  const nowShowing = movies?.slice(0, 5) ?? [];
+  const comingSoon = movies?.slice(5) ?? [];
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Component Showcase</Text>
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Good evening</Text>
+          <Text style={styles.title}>What are you watching tonight?</Text>
+        </View>
 
-      <View style={styles.row}>
-        {["Sat 23", "Sun 24", "Mon 25"].map((label) => (
-          <Chip key={label} label={label} selected={selected === label} onPress={() => setSelected(label)} />
-        ))}
-      </View>
+        <ScreenState
+          isLoading={isLoading}
+          error={error}
+          isEmpty={!isLoading && !error && (movies?.length ?? 0) === 0}
+          emptyMessage="No movies are showing right now."
+          onRetry={reload}
+        >
+          <Text style={styles.sectionTitle}>Now Showing</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.carousel}>
+            {nowShowing.map((movie) => (
+              <PosterCard
+                key={movie.id}
+                movie={movie}
+                variant="large"
+                onPress={() => router.push(`/movie/${movie.id}`)}
+              />
+            ))}
+          </ScrollView>
 
-      <GradientButton label="Reservation" onPress={() => {}} />
-      <GradientButton label="Disabled" onPress={() => {}} disabled />
-
-      <Barcode code="AB12CD34" />
-    </ScrollView>
+          {comingSoon.length > 0 && (
+            <View style={styles.comingSoonSection}>
+              <Text style={styles.sectionTitle}>Coming Soon</Text>
+              <View style={styles.comingSoonList}>
+                {comingSoon.map((movie) => (
+                  <PosterCard
+                    key={movie.id}
+                    movie={movie}
+                    variant="small"
+                    onPress={() => router.push(`/movie/${movie.id}`)}
+                  />
+                ))}
+              </View>
+            </View>
+          )}
+        </ScreenState>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: MovieColors.background,
   },
   content: {
-    padding: Spacing.four,
-    gap: Spacing.four,
+    paddingBottom: 140,
+  },
+  header: {
+    paddingHorizontal: Spacing.four,
+    paddingTop: Spacing.three,
+    paddingBottom: Spacing.four,
+    gap: Spacing.one,
+  },
+  greeting: {
+    color: MovieColors.textSecondary,
+    fontSize: 14,
+    fontWeight: "600",
   },
   title: {
     color: MovieColors.text,
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "700",
   },
-  row: {
-    flexDirection: "row",
-    gap: Spacing.two,
+  sectionTitle: {
+    color: MovieColors.text,
+    fontSize: 18,
+    fontWeight: "700",
+    paddingHorizontal: Spacing.four,
+    marginBottom: Spacing.three,
+  },
+  carousel: {
+    gap: Spacing.three,
+    paddingHorizontal: Spacing.four,
+  },
+  comingSoonSection: {
+    marginTop: Spacing.five,
+  },
+  comingSoonList: {
+    gap: Spacing.four,
+    paddingHorizontal: Spacing.four,
   },
 });
