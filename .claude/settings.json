@@ -65,7 +65,8 @@
     ]
   },
   "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true
+    "example-skills@anthropic-agent-skills": true,
+    "expo@claude-plugins-official": true
   },
   "statusLine": {
     "type": "command",
