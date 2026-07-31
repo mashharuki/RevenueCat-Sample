@@ -44,3 +44,12 @@ bun run test
 bunx tsc --noEmit   # type check
 bunx biome check .  # lint + format check
 ```
+
+## Manually testing error states
+
+`src/services/mock-config.ts` exposes two flags for manually exercising UI states that are otherwise hard to trigger:
+
+- `simulateNetworkErrors` — when `true`, mock service calls randomly fail so you can verify the app's network-error UI (retry states, error messages).
+- `alwaysFailPurchase` — when `true`, the checkout "Pay" action always fails so you can verify the purchase-failure UI.
+
+Both default to `false`. Flip either to `true` temporarily during development to check the corresponding UI path, then make sure to set it back to `false` before committing.
