@@ -10,7 +10,7 @@ import { useBooking } from "@/context/booking-context";
 import { useTickets } from "@/context/tickets-context";
 import { useAsync } from "@/hooks/use-async";
 import { fetchMovieById } from "@/services/movies";
-import { calculateTotal } from "@/services/pricing";
+import { calculateSeatPrice, calculateTotal } from "@/services/pricing";
 import type { ServiceError } from "@/services/result";
 import { fetchSeatMap, parseSeatId } from "@/services/seats";
 import { fetchShowtimeById } from "@/services/showtimes";
@@ -49,6 +49,23 @@ export default function CheckoutScreen() {
       )
     : [];
   const totalUsd = showtime ? calculateTotal(seats, showtime.priceUsd) : 0;
+
+  const standardSeats = seats.filter((seat) => seat.section === "standard");
+  const vipSeats = seats.filter((seat) => seat.section === "vip");
+  const standardSubtotalUsd =
+    showtime && standardSeats.length > 0
+      ? standardSeats.reduce(
+          (sum, seat) => sum + calculateSeatPrice(seat, showtime.priceUsd),
+          0,
+        )
+      : 0;
+  const vipSubtotalUsd =
+    showtime && vipSeats.length > 0
+      ? vipSeats.reduce(
+          (sum, seat) => sum + calculateSeatPrice(seat, showtime.priceUsd),
+          0,
+        )
+      : 0;
 
   async function handlePay() {
     setIsSubmitting(true);
@@ -94,6 +111,25 @@ export default function CheckoutScreen() {
               <Text style={styles.detailText}>
                 Seats: {state.selectedSeatIds.join(", ")}
               </Text>
+              <View style={styles.divider} />
+              {standardSeats.length > 0 && (
+                <View style={styles.row}>
+                  <Text style={styles.rowLabel}>
+                    Standard x{standardSeats.length}
+                  </Text>
+                  <Text style={styles.rowLabel}>
+                    ${standardSubtotalUsd.toFixed(2)}
+                  </Text>
+                </View>
+              )}
+              {vipSeats.length > 0 && (
+                <View style={styles.row}>
+                  <Text style={styles.rowLabel}>VIP x{vipSeats.length}</Text>
+                  <Text style={styles.rowLabel}>
+                    ${vipSubtotalUsd.toFixed(2)}
+                  </Text>
+                </View>
+              )}
               <View style={styles.divider} />
               <View style={styles.row}>
                 <Text style={styles.rowLabel}>Total</Text>

@@ -4,6 +4,7 @@ import { MovieColors, Spacing } from "@/constants/theme";
 
 const LEGEND_ITEMS = [
   { label: "Available", color: MovieColors.seatAvailable },
+  { label: "VIP", color: MovieColors.primaryDark },
   { label: "Reserved", color: MovieColors.seatReserved },
   { label: "Selected", color: MovieColors.seatSelected },
 ] as const;
@@ -24,8 +25,9 @@ export function SeatLegend() {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
-    gap: Spacing.four,
+    gap: Spacing.three,
     marginVertical: Spacing.four,
   },
   item: {
