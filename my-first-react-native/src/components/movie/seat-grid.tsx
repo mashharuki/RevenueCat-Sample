@@ -30,6 +30,7 @@ export function SeatGrid({ seatMap, selectedSeatIds, onToggleSeat }: SeatGridPro
               <View key={seatId} style={number === aisleAfterSeatNumber + 1 && styles.aisleGap}>
                 <SeatButton
                   status={getSeatStatus(seatId, seatMap, selectedSeatIds)}
+                  section={seatMap.vipRows.includes(row) ? "vip" : "standard"}
                   onPress={() => onToggleSeat(seatId)}
                 />
               </View>
