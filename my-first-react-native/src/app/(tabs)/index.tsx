@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { PosterCard } from "@/components/movie/poster-card";
 import { ScreenState } from "@/components/ui/screen-state";
-import { MovieColors, Spacing } from "@/constants/theme";
+import { BottomTabInset, MovieColors, Spacing } from "@/constants/theme";
 import { useAsync } from "@/hooks/use-async";
 import { fetchMovies } from "@/services/movies";
 
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: MovieColors.background,
   },
   content: {
-    paddingBottom: 140,
+    paddingBottom: BottomTabInset + Spacing.five,
   },
   header: {
     paddingHorizontal: Spacing.four,
