@@ -41,7 +41,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "knip": "knip",
+    "knip": "knip --fix --exports",
     "doctor": "npx react-doctor@latest",
     "format": "biome format --write .",
     "check": "biome check --write."
