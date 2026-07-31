@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { MovieColors } from "@/constants/theme";
 
-export default function PlaceholderScreen() {
+export default function TicketsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Movie Ticket Booking App</Text>
+      <Text style={styles.title}>My Tickets</Text>
     </View>
   );
 }
@@ -17,9 +17,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  title: {
-    color: MovieColors.text,
-    fontSize: 20,
-    fontWeight: "700",
-  },
+  title: { color: MovieColors.text, fontSize: 20, fontWeight: "700" },
 });
