@@ -1,56 +1,46 @@
-# Welcome to your Expo app 👋
+# Movie Ticket Booking App (practice project)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a learning/practice project built with [Expo](https://expo.dev) and React Native. It simulates an end-to-end movie ticket booking flow — browsing movies, picking a showtime, choosing seats, checking out, and viewing purchased tickets — entirely against a **mock in-memory backend**. There is no real payment processing and no real server: all data (movies, showtimes, seat maps, tickets) is generated and stored in-memory for the lifetime of the app session.
 
-## Get started
+## Screens
 
-1. Install dependencies
+The app implements a 5-screen booking flow using [Expo Router](https://docs.expo.dev/router/introduction) file-based routing:
 
-   ```bash
-   npm install
-   ```
+1. **Home** (`src/app/(tabs)/index.tsx`) — Browse the list of now-showing movies.
+2. **Movie Detail** (`src/app/movie/[id].tsx`) — View movie info and pick a date/showtime.
+3. **Seat Selection** (`src/app/booking/seats.tsx`) — Pick one or more seats from the seat map for the selected showtime.
+4. **Checkout** (`src/app/booking/checkout.tsx`) — Review the order summary and total, then "pay" (mock, no real charge).
+5. **My Tickets** (`src/app/(tabs)/tickets.tsx`) — See previously purchased tickets, each rendered as a ticket card with a barcode.
 
-2. Start the app
+The app uses a dark theme throughout.
 
-   ```bash
-   npx expo start
-   ```
+## Getting started
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install dependencies:
 
 ```bash
-npm run reset-project
+bun install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Run the app in the iOS Simulator:
 
-### Other setup steps
+```bash
+bun run ios
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+(`bun run android` and `bun run web` are also available for the other platforms.)
 
-## Learn more
+## Running tests
 
-To learn more about developing your project with Expo, look at the following resources:
+The mock backend logic (pricing, seat generation, ticket purchasing, and booking state) is covered by unit tests. Run the full suite with:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+bun run test
+```
 
-## Join the community
+## Quality checks
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+bunx tsc --noEmit   # type check
+bunx biome check .  # lint + format check
+```
