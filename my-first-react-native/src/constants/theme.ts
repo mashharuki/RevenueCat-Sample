@@ -63,3 +63,27 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+
+export const MovieColors = {
+  background: "#0F0B1E",
+  surface: "#1A1428",
+  surfaceElevated: "#241C38",
+  primary: "#E44C9A",
+  primaryDark: "#7B3FE4",
+  primaryGradient: ["#7B3FE4", "#E44C9A"],
+  text: "#FFFFFF",
+  textSecondary: "#A79FC4",
+  textMuted: "#6E6690",
+  seatAvailable: "#3A3252",
+  seatReserved: "#E44C9A",
+  seatSelected: "#FFFFFF",
+  divider: "#2A2340",
+} as const;
+
+export const Radius = {
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  pill: 999,
+} as const;
