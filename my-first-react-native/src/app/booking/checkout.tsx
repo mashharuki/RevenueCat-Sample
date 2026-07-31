@@ -62,7 +62,7 @@ export default function CheckoutScreen() {
 
     if (result.ok) {
       dispatch({ type: "clearBooking" });
-      router.replace("/(tabs)/tickets");
+      router.dismissTo("/(tabs)/tickets");
     } else {
       setPurchaseError(result.error);
     }
