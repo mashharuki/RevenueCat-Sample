@@ -22,7 +22,10 @@ export default function SeatSelectionScreen() {
   const showtimeId = state.showtimeId ?? "";
 
   const seatMapAsync = useAsync(() => fetchSeatMap(showtimeId), [showtimeId]);
-  const showtimeAsync = useAsync(() => fetchShowtimeById(showtimeId), [showtimeId]);
+  const showtimeAsync = useAsync(
+    () => fetchShowtimeById(showtimeId),
+    [showtimeId],
+  );
 
   const isLoading = seatMapAsync.isLoading || showtimeAsync.isLoading;
   const error = seatMapAsync.error ?? showtimeAsync.error;
@@ -31,7 +34,9 @@ export default function SeatSelectionScreen() {
 
   const totalUsd = useMemo(() => {
     if (!seatMap || !showtime) return 0;
-    const seats = state.selectedSeatIds.map((seatId) => parseSeatId(seatId, seatMap.vipRows));
+    const seats = state.selectedSeatIds.map((seatId) =>
+      parseSeatId(seatId, seatMap.vipRows),
+    );
     return calculateTotal(seats, showtime.priceUsd);
   }, [seatMap, showtime, state.selectedSeatIds]);
 
@@ -54,7 +59,9 @@ export default function SeatSelectionScreen() {
               <SeatGrid
                 seatMap={seatMap}
                 selectedSeatIds={state.selectedSeatIds}
-                onToggleSeat={(seatId) => dispatch({ type: "toggleSeat", seatId })}
+                onToggleSeat={(seatId) =>
+                  dispatch({ type: "toggleSeat", seatId })
+                }
               />
               <SeatLegend />
             </View>

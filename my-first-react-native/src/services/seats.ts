@@ -1,8 +1,7 @@
-import { delay } from "./delay";
-import { findShowtimeByIdSync } from "./showtimes";
-import { err, ok, type Result } from "./result";
-
 import type { Seat, SeatMap } from "@/types/seat";
+import { delay } from "./delay";
+import { err, ok, type Result } from "./result";
+import { findShowtimeByIdSync } from "./showtimes";
 
 const ROWS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const SEATS_PER_ROW = 12;
@@ -16,7 +15,10 @@ const INITIAL_RESERVED_SEATS: Record<string, string[]> = {
 
 const seatReservationStore = new Map<string, Set<string>>();
 
-export function generateSeatMap(showtimeId: string, reservedSeatIds: string[]): SeatMap {
+export function generateSeatMap(
+  showtimeId: string,
+  reservedSeatIds: string[],
+): SeatMap {
   return {
     showtimeId,
     rows: ROWS,
@@ -52,7 +54,9 @@ export function markSeatsReserved(showtimeId: string, seatIds: string[]): void {
   seatReservationStore.set(showtimeId, current);
 }
 
-export async function fetchSeatMap(showtimeId: string): Promise<Result<SeatMap>> {
+export async function fetchSeatMap(
+  showtimeId: string,
+): Promise<Result<SeatMap>> {
   await delay();
   const showtime = findShowtimeByIdSync(showtimeId);
   if (!showtime) {

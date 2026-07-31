@@ -17,13 +17,19 @@ describe("bookingReducer", () => {
   });
 
   it("should add a seat when toggling an unselected seat", () => {
-    const state = bookingReducer(initialBookingState, { type: "toggleSeat", seatId: "C-3" });
+    const state = bookingReducer(initialBookingState, {
+      type: "toggleSeat",
+      seatId: "C-3",
+    });
     expect(state.selectedSeatIds).toEqual(["C-3"]);
   });
 
   it("should remove a seat when toggling an already-selected seat", () => {
     const withSeat = { ...initialBookingState, selectedSeatIds: ["C-3"] };
-    const state = bookingReducer(withSeat, { type: "toggleSeat", seatId: "C-3" });
+    const state = bookingReducer(withSeat, {
+      type: "toggleSeat",
+      seatId: "C-3",
+    });
     expect(state.selectedSeatIds).toEqual([]);
   });
 
@@ -32,13 +38,20 @@ describe("bookingReducer", () => {
       ...initialBookingState,
       selectedSeatIds: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6"],
     };
-    const state = bookingReducer(fullState, { type: "toggleSeat", seatId: "A-7" });
+    const state = bookingReducer(fullState, {
+      type: "toggleSeat",
+      seatId: "A-7",
+    });
     expect(state.selectedSeatIds).toHaveLength(6);
     expect(state.selectedSeatIds).not.toContain("A-7");
   });
 
   it("should reset to the initial state when clearing the booking", () => {
-    const dirtyState = { movieId: "x", showtimeId: "y", selectedSeatIds: ["A-1"] };
+    const dirtyState = {
+      movieId: "x",
+      showtimeId: "y",
+      selectedSeatIds: ["A-1"],
+    };
     const state = bookingReducer(dirtyState, { type: "clearBooking" });
     expect(state).toEqual(initialBookingState);
   });

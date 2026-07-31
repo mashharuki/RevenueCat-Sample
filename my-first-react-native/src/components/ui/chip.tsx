@@ -12,9 +12,15 @@ export function Chip({ label, selected = false, onPress }: ChipProps) {
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [styles.base, selected && styles.selected, pressed && styles.pressed]}
+      style={({ pressed }) => [
+        styles.base,
+        selected && styles.selected,
+        pressed && styles.pressed,
+      ]}
     >
-      <Text style={[styles.label, selected && styles.labelSelected]}>{label}</Text>
+      <Text style={[styles.label, selected && styles.labelSelected]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

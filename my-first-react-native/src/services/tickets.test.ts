@@ -40,7 +40,11 @@ describe("purchaseTicket", () => {
 
   it("should mark the seat as reserved after a successful purchase", async () => {
     const showtimeId = "iron-tide-d2-2100";
-    await purchaseTicket({ movieId: "iron-tide", showtimeId, seatIds: ["B-8"] });
+    await purchaseTicket({
+      movieId: "iron-tide",
+      showtimeId,
+      seatIds: ["B-8"],
+    });
 
     const seatMapResult = await fetchSeatMap(showtimeId);
     expect(seatMapResult.ok).toBe(true);
@@ -79,7 +83,9 @@ describe("fetchTickets", () => {
     const result = await fetchTickets();
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.data.some((ticket) => ticket.seatIds.includes("D-4"))).toBe(true);
+      expect(result.data.some((ticket) => ticket.seatIds.includes("D-4"))).toBe(
+        true,
+      );
     }
   });
 });

@@ -17,7 +17,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Text style={styles.greeting}>Good evening</Text>
           <Text style={styles.title}>What are you watching tonight?</Text>
@@ -31,7 +34,11 @@ export default function HomeScreen() {
           onRetry={reload}
         >
           <Text style={styles.sectionTitle}>Now Showing</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.carousel}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.carousel}
+          >
             {nowShowing.map((movie) => (
               <PosterCard
                 key={movie.id}

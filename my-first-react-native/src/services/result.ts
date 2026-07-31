@@ -5,13 +5,18 @@ export type ServiceError = {
   message: string;
 };
 
-export type Result<T> = { ok: true; data: T } | { ok: false; error: ServiceError };
+export type Result<T> =
+  | { ok: true; data: T }
+  | { ok: false; error: ServiceError };
 
 export function ok<T>(data: T): Result<T> {
   return { ok: true, data };
 }
 
-export function err<T = never>(code: ServiceErrorCode, message: string): Result<T> {
+export function err<T = never>(
+  code: ServiceErrorCode,
+  message: string,
+): Result<T> {
   console.error(`[${code}] ${message}`);
   return { ok: false, error: { code, message } };
 }

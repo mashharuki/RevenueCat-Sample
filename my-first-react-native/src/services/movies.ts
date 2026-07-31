@@ -1,9 +1,8 @@
+import type { Movie } from "@/types/movie";
 import { delay } from "./delay";
 import { MockConfig } from "./mock-config";
 import { MOVIES } from "./mock-data/movies";
 import { err, ok, type Result } from "./result";
-
-import type { Movie } from "@/types/movie";
 
 export async function fetchMovies(): Promise<Result<Movie[]>> {
   await delay();

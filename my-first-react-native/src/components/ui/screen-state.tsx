@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { MovieColors, Radius, Spacing } from "@/constants/theme";
 import type { ServiceError } from "@/services/result";

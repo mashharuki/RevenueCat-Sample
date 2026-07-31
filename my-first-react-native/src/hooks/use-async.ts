@@ -8,7 +8,10 @@ type AsyncState<T> = {
   isLoading: boolean;
 };
 
-export function useAsync<T>(fetcher: () => Promise<Result<T>>, deps: unknown[]) {
+export function useAsync<T>(
+  fetcher: () => Promise<Result<T>>,
+  deps: unknown[],
+) {
   const [state, setState] = useState<AsyncState<T>>({
     data: null,
     error: null,
@@ -18,6 +21,7 @@ export function useAsync<T>(fetcher: () => Promise<Result<T>>, deps: unknown[]) 
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reloadToken is intentionally unused in the body; bumping it via reload() forces a refetch.
   useEffect(() => {
     let cancelled = false;
     setState((previous) => ({ ...previous, isLoading: true, error: null }));
@@ -34,7 +38,6 @@ export function useAsync<T>(fetcher: () => Promise<Result<T>>, deps: unknown[]) 
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, reloadToken]);
 
   const reload = useCallback(() => setReloadToken((token) => token + 1), []);

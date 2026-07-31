@@ -10,7 +10,12 @@ type GradientButtonProps = {
   loading?: boolean;
 };
 
-export function GradientButton({ label, onPress, disabled = false, loading = false }: GradientButtonProps) {
+export function GradientButton({
+  label,
+  onPress,
+  disabled = false,
+  loading = false,
+}: GradientButtonProps) {
   const isDisabled = disabled || loading;
 
   return (
@@ -20,7 +25,11 @@ export function GradientButton({ label, onPress, disabled = false, loading = fal
       style={({ pressed }) => [pressed && !isDisabled && styles.pressed]}
     >
       <LinearGradient
-        colors={isDisabled ? [MovieColors.textMuted, MovieColors.textMuted] : MovieColors.primaryGradient}
+        colors={
+          isDisabled
+            ? [MovieColors.textMuted, MovieColors.textMuted]
+            : MovieColors.primaryGradient
+        }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={styles.container}

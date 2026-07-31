@@ -10,7 +10,13 @@ type BookingSummaryBarProps = {
   onPressBuy: () => void;
 };
 
-export function BookingSummaryBar({ dateLabel, timeLabel, seatLabels, totalUsd, onPressBuy }: BookingSummaryBarProps) {
+export function BookingSummaryBar({
+  dateLabel,
+  timeLabel,
+  seatLabels,
+  totalUsd,
+  onPressBuy,
+}: BookingSummaryBarProps) {
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -18,14 +24,19 @@ export function BookingSummaryBar({ dateLabel, timeLabel, seatLabels, totalUsd, 
           {dateLabel} • {timeLabel}
         </Text>
         <Text style={styles.seats} numberOfLines={1}>
-          {seatLabels.length > 0 ? `Seats: ${seatLabels.join(", ")}` : "Select your seats"}
+          {seatLabels.length > 0
+            ? `Seats: ${seatLabels.join(", ")}`
+            : "Select your seats"}
         </Text>
         <Text style={styles.total}>${totalUsd.toFixed(2)}</Text>
       </View>
       <Pressable
         onPress={onPressBuy}
         disabled={seatLabels.length === 0}
-        style={[styles.buyButton, seatLabels.length === 0 && styles.buyButtonDisabled]}
+        style={[
+          styles.buyButton,
+          seatLabels.length === 0 && styles.buyButtonDisabled,
+        ]}
       >
         <Text style={styles.buyLabel}>Buy</Text>
       </Pressable>

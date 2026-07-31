@@ -25,20 +25,29 @@ export default function CheckoutScreen() {
   const showtimeId = state.showtimeId ?? "";
 
   const movieAsync = useAsync(() => fetchMovieById(movieId), [movieId]);
-  const showtimeAsync = useAsync(() => fetchShowtimeById(showtimeId), [showtimeId]);
+  const showtimeAsync = useAsync(
+    () => fetchShowtimeById(showtimeId),
+    [showtimeId],
+  );
   const seatMapAsync = useAsync(() => fetchSeatMap(showtimeId), [showtimeId]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [purchaseError, setPurchaseError] = useState<ServiceError | null>(null);
 
-  const isLoading = movieAsync.isLoading || showtimeAsync.isLoading || seatMapAsync.isLoading;
-  const loadError = movieAsync.error ?? showtimeAsync.error ?? seatMapAsync.error;
+  const isLoading =
+    movieAsync.isLoading || showtimeAsync.isLoading || seatMapAsync.isLoading;
+  const loadError =
+    movieAsync.error ?? showtimeAsync.error ?? seatMapAsync.error;
 
   const movie = movieAsync.data;
   const showtime = showtimeAsync.data;
   const seatMap = seatMapAsync.data;
 
-  const seats = seatMap ? state.selectedSeatIds.map((seatId) => parseSeatId(seatId, seatMap.vipRows)) : [];
+  const seats = seatMap
+    ? state.selectedSeatIds.map((seatId) =>
+        parseSeatId(seatId, seatMap.vipRows),
+      )
+    : [];
   const totalUsd = showtime ? calculateTotal(seats, showtime.priceUsd) : 0;
 
   async function handlePay() {
@@ -67,7 +76,11 @@ export default function CheckoutScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScreenState isLoading={isLoading} error={loadError} onRetry={handleReload}>
+      <ScreenState
+        isLoading={isLoading}
+        error={loadError}
+        onRetry={handleReload}
+      >
         {movie && showtime && (
           <View style={styles.content}>
             <Text style={styles.heading}>Confirm your booking</Text>
@@ -75,9 +88,12 @@ export default function CheckoutScreen() {
             <View style={styles.card}>
               <Text style={styles.movieTitle}>{movie.title}</Text>
               <Text style={styles.detailText}>
-                {formatDayLabel(showtime.date).day} • {showtime.time} • {showtime.hall}
+                {formatDayLabel(showtime.date).day} • {showtime.time} •{" "}
+                {showtime.hall}
               </Text>
-              <Text style={styles.detailText}>Seats: {state.selectedSeatIds.join(", ")}</Text>
+              <Text style={styles.detailText}>
+                Seats: {state.selectedSeatIds.join(", ")}
+              </Text>
               <View style={styles.divider} />
               <View style={styles.row}>
                 <Text style={styles.rowLabel}>Total</Text>

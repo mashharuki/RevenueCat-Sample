@@ -1,6 +1,6 @@
 import { DarkTheme, Stack, ThemeProvider } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
 import { BookingProvider } from "@/context/booking-context";

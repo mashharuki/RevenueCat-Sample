@@ -12,7 +12,9 @@ type SeatButtonProps = {
 function getSeatColor(status: SeatStatus, section: SeatSection): string {
   if (status === "reserved") return MovieColors.seatReserved;
   if (status === "selected") return MovieColors.seatSelected;
-  return section === "vip" ? MovieColors.primaryDark : MovieColors.seatAvailable;
+  return section === "vip"
+    ? MovieColors.primaryDark
+    : MovieColors.seatAvailable;
 }
 
 export function SeatButton({ status, section, onPress }: SeatButtonProps) {

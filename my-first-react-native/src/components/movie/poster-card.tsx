@@ -13,7 +13,11 @@ type PosterCardProps = {
 const POSTER_WIDTH = 160;
 const POSTER_HEIGHT = 220;
 
-export function PosterCard({ movie, onPress, variant = "large" }: PosterCardProps) {
+export function PosterCard({
+  movie,
+  onPress,
+  variant = "large",
+}: PosterCardProps) {
   if (variant === "small") {
     return (
       <Pressable onPress={onPress} style={styles.smallContainer}>

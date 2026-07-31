@@ -40,10 +40,15 @@ export default function TicketsScreen() {
         emptyMessage="Once you buy a movie ticket, it will show up here with a scannable barcode."
         onRetry={handleReload}
       >
-        <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+        >
           {tickets.map((ticket) => {
             const movie = movieById.get(ticket.movieId);
-            return movie ? <TicketCard key={ticket.id} ticket={ticket} movie={movie} /> : null;
+            return movie ? (
+              <TicketCard key={ticket.id} ticket={ticket} movie={movie} />
+            ) : null;
           })}
         </ScrollView>
       </ScreenState>

@@ -1,8 +1,12 @@
-import { createContext, useCallback, useContext, type ReactNode } from "react";
+import { createContext, type ReactNode, useCallback, useContext } from "react";
 
 import { useAsync } from "@/hooks/use-async";
-import type { ServiceError, Result } from "@/services/result";
-import { fetchTickets, purchaseTicket, type PurchaseInput } from "@/services/tickets";
+import type { Result, ServiceError } from "@/services/result";
+import {
+  fetchTickets,
+  type PurchaseInput,
+  purchaseTicket,
+} from "@/services/tickets";
 import type { Ticket } from "@/types/ticket";
 
 type TicketsContextValue = {
@@ -30,7 +34,9 @@ export function TicketsProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <TicketsContext.Provider value={{ tickets: data ?? [], isLoading, error, reload, purchase }}>
+    <TicketsContext.Provider
+      value={{ tickets: data ?? [], isLoading, error, reload, purchase }}
+    >
       {children}
     </TicketsContext.Provider>
   );

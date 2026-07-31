@@ -23,7 +23,9 @@ export default function MovieDetailScreen() {
   const showtimesAsync = useAsync(() => fetchShowtimes(id), [id]);
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedShowtimeId, setSelectedShowtimeId] = useState<string | null>(null);
+  const [selectedShowtimeId, setSelectedShowtimeId] = useState<string | null>(
+    null,
+  );
 
   const uniqueDates = useMemo(() => {
     const dates = (showtimesAsync.data ?? []).map((showtime) => showtime.date);
@@ -33,7 +35,10 @@ export default function MovieDetailScreen() {
   const activeDate = selectedDate ?? uniqueDates[0] ?? null;
 
   const timesForActiveDate = useMemo(
-    () => (showtimesAsync.data ?? []).filter((showtime) => showtime.date === activeDate),
+    () =>
+      (showtimesAsync.data ?? []).filter(
+        (showtime) => showtime.date === activeDate,
+      ),
     [showtimesAsync.data, activeDate],
   );
 
@@ -48,7 +53,11 @@ export default function MovieDetailScreen() {
 
   function handleReservation() {
     if (!movie || !selectedShowtimeId) return;
-    dispatch({ type: "selectShowtime", movieId: movie.id, showtimeId: selectedShowtimeId });
+    dispatch({
+      type: "selectShowtime",
+      movieId: movie.id,
+      showtimeId: selectedShowtimeId,
+    });
     router.push("/booking/seats");
   }
 
@@ -65,7 +74,10 @@ export default function MovieDetailScreen() {
                 style={styles.poster}
               >
                 <SafeAreaView edges={["top"]}>
-                  <Pressable onPress={() => router.back()} style={styles.backButton}>
+                  <Pressable
+                    onPress={() => router.back()}
+                    style={styles.backButton}
+                  >
                     <Text style={styles.backLabel}>‹</Text>
                   </Pressable>
                 </SafeAreaView>
@@ -76,11 +88,15 @@ export default function MovieDetailScreen() {
                 <Text style={styles.tagline}>{movie.tagline}</Text>
 
                 <View style={styles.metaRow}>
-                  <Text style={styles.metaText}>{movie.durationMinutes} min</Text>
+                  <Text style={styles.metaText}>
+                    {movie.durationMinutes} min
+                  </Text>
                   <Text style={styles.metaDot}>•</Text>
                   <Text style={styles.metaText}>{movie.ageRating}</Text>
                   <Text style={styles.metaDot}>•</Text>
-                  <Text style={styles.metaText}>★ {movie.rating.toFixed(1)}</Text>
+                  <Text style={styles.metaText}>
+                    ★ {movie.rating.toFixed(1)}
+                  </Text>
                 </View>
 
                 <Text style={styles.genres}>{movie.genres.join(" • ")}</Text>
@@ -88,7 +104,11 @@ export default function MovieDetailScreen() {
 
                 <Text style={styles.sectionTitle}>Select date and time</Text>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.chipRow}
+                >
                   {uniqueDates.map((date) => (
                     <Chip
                       key={date}
@@ -102,7 +122,11 @@ export default function MovieDetailScreen() {
                   ))}
                 </ScrollView>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.chipRow}
+                >
                   {timesForActiveDate.map((showtime) => (
                     <Chip
                       key={showtime.id}
@@ -116,7 +140,11 @@ export default function MovieDetailScreen() {
             </ScrollView>
 
             <View style={styles.footer}>
-              <GradientButton label="Reservation" disabled={!selectedShowtimeId} onPress={handleReservation} />
+              <GradientButton
+                label="Reservation"
+                disabled={!selectedShowtimeId}
+                onPress={handleReservation}
+              />
             </View>
           </>
         )}

@@ -1,4 +1,10 @@
-import { createContext, useContext, useReducer, type Dispatch, type ReactNode } from "react";
+import {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  useContext,
+  useReducer,
+} from "react";
 
 export type BookingState = {
   movieId: string | null;
@@ -19,7 +25,10 @@ export const initialBookingState: BookingState = {
 
 const MAX_SELECTED_SEATS = 6;
 
-export function bookingReducer(state: BookingState, action: BookingAction): BookingState {
+export function bookingReducer(
+  state: BookingState,
+  action: BookingAction,
+): BookingState {
   switch (action.type) {
     case "selectShowtime":
       return {
@@ -32,7 +41,9 @@ export function bookingReducer(state: BookingState, action: BookingAction): Book
       if (isSelected) {
         return {
           ...state,
-          selectedSeatIds: state.selectedSeatIds.filter((seatId) => seatId !== action.seatId),
+          selectedSeatIds: state.selectedSeatIds.filter(
+            (seatId) => seatId !== action.seatId,
+          ),
         };
       }
       if (state.selectedSeatIds.length >= MAX_SELECTED_SEATS) {
@@ -59,7 +70,11 @@ const BookingContext = createContext<BookingContextValue | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(bookingReducer, initialBookingState);
-  return <BookingContext.Provider value={{ state, dispatch }}>{children}</BookingContext.Provider>;
+  return (
+    <BookingContext.Provider value={{ state, dispatch }}>
+      {children}
+    </BookingContext.Provider>
+  );
 }
 
 export function useBooking(): BookingContextValue {

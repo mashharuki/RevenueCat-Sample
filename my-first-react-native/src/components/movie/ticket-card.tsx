@@ -35,7 +35,9 @@ export function TicketCard({ ticket, movie }: TicketCardProps) {
         <View style={styles.detailsGrid}>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Date</Text>
-            <Text style={styles.detailValue}>{formatDayLabel(ticket.purchasedAt.slice(0, 10)).day}</Text>
+            <Text style={styles.detailValue}>
+              {formatDayLabel(ticket.purchasedAt.slice(0, 10)).day}
+            </Text>
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Seats</Text>
@@ -43,7 +45,9 @@ export function TicketCard({ ticket, movie }: TicketCardProps) {
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Total</Text>
-            <Text style={styles.detailValue}>${ticket.totalUsd.toFixed(2)}</Text>
+            <Text style={styles.detailValue}>
+              ${ticket.totalUsd.toFixed(2)}
+            </Text>
           </View>
         </View>
         <Barcode code={ticket.bookingCode} />

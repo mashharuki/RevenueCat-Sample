@@ -7,11 +7,15 @@ function roundToCents(amount: number): number {
 }
 
 export function calculateSeatPrice(seat: Seat, basePriceUsd: number): number {
-  const rawPrice = seat.section === "vip" ? basePriceUsd * VIP_MULTIPLIER : basePriceUsd;
+  const rawPrice =
+    seat.section === "vip" ? basePriceUsd * VIP_MULTIPLIER : basePriceUsd;
   return roundToCents(rawPrice);
 }
 
 export function calculateTotal(seats: Seat[], basePriceUsd: number): number {
-  const total = seats.reduce((sum, current) => sum + calculateSeatPrice(current, basePriceUsd), 0);
+  const total = seats.reduce(
+    (sum, current) => sum + calculateSeatPrice(current, basePriceUsd),
+    0,
+  );
   return roundToCents(total);
 }

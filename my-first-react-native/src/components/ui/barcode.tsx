@@ -18,7 +18,11 @@ export function Barcode({ code }: BarcodeProps) {
     <View style={styles.container}>
       <View style={styles.bars}>
         {bars.map((width, index) => (
-          <View key={`${code}-${index}`} style={[styles.bar, { flex: width }]} />
+          <View
+            // biome-ignore lint/suspicious/noArrayIndexKey: bars are a fixed-order rendering of each character's position in `code`; position is the identity.
+            key={`${code}-${index}`}
+            style={[styles.bar, { flex: width }]}
+          />
         ))}
       </View>
       <Text style={styles.code}>{code}</Text>
