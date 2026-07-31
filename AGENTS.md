@@ -15,6 +15,14 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 - Steering: `.kiro/steering/`
 - Specs: `.kiro/specs/`
 
+### Codex compatibility layer
+
+Claude Code の共有設定は Codex 用にも移植済みです。作業開始時に `.codex/rules/` の全 Markdown を読み、該当するルールを適用してください。`.agents/skills/` は Codex が検出する Skill の正本であり、`.claude/skills/` と重複する同名 Skill がある場合は `.agents/skills/` を使用してください。
+
+- `.codex/hooks.json` は Claude の安全ブロック、保護ファイル、lint/format、セッション監査の互換フックです。
+- `.codex/agents/*.toml` は Claude の専門エージェントに対応します。各エージェントは対応する `.claude/agents/<name>.md` を正本として読み込みます。
+- `notify-completion` の Slack Webhook 通知だけは、外部送信の明示承認が必要なため未移植です。
+
 ### Steering vs Specification
 
 **Steering** (`.kiro/steering/`) - Guide AI with project-wide rules and context
