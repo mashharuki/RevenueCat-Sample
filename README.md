@@ -1,7 +1,9 @@
 # RevenueCat-Sample
+
 RevenueCat学習・調査用のサンプルリポジトリ
 
 ## 参考文献
+
 - [公式ドキュメント - クイックスタート](https://www.revenuecat.com/docs/welcome/overview/)
 - [SDK クイックスタート](https://www.revenuecat.com/docs/getting-started/quickstart)
 - [サンプルアプリ集](https://www.revenuecat.com/docs/platform-resources/sample-apps)
@@ -29,3 +31,5 @@ RevenueCat学習・調査用のサンプルリポジトリ
 - [Figma - Midjourney Web App](https://www.figma.com/community/file/1241020191420889535/midjourney-web-app)
 - [Figma - Notification Web Design](https://www.figma.com/community/file/1247548360630672682/notification-web-design)
 - [Rozenite - React Native DevTools Plugin Framework](https://github.com/callstackincubator/rozenite)
+- [CodeMasic React Native 設定](https://docs.codemagic.io/yaml-quick-start/building-a-react-native-app/)
+- [codemagic ダッシュボード](https://codemagic.io/app/)
