@@ -11,6 +11,10 @@ Project memory keeps persistent guidance (steering, specs notes, component docs)
 
 ## Project Context
 
+### Technology Direction
+- Adopt Expo for the React Native mobile application.
+- Use Cloudflare Workers + D1 as the default backend and database foundation.
+
 ### Paths
 - Steering: `.kiro/steering/`
 - Specs: `.kiro/specs/`
